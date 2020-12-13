@@ -8,46 +8,32 @@
                 Carrera
             </p>
             <p>
-                <select name="carr" id="">
-                    <option value=""> </option>
-                    <option value="">Biología</option>
-                    <option value="">Bioquímica</option>
-                    <option value="">Electrónica</option>
-                    <option value="">Biotecnología</option>
-                    <option value="">Matemáticas Aplicadas</option>
-                    <option value="">Industrial Estadístico</option>
-                    <option value="">Computación Inteligente</option>
-                    <option value="">Sistemas Computacionales</option>
-                    <option value="">Quimico Farmacéutico Biólogo</option>
-                    <option value="">Informática y Tecnologías Computacionales</option>
+                <select name="carr" id="" #carrselect (change)="SeleccionoCarr(carrselect.value)" >
+                    <option>Selecciona una Carrera</option>
+                    <option *ngFor="let carr of carreras" [value]="carr.Codigo">{{carr.Nombre}}</option>
                 </select>
             </p>
             <p class="nom">
                 Departamento
             </p>
              <p>
-                 <select name="depto" id="">
-                     <option value=""> </option>
-                     <option value="">Quimica</option>
-                     <option value="">Biología</option>
-                     <option value="">Morfología</option>
-                     <option value="">Estadística</option>
-                     <option value="">Microbiología</option>                        
-                     <option value="">Mátematicas y Física</option>
-                     <option value="">Sistemas Electrónicos</option>
-                     <option value="">Ingeniería Bioquimica</option>  
-                     <option value="">Sistemas de Información</option>
-                     <option value="">Fisiología y Farmacología</option>
-                     <option value="">Ciencias de la computación</option>                   
+                 <select name="depto" id="" #deptoselect (change)="SeleccionoDpto(deptoselect.value)">
+                    <option>Selecciona una Departamento</option>
+                    <option *ngFor="let dep of deptos" [value]="dep.Codigo">{{dep.Nombre}}</option>                 
                  </select>
              </p>
              <p class="nom">
                 Materia
             </p>
             <p>
-               <input type="text" name="" id="">
+                <select name="materiaselect" id="" [(ngModel)]="materiaselectv" #materiaselect>
+                    <option selected>Selecciona una Materia</option>
+                    <option *ngFor="let mat of materias" [value]="mat.Nombre">{{mat.Nombre}} - {{mat.Semestre}}°</option>                 
+                 </select>
             </p> 
-             <button type="button" class="btn btn-secondary mt-3">Buscar</button>
+             <button type="button" class="btn btn-secondary mt-3" (click)="enviar(carrselect.value,deptoselect.value,materiaselect.value)">Buscar</button>
+             <p style="color: red;" *ngIf="completo">Completa los datos.</p>
         </form>
+        
     </div>
 </div>

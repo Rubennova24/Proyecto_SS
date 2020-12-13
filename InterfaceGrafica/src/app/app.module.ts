@@ -6,6 +6,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { DepartamentoComponent } from './components/departamento/departamento.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ListaComponent } from './components/listas/lista/lista.component';
 
 @NgModule({
   declarations: [
@@ -13,11 +16,14 @@ import { DepartamentoComponent } from './components/departamento/departamento.co
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    DepartamentoComponent
+    DepartamentoComponent,
+    ListaComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
