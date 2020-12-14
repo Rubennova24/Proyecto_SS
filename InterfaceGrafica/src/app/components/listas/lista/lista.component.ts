@@ -23,6 +23,8 @@ export class ListaComponent implements OnInit {
       }else{
         this.tabla=true;
         alert('ya hay alumnos')
+        //data ya tiene la lista de los alumnos inscritos pero son de todas las carreras, de aqui lo mandas a crear o ver las vistas
+        //acordarse de si ya exite volver a consultar la vista, sino es crearla
       }
     });
   }
@@ -34,6 +36,7 @@ export class ListaComponent implements OnInit {
           alert('Algo paso mal');
         }else{
           alert("inscrito correctamente");
+          
         }
       });
     }else{
