@@ -37,7 +37,7 @@ module.exports = {
         })
     },
     createlista: (connection, body, callback) => {
-        connection.query('CREATE TABLE `?` (Id varchar(8) NOT NULL,Nombre varchar(50),Carrera varchar(5) NOT NULL,CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo));', [body.Materia], (err, results) => {
+        connection.query('CREATE TABLE `?` (Id varchar(8) NOT NULL,Nombre varchar(50),Carrera varchar(8) NOT NULL,CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo));', [body.Materia], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
