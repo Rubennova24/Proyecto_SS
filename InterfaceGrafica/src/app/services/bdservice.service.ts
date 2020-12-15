@@ -32,9 +32,11 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-  getlista(){
+  getlista(materia: string){
+    let mat =  materia.replace(/ /g,"");
+  
     const body = new HttpParams()
-    .set('Materia', this.materia.trim());
+    .set('Materia', mat);
     return this.httpClient.post('http://localhost:3000/' + 'lista', body.toString(),
     {
     headers: new HttpHeaders()
@@ -42,8 +44,9 @@ export class BdserviceService {
     });
   }
   createlista(materia:string){
+    let mat =  materia.replace(/ /g,"");
     const body = new HttpParams()
-    .set('Materia', materia.trim());
+    .set('Materia', mat);
     return this.httpClient.post('http://localhost:3000/' + 'createlista', body.toString(),
     {
     headers: new HttpHeaders()
@@ -51,11 +54,12 @@ export class BdserviceService {
     });
   }
   inscribirlista(id:string,nombre:string,carrera:string,materia:string){
+    let mat = materia.replace(/ /g,"");
     const body = new HttpParams()
     .set('Id', id)
     .set('Nombre', nombre)
     .set('Carrera', carrera)
-    .set('Materia', materia.trim());
+    .set('Materia', mat);
     return this.httpClient.post('http://localhost:3000/' + 'inscribirlista', body.toString(),
     {
     headers: new HttpHeaders()
@@ -72,5 +76,40 @@ export class BdserviceService {
   }
   getselecCarrera(){
     return this.carrera;
+  }
+
+  VerCarreraLista(Materia: string){
+    let mat = Materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Materia', mat);
+    return this.httpClient.post('http://localhost:3000/' + 'VerCarrerasLista', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  CrearVista(Materia: string, Carrera: string){
+    let mat = Materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Materia', mat)
+    .set('Carrera', Carrera);
+    return this.httpClient.post('http://localhost:3000/' + 'CrearVista', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  VerVista(Materia: string, Carrera: string){
+    let mat = Materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Materia', mat)
+    .set('Carrera', Carrera);
+    return this.httpClient.post('http://localhost:3000/' + 'VerVistas', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
   }
 }

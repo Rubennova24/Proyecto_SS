@@ -1,41 +1,53 @@
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop" style="margin-left: 45%; margin-top: 2%;;">
   Inscribirme
 </button>
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">Materia: {{materiacard}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Carrera: </h6>
-      <p class="card-text" >{{texto}}</p>
-      
+
+<div *ngIf="tabla; else vacio">
+    <div *ngFor="let vista of vistas" class="card" style="width: 18rem; margin-left: 2%;">
+        <div class="card-body">
+            <h5 class="card-title">Materia: {{materiacard}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Carrera: {{vista[0].Carrera}} </h6>
+            <p *ngFor="let vist of vista" class="card-text">Id: {{vist.Id}}</p>
+        </div>
     </div>
-  </div>
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+</div>
+
+<ng-template #vacio>
+    <div class="card" style="width: 18rem; margin-left: 2em;">
+        <div class="card-body">
+            <h5 class="card-title">Materia: {{materiacard}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Carrera: </h6>
+            <p class="card-text">{{texto}}</p>
+        </div>
+    </div>
+</ng-template>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Inscripción</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Inscripción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
-        <div class="modal-body">
-            <label for="id">Id: </label>
-            <input type="text" name="id" id="id" style="margin-left: 11%;" #id>
-            <br>
-            <label for="nombre">Nombre: </label>
-            <input type="text" name="nombre" id="nombre" style="margin-left: 2%;" #nombre>
-            <br>
-            <label for="carr">Carrera: {{carreracard}}</label>
-            <br>
-            <!--<p style="text-align: center;">Se necesita subir una imagen ya sea de tu Credencial de la UAA <br>ó <br>Una captura de esiima donde se vea tu situación actual.</p>
+            </div>
+            <div class="modal-body">
+                <label for="id">Id: </label>
+                <input type="text" name="id" id="id" style="margin-left: 11%;" #id>
+                <br>
+                <label for="nombre">Nombre: </label>
+                <input type="text" name="nombre" id="nombre" style="margin-left: 2%;" #nombre>
+                <br>
+                <label for="carr">Carrera: {{carreracard}}</label>
+                <br>
+                <!--<p style="text-align: center;">Se necesita subir una imagen ya sea de tu Credencial de la UAA <br>ó <br>Una captura de esiima donde se vea tu situación actual.</p>
             <label for="imagen">Imagen: </label>
             <input type="file" name="imagen" id="imagen" accept="image/x-png,image/gif,image/jpeg" style="margin-left: 2%;"/>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" (click)="inscripcion(id.value,nombre.value)" data-dismiss="modal">Inscribirme</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-success" (click)="inscripcion(id.value,nombre.value)" data-dismiss="modal">Inscribirme</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
