@@ -9,6 +9,7 @@ import { DepartamentoComponent } from './components/departamento/departamento.co
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListaComponent } from './components/listas/lista/lista.component';
+import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ListaComponent } from './components/listas/lista/lista.component';
     FooterComponent,
     HomeComponent,
     DepartamentoComponent,
-    ListaComponent
+    ListaComponent,
+    AsignacionComponent
   ],
   imports: [
     BrowserModule,

@@ -38,7 +38,8 @@ export class ListaComponent implements OnInit {
         this.carreras = data;
         for( const Carr of this.carreras){
           this.bdservice.CrearVista(this.materiacard, Carr.Carrera).subscribe(
-            datos => {      
+            datos => {
+
               if(datos=="false"){
                 alert("algo salio mal en la creacion de vista");
               }else{
@@ -50,7 +51,7 @@ export class ListaComponent implements OnInit {
 
                     }else{
                       this.vistas.push(vista);
-                      
+
                       console.log(this.vistas);
                     }
 
@@ -77,11 +78,13 @@ export class ListaComponent implements OnInit {
       });
     }else{
       //se crea la lista y se inscribe
-      this.bdservice.createlista(this.materiacard).subscribe(data=>{       
+      this.bdservice.createlista(this.materiacard).subscribe(data=>{
         if(data=="false"){
           alert('Algo paso mal tabla');
         }else{
           alert("tabla creada correctamente");
+          //trigger
+
         }
       });
       this.bdservice.inscribirlista(id,nombre,this.carreracard,this.materiacard).subscribe(data=>{

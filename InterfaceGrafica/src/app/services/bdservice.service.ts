@@ -34,7 +34,7 @@ export class BdserviceService {
   }
   getlista(materia: string){
     let mat =  materia.replace(/ /g,"");
-  
+
     const body = new HttpParams()
     .set('Materia', mat);
     return this.httpClient.post('http://localhost:3000/' + 'lista', body.toString(),
@@ -91,9 +91,12 @@ export class BdserviceService {
 
   CrearVista(Materia: string, Carrera: string){
     let mat = Materia.replace(/ /g,"");
+    let anidado = Carrera+mat;
     const body = new HttpParams()
+    .set('Nombre', anidado)
     .set('Materia', mat)
     .set('Carrera', Carrera);
+
     return this.httpClient.post('http://localhost:3000/' + 'CrearVista', body.toString(),
     {
     headers: new HttpHeaders()
@@ -103,13 +106,63 @@ export class BdserviceService {
 
   VerVista(Materia: string, Carrera: string){
     let mat = Materia.replace(/ /g,"");
+    let anidado = Carrera+mat;
     const body = new HttpParams()
-    .set('Materia', mat)
-    .set('Carrera', Carrera);
+    .set('Nombre', anidado);
     return this.httpClient.post('http://localhost:3000/' + 'VerVistas', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  VerVista2(Nombre: string){
+    //let mat = Materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Nombre', Nombre);
+    return this.httpClient.post('http://localhost:3000/' + 'VerVistas2', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  getVistas2() {
+    return this.httpClient.get('http://localhost:3000/' + 'asignacion');
+  }
+
+  conteoAsignacion(Nombre:string){
+    const body = new HttpParams()
+    .set('Nombre', Nombre);
+    return this.httpClient.post('http://localhost:3000/' + 'conteo', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  asignacion(Clase:string, Nombre:string, Salon:string, Horario:string,NombreLista:string,Carrera:string){
+  
+    const body = new HttpParams()
+    .set('Clase', Clase)
+    .set('Nombre', Nombre)
+    .set('Salon', Salon)
+    .set('Horario', Horario)
+    .set('NombreLista', NombreLista)
+    .set('Carrera', Carrera);
+    return this.httpClient.post('http://localhost:3000/' + 'asignarMaestro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getCarreraVista(Nombre:string){
+    const body = new HttpParams()
+    .set('Nombre', Nombre);
+    return this.httpClient.post('http://localhost:3000/' + 'getCarreraVista', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+
 }

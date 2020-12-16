@@ -15,6 +15,17 @@ router.get('/carreras', (req, res) => {
         res.json(data);
     }))
 });
+router.get('/asignacion', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getVistas2(connection, body, (data => {
+        res.json(data);
+    }))
+});
 router.post('/dpto', [
     body('IdCarrera').not().isEmpty().isString(),
 ], (req, res) => {
@@ -25,6 +36,19 @@ router.post('/dpto', [
     }
     let body = req.body;
     user.getdpto(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/conteo', [
+    body('Nombre').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getConteo(connection, body, (data => {
         res.json(data);
     }))
 });
@@ -84,6 +108,24 @@ router.post('/inscribirlista', [
         res.json(data);
     }))
 });
+router.post('/asignarMaestro', [
+    body('Clase').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('Salon').not().isEmpty().isString(),
+    body('Horario').not().isEmpty().isString(),
+    body('NombreLista').not().isEmpty().isString(),
+    body('Carrera').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.asignarMaestro(connection, body, (data => {
+        res.json(data);
+    }))
+});
 
 router.post('/VerCarrerasLista', [
     body('Materia').not().isEmpty().isString(),
@@ -100,8 +142,9 @@ router.post('/VerCarrerasLista', [
 });
 
 router.post('/CrearVista', [
-    body('Carrera').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
     body('Materia').not().isEmpty().isString(),
+    body('Carrera').not().isEmpty().isString(),
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -115,8 +158,7 @@ router.post('/CrearVista', [
 });
 
 router.post('/VerVistas', [
-    body('Carrera').not().isEmpty().isString(),
-    body('Materia').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString()
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -125,6 +167,33 @@ router.post('/VerVistas', [
     }
     let body = req.body;
     user.VerVistas(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/VerVistas2', [
+    body('Nombre').not().isEmpty().isString()
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.VerVistas2(connection, body, (data => {
+        res.json(data);
+    }))
+});
+
+router.post('/getCarreraVista', [
+    body('Nombre').not().isEmpty().isString()
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getCarreraVista(connection, body, (data => {
         res.json(data);
     }))
 });
