@@ -8,15 +8,55 @@ export class BdserviceService {
   carrera:string;
   departamento:string;
   materia:string;
-
+  jefeDpto:string;
   constructor(private httpClient: HttpClient) { }
   getCarreras() {
     return this.httpClient.get('http://localhost:3000/' + 'carreras');
+  }
+  getMateriasC3() {
+    return this.httpClient.get('http://localhost:3000/' + 'MateriasC3');
+  }
+  getCarrerasyMaterias() {
+    return this.httpClient.get('http://localhost:3000/' + 'carrerasyMaterias');
+  }
+  setSession(jefe:string){
+    this.jefeDpto= jefe;
+    console.log(this.jefeDpto);
+
+  }
+  setMaestro(nom_maestro:string){
+    const body = new HttpParams()
+    .set('jefe', this.jefeDpto)
+    .set('nombre_maestro', nom_maestro);
+    return this.httpClient.post('http://localhost:3000/' + 'asignjefedpto', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  getMateriasyCarreras(nom_mat: string){
+    const body = new HttpParams()
+    .set('Nombre', nom_mat);
+    return this.httpClient.post('http://localhost:3000/' + 'Materiasycarreras', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
   }
   getDpto(clave: string){
     const body = new HttpParams()
     .set('IdCarrera', clave);
     return this.httpClient.post('http://localhost:3000/' + 'dpto', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getMateriasDpto(carrera: string){
+    const body = new HttpParams()
+    .set('nom_mat', carrera);
+    return this.httpClient.post('http://localhost:3000/' + 'materiasdpto', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -140,7 +180,7 @@ export class BdserviceService {
     });
   }
   asignacion(Clase:string, Nombre:string, Salon:string, Horario:string,NombreLista:string,Carrera:string){
-  
+
     const body = new HttpParams()
     .set('Clase', Clase)
     .set('Nombre', Nombre)
@@ -158,6 +198,26 @@ export class BdserviceService {
     const body = new HttpParams()
     .set('Nombre', Nombre);
     return this.httpClient.post('http://localhost:3000/' + 'getCarreraVista', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getUsr(usr: string, pass: string){
+    const body = new HttpParams()
+    .set('Usuario', usr)
+    .set('Password', pass);
+    return this.httpClient.post('http://localhost:3000/' + 'usr', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getUsr2(usr: string, pass: string){
+    const body = new HttpParams()
+    .set('Usuario', usr)
+    .set('Password', pass);
+    return this.httpClient.post('http://localhost:3000/' + 'usr2', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

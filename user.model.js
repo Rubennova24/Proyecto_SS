@@ -8,6 +8,52 @@ module.exports = {
             callback(results);
         })
     },
+    
+    getCarrerasyMaterias: (connection, body, callback) => {
+        connection.query('CALL `countMaterias`();', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getMateriasyCarreras: (connection, body, callback) => {
+        connection.query('CALL `rutina3`(?);',[body.Nombre] ,(err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getMateriasDpto: (connection, body, callback) => {
+        connection.query('CALL `rutina2`(?);',[body.nom_mat], (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getMateriasC3: (connection, body, callback) => {
+        connection.query('SELECT DISTINCT mat.Nombre FROM materia mat GROUP BY mat.Nombre HAVING COUNT(*)>1', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    setMaestro: (connection, body, callback) => {
+        connection.query('CALL `asignarJefeDpto`( ? , ? );', [body.jefe,body.nombre_maestro], (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
     getdpto: (connection, body, callback) => {
         connection.query('SELECT * FROM departamento WHERE Codigo IN(SELECT Cdg_dpto FROM dpto_ca WHERE Cdg_ca = ?)ORDER BY Nombre;', [body.IdCarrera], (err, results) => {
             if (err) {
@@ -57,6 +103,8 @@ module.exports = {
         })
     },
     asignarMaestro: (connection, body, callback) => {
+
+        //hacer trigger
         connection.beginTransaction(function(err) {
             if (err) {
                 throw err;
@@ -64,10 +112,10 @@ module.exports = {
             connection.query('INSERT INTO maestros_asignados (`clase`, `nombre_maestro`, `salon`, `horario`, `nombre_lista`, `carrera`) VALUES (? , ? , ? , ?, ?, ? );',
             [body.Clase, body.Nombre, body.Salon, body.Horario,body.NombreLista ,body.Carrera, body.NombreLista] ,(err, result) =>{
                     if (err) {
-                        connection.rollback(function() {
-                            throw err;
-                        });
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    callback("false");
                     }
+                    callback(result);
                     });
             connection.query('UPDATE ?? SET `maestro` = ? , `salon` = ? , `horario` = ? WHERE `carrera`= ?;',
             [body.NombreLista, body.Nombre, body.Salon, body.Horario, body.Carrera],(err, result) =>{
@@ -85,16 +133,7 @@ module.exports = {
           });
         }
       });
-        /*connection.query('INSERT INTO maestros_asignados (`clase`, `nombre_maestro`, `salon`, `horario`, `nombre_lista`, `carrera`) VALUES (? , ? , ? , ?, ?, ? );',
-         [body.Clase, body.Nombre, body.Salon, body.Horario,body.NombreLista ,body.Carrera], (err, results) => {
-            if (err) {
-                //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                callback("false");
-                console.log( JSON.stringify(err));
-                return;
-            }
-            callback(results);
-        })*/
+        
     },
     createVista: (connection, body, callback) => {
         
@@ -168,6 +207,27 @@ module.exports = {
                 return;
             }
             //console.log('Query result: ', rows[0].num);
+            callback(results);
+        })
+    },
+    getUsr: (connection, body, callback) => {
+        connection.query('SELECT * FROM jefe_dpto WHERE Nombre = ? && Contrasena = ?',[body.Usuario, body.Password], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+
+    getUsr2: (connection, body, callback) => {
+        connection.query('SELECT * FROM jefe_centro WHERE Nombre = ? && Contrasena = ?',[body.Usuario, body.Password], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
             callback(results);
         })
     }

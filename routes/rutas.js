@@ -15,6 +15,45 @@ router.get('/carreras', (req, res) => {
         res.json(data);
     }))
 });
+router.get('/carrerasyMaterias', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getCarrerasyMaterias(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/Materiasycarreras',[
+    body('Nombre').not().isEmpty().isString(),
+] ,(req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getMateriasyCarreras(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/asignjefedpto',[
+    body('jefe').not().isEmpty().isString(),
+    body('nombre_maestro').not().isEmpty().isString(),
+] ,(req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.setMaestro(connection, body, (data => {
+        res.json(data);
+    }))
+});
+
 router.get('/asignacion', (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -23,6 +62,30 @@ router.get('/asignacion', (req, res) => {
     }
     let body = req.body;
     user.getVistas2(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/materiasdpto', [
+    body('nom_mat').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getMateriasDpto(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/MateriasC3', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getMateriasC3(connection, body, (data => {
         res.json(data);
     }))
 });
@@ -194,6 +257,32 @@ router.post('/getCarreraVista', [
     }
     let body = req.body;
     user.getCarreraVista(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/usr',[
+    body('Usuario').not().isEmpty().isString(),
+    body('Password').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getUsr(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/usr2',[
+    body('Usuario').not().isEmpty().isString(),
+    body('Password').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getUsr2(connection,body, (data => {
         res.json(data);
     }))
 });

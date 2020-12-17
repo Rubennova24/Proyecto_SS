@@ -28,11 +28,9 @@ export class AsignacionComponent implements OnInit {
             }
         });
       }
-      //console.log(data);
     });
-
-
   }
+
   asignacion(nombre:string, salon:string, horario:string){
     this.bdservice.getCarreraVista(this.clase).subscribe(data =>{
         if(data=="false"){
@@ -41,24 +39,29 @@ export class AsignacionComponent implements OnInit {
           this.nomclase = data[0];
           this.nomclase2 = this.nomclase.Carrera.toLowerCase();
           let num = this.nomclase2.length;
-          
+
           this.nom_list = this.clase.substr(num,this.clase.length);
-          
+
         this.bdservice.asignacion(this.clase,nombre,salon,horario,this.nom_list, this.nomclase.Carrera).subscribe(data =>{
         if(data=="false"){
           alert("error al asignar");
         }else{
-          alert("Maestro Asignado");
+          alert("Maestro asignado");
+          this.asignar(nombre);
         }
     });
         }
     });
-    
+
   }
 
 setClase(clase:string){
   this.clase=clase;
 }
+asignar(nombre:string){
+  this.bdservice.setMaestro(nombre).subscribe(data=>{
 
+});
+}
 
 }

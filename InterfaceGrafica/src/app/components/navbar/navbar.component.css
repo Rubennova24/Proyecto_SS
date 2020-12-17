@@ -1,0 +1,28 @@
+.modal .contenedor{
+  margin-top: 25px;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content:center;
+  font-family: cursive;
+  font-size: 17px;
+}
+.user{
+  border-radius: 5px;
+}
+.pass{
+  border-radius: 5px;
+}
+.btn {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.btn1{
+  margin-bottom: 25px;
+  border-radius: 7px;
+}
+.btn1:hover{
+  background: #B8BDBE;
+}
+
