@@ -9,51 +9,7 @@ module.exports = {
         })
     },
     
-    getCarrerasyMaterias: (connection, body, callback) => {
-        connection.query('CALL `countMaterias`();', (err, results) => {
-            if (err) {
-                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                return;
-            }
-            callback(results);
-        })
-    },
-    getMateriasyCarreras: (connection, body, callback) => {
-        connection.query('CALL `rutina3`(?);',[body.Nombre] ,(err, results) => {
-            if (err) {
-                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                return;
-            }
-            callback(results);
-        })
-    },
-    getMateriasDpto: (connection, body, callback) => {
-        connection.query('CALL `rutina2`(?);',[body.nom_mat], (err, results) => {
-            if (err) {
-                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                return;
-            }
-            callback(results);
-        })
-    },
-    getMateriasC3: (connection, body, callback) => {
-        connection.query('SELECT DISTINCT mat.Nombre FROM materia mat GROUP BY mat.Nombre HAVING COUNT(*)>1', (err, results) => {
-            if (err) {
-                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                return;
-            }
-            callback(results);
-        })
-    },
-    setMaestro: (connection, body, callback) => {
-        connection.query('CALL `asignarJefeDpto`( ? , ? );', [body.jefe,body.nombre_maestro], (err, results) => {
-            if (err) {
-                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                return;
-            }
-            callback(results);
-        })
-    },
+
     getdpto: (connection, body, callback) => {
         connection.query('SELECT * FROM departamento WHERE Codigo IN(SELECT Cdg_dpto FROM dpto_ca WHERE Cdg_ca = ?)ORDER BY Nombre;', [body.IdCarrera], (err, results) => {
             if (err) {
@@ -83,7 +39,7 @@ module.exports = {
         })
     },
     createlista: (connection, body, callback) => {
-        connection.query('CREATE TABLE ?? (num INT NOT NULL AUTO_INCREMENT, Id varchar(8) NOT NULL,Nombre varchar(50),Carrera varchar(8) NOT NULL,Maestro varchar(50),Salon varchar(5),Horario time,CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo), INDEX `id_index` (num));', [body.Materia], (err, results) => {
+        connection.query('CREATE TABLE ?? (num INT NOT NULL AUTO_INCREMENT, Id varchar(8) NOT NULL,Nombre varchar(50),Carrera varchar(8) NOT NULL, Imagen varchar(100),Maestro varchar(50),Salon varchar(5),Horario time,CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo), INDEX `id_index` (num));', [body.Materia], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
@@ -97,6 +53,15 @@ module.exports = {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    setMaestro: (connection, body, callback) => {
+        connection.query('CALL `asignarJefeDpto`( ? , ? );', [body.jefe,body.nombre_maestro], (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 return;
             }
             callback(results);

@@ -4,14 +4,13 @@ import { DepartamentoComponent } from './components/departamento/departamento.co
 import { HomeComponent } from './components/home/home.component';
 import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
-import { ExtraComponent } from './components/extra/extra.component';
+
 
 const routes: Routes = [
   {path: 'inicio', component: HomeComponent},
   {path: 'asignacion', component: AsignacionComponent},
   {path: 'departamento', component:DepartamentoComponent},
   {path: 'lista', component:ListaComponent},
-  {path: 'extras', component:ExtraComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

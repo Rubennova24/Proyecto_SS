@@ -13,37 +13,12 @@ export class BdserviceService {
   getCarreras() {
     return this.httpClient.get('http://localhost:3000/' + 'carreras');
   }
-  getMateriasC3() {
-    return this.httpClient.get('http://localhost:3000/' + 'MateriasC3');
-  }
-  getCarrerasyMaterias() {
-    return this.httpClient.get('http://localhost:3000/' + 'carrerasyMaterias');
-  }
   setSession(jefe:string){
     this.jefeDpto= jefe;
     console.log(this.jefeDpto);
 
   }
-  setMaestro(nom_maestro:string){
-    const body = new HttpParams()
-    .set('jefe', this.jefeDpto)
-    .set('nombre_maestro', nom_maestro);
-    return this.httpClient.post('http://localhost:3000/' + 'asignjefedpto', body.toString(),
-    {
-    headers: new HttpHeaders()
-    .set('Content-Type', 'application/x-www-form-urlencoded')
-    });
-  }
 
-  getMateriasyCarreras(nom_mat: string){
-    const body = new HttpParams()
-    .set('Nombre', nom_mat);
-    return this.httpClient.post('http://localhost:3000/' + 'Materiasycarreras', body.toString(),
-    {
-    headers: new HttpHeaders()
-    .set('Content-Type', 'application/x-www-form-urlencoded')
-    });
-  }
   getDpto(clave: string){
     const body = new HttpParams()
     .set('IdCarrera', clave);
@@ -53,15 +28,7 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-  getMateriasDpto(carrera: string){
-    const body = new HttpParams()
-    .set('nom_mat', carrera);
-    return this.httpClient.post('http://localhost:3000/' + 'materiasdpto', body.toString(),
-    {
-    headers: new HttpHeaders()
-    .set('Content-Type', 'application/x-www-form-urlencoded')
-    });
-  }
+
   getMateria(carr: string,dpto:string){
     const body = new HttpParams()
     .set('IdCarrera', carr)
@@ -101,6 +68,16 @@ export class BdserviceService {
     .set('Carrera', carrera)
     .set('Materia', mat);
     return this.httpClient.post('http://localhost:3000/' + 'inscribirlista', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  setMaestro(nom_maestro:string){
+    const body = new HttpParams()
+    .set('jefe', this.jefeDpto)
+    .set('nombre_maestro', nom_maestro);
+    return this.httpClient.post('http://localhost:3000/' + 'asignjefedpto', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

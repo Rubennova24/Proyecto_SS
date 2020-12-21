@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
-import { ExtraComponent } from './components/extra/extra.component';
+
 
 @NgModule({
   declarations: [
@@ -20,8 +20,7 @@ import { ExtraComponent } from './components/extra/extra.component';
     HomeComponent,
     DepartamentoComponent,
     ListaComponent,
-    AsignacionComponent,
-    ExtraComponent
+    AsignacionComponent
   ],
   imports: [
     BrowserModule,
