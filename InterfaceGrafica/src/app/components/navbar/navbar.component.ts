@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   logeado=false;
   sesion = "incorrecto";
   completo:boolean;
-
+  Dpto:string;
   constructor(private router: Router,private bdserviceService:BdserviceService) {
 
    }
@@ -25,8 +25,11 @@ export class NavbarComponent implements OnInit {
 
   ingresar(){
     this.bdserviceService.getUsr(this.usuario,this.pass).subscribe(data =>{
+      console.log(data);
       if(Object.keys(data).length == 0){
         this.bdserviceService.getUsr2(this.usuario,this.pass).subscribe(data2 =>{
+
+
         if(Object.keys(data2).length == 0){
 
           this.completo=false;
@@ -35,16 +38,19 @@ export class NavbarComponent implements OnInit {
           this.Tipo="Centro";
           this.sesion = "correcto";
           this.completo=true;
-          this.bdserviceService.setSession(this.usuario);
+          this.Dpto = "Centro"
+          this.bdserviceService.setSession(this.usuario, this.Dpto);
         }
-        //this.router.navigate(['/asignacion']);
+
         });
       }else{
         this.logeado=true;
         this.Tipo="Dpto";
         this.sesion = "correcto";
         this.completo=true;
-        this.bdserviceService.setSession(this.usuario);
+        this.Dpto = data[0].Dpto
+        this.bdserviceService.setSession(this.usuario, this.Dpto);
+        this.checkFecha();
       }
     });
 
@@ -63,6 +69,11 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  checkFecha(){
+    let f = new Date();
+    let fechaHoy = f.getDate()+"/"+(f.getMonth()+1);
 
+
+  }
 
 }

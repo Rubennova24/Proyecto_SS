@@ -9,6 +9,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Materia: {{materiacard}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Carrera: {{vista[0].Carrera}} </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Maestro: {{vista[0].Maestro}} <br> Salon: {{vista[0].Salon}} </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Horario: {{vista[0].Horario}}</h6>
                     <p *ngFor="let vist of vista" class="card-text">Nombre: {{vist.Nombre}} - Id: {{vist.Id}}</p>
                 </div>
             </div>
@@ -37,22 +39,27 @@
             </div>
             <div class="modal-body">
                 <label for="id">Id: </label>
-                <input type="text" name="id" id="id" style="margin-left: 12%;" #id>
+                <input type="number" name="id" id="id" style="margin-left: 12%;" required #id>
                 <br>
                 <label for="nombre">Nombre: </label>
-                <input type="text" name="nombre" id="nombre" style="margin-left: 2.5%;" #nombre>
+                <input type="text" name="nombre" id="nombre" style="margin-left: 2.5%;" required #nombre>
                 <br>
                 <label for="carr">Carrera: {{carreracard}}</label>
                 <br>
                 <p style="text-align: center;"><strong>
                   Se necesita subir una imagen ya sea de tu Credencial de la UAA <br>ó <br>Una captura de esiima donde se vea tu situación actual.
                 </strong> </p>
-            <label for="imagen">Imagen: </label>
-            <input type="file" name="imagen" id="imagen" accept="image/x-png,image/gif,image/jpeg" style="margin-left: 2%;"/>
+                <form action="/subirimagen" method="post" enctype="multipart/form-data">
+                  <label for="imagen">Imagen: </label>
+                  <input type="file" name="imagen" id="imagen" required (change)="onFileChange($event)" accept="image/x-png,image/gif,image/jpeg" style="margin-left: 2%;"/>
+                </form>
+
+            <button type="button" class="btn btn-info"  (click)="onUpload(id.value,nombre.value)" *ngIf="!upload">Subir Imagen</button>
             </div>
             <div class="modal-footer">
+
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" (click)="inscripcion(id.value,nombre.value)" data-dismiss="modal">Inscribirme</button>
+                <button type="button" class="btn btn-success" (click)="inscripcion(id.value,nombre.value)" *ngIf="upload" data-dismiss="modal">Inscribirme</button>
             </div>
         </div>
     </div>

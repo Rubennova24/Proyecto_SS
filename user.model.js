@@ -38,8 +38,28 @@ module.exports = {
             callback(results);
         })
     },
+    maestroAsignado: (connection, body, callback) => {
+        connection.query('SELECT DISTINCT (Maestro), Salon, Horario FROM ?? ;', [body.nom_tab], (err, results) => {
+            if (err) {
+                //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+   /* dropTableyView: (connection, body, callback) => {
+        connection.query('DROP VIEW ??; DROP TABLE ??', [body.nom_tab, body.nom_view], (err, results) => {
+            if (err) {
+                //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },*/
     createlista: (connection, body, callback) => {
-        connection.query('CREATE TABLE ?? (num INT NOT NULL AUTO_INCREMENT, Id varchar(8) NOT NULL,Nombre varchar(50),Carrera varchar(8) NOT NULL, Imagen varchar(100),Maestro varchar(50),Salon varchar(5),Horario time,CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo), INDEX `id_index` (num));', [body.Materia], (err, results) => {
+        connection.query('CREATE TABLE ?? ( Id varchar(8) NOT NULL,Nombre varchar(50) NOT NULL,Carrera varchar(8) NOT NULL, Imagen varchar(100) NOT NULL,Maestro varchar(50) NOT NULL,Salon varchar(5) NOT NULL,Horario time NOT NULL, Departamento varchar(8), CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo),CONSTRAINT FOREIGN KEY(Departamento) REFERENCES departamento(Codigo));', [body.Materia], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
@@ -49,7 +69,7 @@ module.exports = {
         })
     },
     inscribirlista: (connection, body, callback) => {
-        connection.query('INSERT INTO ?? (`Id`, `Nombre`, `Carrera`) VALUES ( ? , ? , ? );', [body.Materia, body.Id, body.Nombre, body.Carrera], (err, results) => {
+        connection.query('INSERT INTO ?? (`Id`, `Nombre`, `Carrera`, `Imagen`, `Departamento`) VALUES ( ? , ? , ? , ? , ?);', [body.Materia, body.Id, body.Nombre, body.Carrera, body.Imagen, body.Dpto], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
@@ -58,6 +78,7 @@ module.exports = {
             callback(results);
         })
     },
+    
     setMaestro: (connection, body, callback) => {
         connection.query('CALL `asignarJefeDpto`( ? , ? );', [body.jefe,body.nombre_maestro], (err, results) => {
             if (err) {
@@ -144,7 +165,7 @@ module.exports = {
     },
 
     getVistas2: (connection, body, callback) => {
-        connection.query('SELECT Table_Name FROM INFORMATION_SCHEMA.Tables WHERE table_schema = "cursosespeciales" && table_type="view"', (err, results) => {
+        connection.query('SELECT Table_Name FROM INFORMATION_SCHEMA.Tables WHERE table_schema = "cursosespeciales" && table_type="view" ORDER BY Table_Name', (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");

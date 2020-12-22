@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BdserviceService } from 'src/app/services/bdservice.service';
 
 @Component({
@@ -14,21 +15,21 @@ export class AsignacionComponent implements OnInit {
   nomclase:any;
   nomclase2:string;
   nom_list:string;
-  constructor(private bdservice:BdserviceService) { }
+  vistas:any;
+  loggeado:string;
+  maestros = [];
+  UsrDpto:string;
+  constructor(private bdservice:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
-    this.bdservice.getVistas2().subscribe(data =>{
-      this.grupos = data;
-      for(const nom of this.grupos){
-        this.bdservice.conteoAsignacion(nom.Table_Name).subscribe(num =>{
-            if(num == "false"){
-            }else{
+    this.loggeado = this.bdservice.getSession();
+    if(this.loggeado == ""){
+      this.router.navigate(['/inicio']);
+    }
+    this.UsrDpto = this.bdservice.getUsrDpto();
+    this.visualizacion();
 
-                this.cont.push(num);
-            }
-        });
-      }
-    });
+
   }
 
   asignacion(nombre:string, salon:string, horario:string){
@@ -48,6 +49,10 @@ export class AsignacionComponent implements OnInit {
         }else{
           alert("Maestro asignado");
           this.asignar(nombre);
+          this.cont = [];
+          this.maestros = [];
+          this.visualizacion();
+
         }
     });
         }
@@ -62,6 +67,52 @@ asignar(nombre:string){
   this.bdservice.setMaestro(nombre).subscribe(data=>{
 
 });
+}
+
+ver(nom_tab:string){
+  this.bdservice.VerVista2(nom_tab).subscribe(
+    vista => {
+      if(vista == "false"){
+        alert("algo paso mal viendo la vista");
+
+      }else{
+        this.vistas = vista
+      }
+    });
+}
+
+borrarGrupo(grupo:string){
+
+    let confirmar=confirm("¿Seguro que se quiere eliminar el grupo "+grupo+" ?");
+    if (confirmar){
+      //Aquí pones lo que quieras si da a Aceptar
+    }
+
+
+
+}
+visualizacion(){
+  this.bdservice.getVistas2().subscribe(data =>{
+    this.grupos = data;
+    for(const nom of this.grupos){
+      this.bdservice.maestroAsignado(nom.Table_Name).subscribe(data =>{
+        if(data == "false"){
+
+        }else{
+          this.maestros.push(data);
+        }
+
+    });
+      this.bdservice.conteoAsignacion(nom.Table_Name).subscribe(num =>{
+          if(num == "false"){
+          }else{
+
+              this.cont.push(num);
+          }
+      });
+
+    }
+  });
 }
 
 }

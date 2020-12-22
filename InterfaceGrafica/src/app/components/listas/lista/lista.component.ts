@@ -1,5 +1,6 @@
 import { BdserviceService } from './../../../services/bdservice.service';
 import { Component, OnInit } from '@angular/core';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-lista',
@@ -15,6 +16,10 @@ export class ListaComponent implements OnInit {
   carreras:any;
   texto="";
   tabla:boolean;
+  upload=false;
+  uploadedFiles: Array<File>;
+  path:any;
+  path2:string;
   ngOnInit(): void {
     this.materiacard=this.bdservice.getselecMateria();
     this.carreracard=this.bdservice.getselecCarrera();
@@ -34,7 +39,7 @@ export class ListaComponent implements OnInit {
   creacionVista(){
     this.bdservice.VerCarreraLista(this.materiacard).subscribe(
       data => {
-        console.log(data);
+
         this.carreras = data;
         for( const Carr of this.carreras){
           this.bdservice.CrearVista(this.materiacard, Carr.Carrera).subscribe(
@@ -52,7 +57,6 @@ export class ListaComponent implements OnInit {
                     }else{
                       this.vistas.push(vista);
 
-                      console.log(this.vistas);
                     }
 
                   });
@@ -65,39 +69,67 @@ export class ListaComponent implements OnInit {
       );
   }
   inscripcion(id:string,nombre:string){
-    if(this.tabla){
-      //se inscribe en la lista
-      this.bdservice.inscribirlista(id,nombre,this.carreracard,this.materiacard).subscribe(data=>{
-        if(data=="false"){
-          alert('Algo paso mal en inscribir');
-        }else{
-          alert("inscrito correctamente");
-          this.vistas = [];
-          this.creacionVista();
-        }
-      });
-    }else{
-      //se crea la lista y se inscribe
-      this.bdservice.createlista(this.materiacard).subscribe(data=>{
-        if(data=="false"){
-          alert('Algo paso mal tabla');
-        }else{
-          alert("tabla creada correctamente");
-          //trigger
+    let Dpto = this.bdservice.getSelectDpto();
+      if(this.tabla){
+        //se inscribe en la lista
+        this.bdservice.inscribirlista(id,nombre,this.carreracard,this.materiacard, this.path.path, Dpto).subscribe(data=>{
+          if(data=="false"){
+            alert('No se pudo inscribir o id ya registrado, intenta nuevamente.');
+          }else{
+            alert("inscrito correctamente");
+            this.vistas = [];
+            this.creacionVista();
+          }
+        });
+      }else{
+        //se crea la lista y se inscribe
+        this.bdservice.createlista(this.materiacard).subscribe(data=>{
+          if(data=="false"){
+            alert('Algo paso mal tabla');
+          }else{
+            alert("tabla creada correctamente");
 
-        }
-      });
-      this.bdservice.inscribirlista(id,nombre,this.carreracard,this.materiacard).subscribe(data=>{
-        if(data=="false"){
-          alert('Algo paso mal xdxd');
-        }else{
-          alert("inscrito correctamente");
-          this.vistas=[];
-          this.tabla=true;
-          this.creacionVista();
-        }
-      });
+
+          }
+        });
+        this.bdservice.inscribirlista(id,nombre,this.carreracard,this.materiacard, this.path.path, Dpto).subscribe(data=>{
+          if(data=="false"){
+            alert('No se pudo inscribir o id ya registrado, intenta nuevamente.');
+          }else{
+            alert("inscrito correctamente");
+            this.vistas=[];
+            this.tabla=true;
+            this.creacionVista();
+          }
+        });
+      }
+
+
+  }
+  onUpload(id:string,nombre:string){
+    if(id != "" && nombre != ""){
+      let formData = new FormData();
+      formData.append("uploads[]",this.uploadedFiles[0], this.uploadedFiles[0].name);
+    let nombre_arch = this.uploadedFiles[0].name
+
+    this.bdservice.uploadFile(formData, nombre_arch).subscribe( res =>{
+      this.upload=true;
+      this.path = res
+      this.path.path = this.path.path.replace("public\\subidas\\","");
+
+
+    });
+    }else{
+      alert("Favor de completar todos los datos.");
     }
+
+
+  }
+  onFileChange(e){
+
+    this.uploadedFiles = e.target.files;
+
+
   }
 
 }

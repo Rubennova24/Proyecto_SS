@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const multipart = require('connect-multiparty');
 const connection = require("./conexion");
 const cors = require('cors');
 
@@ -7,9 +8,21 @@ const cors = require('cors');
  const rutas=require('./routes/rutas');
  app.use(cors());
 
- app.use(bodyParser.urlencoded({extended:false}));
+ app.use(bodyParser.urlencoded({extended:true}));
  app.use(bodyParser.json());
  app.use('/',rutas);
+ var publicDir = require('path').join(__dirname,'/public'); 
+ app.use(express.static(publicDir)); 
+ const multiPartMiddleware = multipart({
+   uploadDir: './public/subidas'
+ });
+ app.post('/subirimagen', multiPartMiddleware, (req, res) =>{
+    // console.log(req.files.uploads[0].path);
+        res.json({
+            'message':'Se subio correctamente',
+            'path': req.files.uploads[0].path
+        });
+ });
 
  connection.connect((err, res) => {
     if(err){

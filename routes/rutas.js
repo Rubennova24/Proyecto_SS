@@ -17,6 +17,7 @@ router.get('/carreras', (req, res) => {
 });
 
 
+
 router.get('/asignacion', (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -28,6 +29,34 @@ router.get('/asignacion', (req, res) => {
         res.json(data);
     }))
 });
+
+router.post('/maestroAsignado', [
+    body('nom_tab').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.maestroAsignado(connection, body, (data => {
+        res.json(data);
+    }))
+});
+/*router.post('/dropTableyView', [
+    body('nom_tab').not().isEmpty().isString(),
+    body('nom_view').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.dropTableyView(connection, body, (data => {
+        
+    }))
+});*/
 
 router.post('/dpto', [
     body('IdCarrera').not().isEmpty().isString(),
@@ -100,6 +129,8 @@ router.post('/inscribirlista', [
     body('Nombre').not().isEmpty().isString(),
     body('Carrera').not().isEmpty().isString(),
     body('Materia').not().isEmpty().isString(),
+    body('Imagen').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

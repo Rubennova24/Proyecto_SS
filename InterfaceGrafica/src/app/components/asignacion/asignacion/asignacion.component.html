@@ -3,12 +3,35 @@
     <div class="container">
         <div class="row">
             <div *ngFor="let grupo of grupos;let j = index"  class="card col-md-4" style="width: 18rem; margin-left: 2%;">
+              <div class="card-header">
+
+                <button type="button" class="close" aria-label="Close" (click)="borrarGrupo(grupo.Table_Name)">
+                  <span aria-hidden="true" style="color: red;">&times;</span>
+                </button>
+              </div>
                 <div class="card-body">
                     <h5 class="card-title">Materia: {{grupo.Table_Name}}</h5>
+                    <div *ngFor="let dato of maestros[j]">
+                      <h6>Maestro: {{dato.Maestro}}</h6>
+                      <h6>Salon: {{dato.Salon}}</h6>
+                      <h6>Horario: {{dato.Horario}}</h6>
+                    </div>
+
                     <h6>#Alumnos: {{cont[j]}} </h6>
-                    <button type="button" class="btn btn-success" data-toggle="modal" (click)="setClase(grupo.Table_Name)" data-target="#staticBackdrop" style="margin-left: 45%; margin-top: 2%;;">
-                      Asignar
-                    </button>
+                    <div class="row">
+                      <div class="col">
+                        <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#staticBackdrop2" (click)="ver(grupo.Table_Name)" style="margin-left: 25%; margin-top: 2%;">
+                          Ver
+                        </button>
+                      </div>
+                      <div class="col">
+                        <button type="button" class="btn btn-success" data-toggle="modal" (click)="setClase(grupo.Table_Name)" data-target="#staticBackdrop" style="margin-top: 2%;">
+                          Asignar
+                        </button>
+                      </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -21,7 +44,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Inscripción</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Asignación de Maestro</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -44,4 +67,42 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Lista de Alumnos</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Carrera</th>
+                   <th scope="col">Fotografia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vista of vistas">
+                    <td> {{vista.Id}}</td>
+                    <td>{{vista.Nombre}}</td>
+                    <td>{{vista.Carrera}}</td>
+                    <td><img style="width: 150px; height: 100px;" src="http://localhost:3000/subidas/{{vista.Imagen}}" alt=""></td>
+                  </tr>
+
+                </tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+          </div>
+      </div>
+  </div>
 </div>

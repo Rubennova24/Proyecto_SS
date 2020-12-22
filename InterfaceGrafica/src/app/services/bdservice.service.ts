@@ -8,15 +8,26 @@ export class BdserviceService {
   carrera:string;
   departamento:string;
   materia:string;
-  jefeDpto:string;
+  jefeDpto:string = "";
+  Dpto:string = "";
   constructor(private httpClient: HttpClient) { }
+  getSession(){
+    return this.jefeDpto;
+  }
+  getUsrDpto(){
+    return this.Dpto;
+  }
+  uploadFile(formData, nombre_arch:string){
+
+    let urlApi = 'http:///localhost:3000/subirimagen';
+    return this.httpClient.post(urlApi, formData);
+  }
   getCarreras() {
     return this.httpClient.get('http://localhost:3000/' + 'carreras');
   }
-  setSession(jefe:string){
+  setSession(jefe:string, Dpto:string){
     this.jefeDpto= jefe;
-    console.log(this.jefeDpto);
-
+    this.Dpto = Dpto;
   }
 
   getDpto(clave: string){
@@ -28,6 +39,29 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  maestroAsignado(nom_tab: string){
+    const body = new HttpParams()
+    .set('nom_tab', nom_tab);
+    return this.httpClient.post('http://localhost:3000/' + 'maestroAsignado', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  /*dropTableyView(Materia: string, Carrera: string){
+    let mat = Materia.replace(/ /g,"");
+    let anidado = Carrera+mat;
+    const body = new HttpParams()
+    .set('Nombre', anidado)
+    .set('Materia', mat)
+    .set('Carrera', Carrera);
+
+    return this.httpClient.post('http://localhost:3000/' + 'CrearVista', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }*/
 
   getMateria(carr: string,dpto:string){
     const body = new HttpParams()
@@ -60,13 +94,15 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-  inscribirlista(id:string,nombre:string,carrera:string,materia:string){
+  inscribirlista(id:string,nombre:string,carrera:string,materia:string, imagen:string , Dpto:string){
     let mat = materia.replace(/ /g,"");
     const body = new HttpParams()
     .set('Id', id)
     .set('Nombre', nombre)
     .set('Carrera', carrera)
-    .set('Materia', mat);
+    .set('Materia', mat)
+    .set('Imagen', imagen)
+    .set('Dpto', Dpto);
     return this.httpClient.post('http://localhost:3000/' + 'inscribirlista', body.toString(),
     {
     headers: new HttpHeaders()
@@ -87,6 +123,9 @@ export class BdserviceService {
     this.carrera=carr;
     this.departamento=dpto;
     this.materia=mat;
+  }
+  getSelectDpto(){
+    return this.departamento;
   }
   getselecMateria(){
     return this.materia;
