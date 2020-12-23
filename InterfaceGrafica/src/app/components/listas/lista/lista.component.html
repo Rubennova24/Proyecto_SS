@@ -1,6 +1,10 @@
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop" style="margin-left: 45%; margin-top: 2%;;">
+<button *ngIf="inscripcionposible; else fechas" type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop" style="margin-left: 45%; margin-top: 2%;;">
   Inscribirme
 </button>
+<ng-template #fechas>
+    <h2 style="text-align: center;">Las Fechas de Inscripción son del {{fechainicio}} al {{fechafinal}}</h2>
+</ng-template>
+
 <br><br>
 <div *ngIf="tabla; else vacio">
     <div class="container">

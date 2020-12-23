@@ -20,9 +20,15 @@ export class ListaComponent implements OnInit {
   uploadedFiles: Array<File>;
   path:any;
   path2:string;
+  inscripcionposible:boolean;
+  fechainicio:string;
+  fechafinal:string;
   ngOnInit(): void {
     this.materiacard=this.bdservice.getselecMateria();
     this.carreracard=this.bdservice.getselecCarrera();
+    this.inscripcionposible=this.bdservice.esposibleinscribir;
+    this.fechainicio=this.bdservice.getFechaInicio();
+    this.fechafinal=this.bdservice.getFechaFinal();
     this.bdservice.getlista(this.materiacard).subscribe(data=>{
 
       if(Object.keys(data).length != 0){

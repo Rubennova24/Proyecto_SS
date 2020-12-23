@@ -311,5 +311,14 @@ module.exports = {
             }
             callback(results);
         })
-    }
+    },
+    getFinscripciones: (connection, body, callback) => {
+        connection.query('SELECT * FROM fecha_inscripciones;', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
 }

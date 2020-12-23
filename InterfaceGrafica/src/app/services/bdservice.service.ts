@@ -10,7 +10,10 @@ export class BdserviceService {
   materia:string;
   jefeDpto:string = "";
   Dpto:string = "";
-  tipo:string
+  tipo:string;
+  fechainicio:string;
+  fechafinal:string;
+  esposibleinscribir:boolean;
   constructor(private httpClient: HttpClient) { }
   getSession(){
     return this.jefeDpto;
@@ -314,6 +317,19 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-
+  getFinsciripciones() {
+    return this.httpClient.get('http://localhost:3000/' + 'fechainscripcion');
+  }
+  setPosibleInscribir(inscribir:boolean,inicio:string,final:string){
+    this.esposibleinscribir=inscribir;
+    this.fechainicio=inicio;
+    this.fechafinal=final
+  }
+  getFechaInicio(){
+    return this.fechainicio;
+  }
+  getFechaFinal(){
+    return this.fechafinal;
+  }
 
 }
