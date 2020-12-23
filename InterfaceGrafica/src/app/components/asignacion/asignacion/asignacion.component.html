@@ -1,8 +1,8 @@
 <br><br>
 
-    <div class="container">
+    <div class="container" *ngIf="existengrupos; else vacio">
         <div class="row">
-            <div *ngFor="let grupo of grupos;let j = index"  class="card col-md-4" style="width: 18rem; margin-left: 2%;">
+            <div *ngFor="let grupo of grupos2;let j = index"  class="card col-md-4" style="width: 18rem; margin-left: 2%;">
               <div class="card-header">
 
                 <button type="button" class="close" aria-label="Close" (click)="borrarGrupo(grupo.Table_Name)">
@@ -10,7 +10,7 @@
                 </button>
               </div>
                 <div class="card-body">
-                    <h5 class="card-title">Materia: {{grupo.Table_Name}}</h5>
+                    <h5 class="card-title">Materia: {{grupo}}</h5>
                     <div *ngFor="let dato of maestros[j]">
                       <h6>Maestro: {{dato.Maestro}}</h6>
                       <h6>Salon: {{dato.Salon}}</h6>
@@ -20,12 +20,12 @@
                     <h6>#Alumnos: {{cont[j]}} </h6>
                     <div class="row">
                       <div class="col">
-                        <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#staticBackdrop2" (click)="ver(grupo.Table_Name)" style="margin-left: 25%; margin-top: 2%;">
+                        <button type="button" class="btn btn-info" data-toggle="modal"  data-target="#staticBackdrop2" (click)="ver(grupo)" style="margin-left: 25%; margin-top: 2%;">
                           Ver
                         </button>
                       </div>
                       <div class="col">
-                        <button type="button" class="btn btn-success" data-toggle="modal" (click)="setClase(grupo.Table_Name)" data-target="#staticBackdrop" style="margin-top: 2%;">
+                        <button type="button" class="btn btn-success" data-toggle="modal" (click)="setClase(grupo)" data-target="#staticBackdrop" style="margin-top: 2%;">
                           Asignar
                         </button>
                       </div>
@@ -36,6 +36,9 @@
             </div>
         </div>
     </div>
+<ng-template #vacio>
+  <h1 style="text-align: center;">No Hay Grupos Creados Correspondientes.</h1>
+</ng-template>
 
 <br><br>
 

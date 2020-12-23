@@ -10,12 +10,16 @@ export class BdserviceService {
   materia:string;
   jefeDpto:string = "";
   Dpto:string = "";
+  tipo:string
   constructor(private httpClient: HttpClient) { }
   getSession(){
     return this.jefeDpto;
   }
   getUsrDpto(){
     return this.Dpto;
+  }
+  getTipo(){
+    return this.tipo;
   }
   uploadFile(formData, nombre_arch:string){
 
@@ -25,9 +29,10 @@ export class BdserviceService {
   getCarreras() {
     return this.httpClient.get('http://localhost:3000/' + 'carreras');
   }
-  setSession(jefe:string, Dpto:string){
+  setSession(jefe:string, Dpto:string,tipo:string){
     this.jefeDpto= jefe;
     this.Dpto = Dpto;
+    this.tipo=tipo;
   }
 
   getDpto(clave: string){
@@ -43,6 +48,16 @@ export class BdserviceService {
     const body = new HttpParams()
     .set('nom_tab', nom_tab);
     return this.httpClient.post('http://localhost:3000/' + 'maestroAsignado', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  checkDpto(nom_tab: string,Dpto:string){
+    const body = new HttpParams()
+    .set('nom_tab', nom_tab)
+    .set('Dpto', Dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'checkDpto', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

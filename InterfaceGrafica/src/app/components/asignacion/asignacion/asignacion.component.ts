@@ -8,7 +8,9 @@ import { BdserviceService } from 'src/app/services/bdservice.service';
   styleUrls: ['./asignacion.component.css']
 })
 export class AsignacionComponent implements OnInit {
-  grupos: any;
+  grupos2=[];
+  grupos:any;
+  allgrupos:any;
   cont = [];
   tabla:boolean;
   clase:string;
@@ -19,6 +21,7 @@ export class AsignacionComponent implements OnInit {
   loggeado:string;
   maestros = [];
   UsrDpto:string;
+  existengrupos=false;
   constructor(private bdservice:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
@@ -51,6 +54,7 @@ export class AsignacionComponent implements OnInit {
           this.asignar(nombre);
           this.cont = [];
           this.maestros = [];
+          this.grupos2=[]
           this.visualizacion();
 
         }
@@ -92,27 +96,60 @@ borrarGrupo(grupo:string){
 
 }
 visualizacion(){
-  this.bdservice.getVistas2().subscribe(data =>{
-    this.grupos = data;
-    for(const nom of this.grupos){
-      this.bdservice.maestroAsignado(nom.Table_Name).subscribe(data =>{
-        if(data == "false"){
-
-        }else{
-          this.maestros.push(data);
-        }
-
+  //Aqui va ir un if para si es jefe dpto o si es decano
+  let tipo=this.bdservice.getTipo();
+  if(tipo=="Dpto"){
+    this.bdservice.getVistas2().subscribe(data=>{
+      if(Object.keys(data).length != 0){
+      this.allgrupos=data;
+      for(const nom of this.allgrupos){
+        this.bdservice.checkDpto(nom.Table_Name,this.UsrDpto).subscribe(data2=>{
+          if(Object.keys(data2).length != 0){
+            this.existengrupos=true;
+            this.grupos2.push(nom.Table_Name);
+            this.bdservice.maestroAsignado(nom.Table_Name).subscribe(data3 =>{
+              if(data3 == "false"){
+              }else{
+                this.maestros.push(data3);
+              }
+          });
+            this.bdservice.conteoAsignacion(nom.Table_Name).subscribe(num =>{
+              
+                if(num == "false"){
+                }else{
+                    this.cont.push(num);
+                }
+            });
+          }
+        });
+      }
+    }//end if de si hay grupos
     });
-      this.bdservice.conteoAsignacion(nom.Table_Name).subscribe(num =>{
+  }else if(tipo=="Centro"){
+  this.bdservice.getVistas2().subscribe(datacentro =>{
+    if(Object.keys(datacentro).length != 0){
+      this.allgrupos = datacentro;
+      for(const nom of this.allgrupos){
+        this.grupos2.push(nom.Table_Name);
+        this.existengrupos=true;
+        this.bdservice.maestroAsignado(nom.Table_Name).subscribe(data =>{
+          if(data == "false"){
+
+          }else{
+            this.maestros.push(data);
+          }
+        });
+        this.bdservice.conteoAsignacion(nom.Table_Name).subscribe(num =>{
           if(num == "false"){
           }else{
-
               this.cont.push(num);
           }
-      });
+        });
 
+      }
     }
   });
+  }//end else if
 }
 
 }

@@ -43,6 +43,20 @@ router.post('/maestroAsignado', [
         res.json(data);
     }))
 });
+router.post('/checkDpto', [
+    body('nom_tab').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.checkDpto(connection, body, (data => {
+        res.json(data);
+    }))
+});
 /*router.post('/dropTableyView', [
     body('nom_tab').not().isEmpty().isString(),
     body('nom_view').not().isEmpty().isString(),

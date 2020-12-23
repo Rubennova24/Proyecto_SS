@@ -48,6 +48,16 @@ module.exports = {
             callback(results);
         })
     },
+    checkDpto: (connection, body, callback) => {
+        connection.query('SELECT DISTINCT (Departamento) FROM ?? WHERE Departamento = ? ;', [body.nom_tab,body.Dpto], (err, results) => {
+            if (err) {
+                //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
    /* dropTableyView: (connection, body, callback) => {
         connection.query('DROP VIEW ??; DROP TABLE ??', [body.nom_tab, body.nom_view], (err, results) => {
             if (err) {

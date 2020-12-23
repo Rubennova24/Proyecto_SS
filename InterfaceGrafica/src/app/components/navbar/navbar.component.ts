@@ -25,7 +25,6 @@ export class NavbarComponent implements OnInit {
 
   ingresar(){
     this.bdserviceService.getUsr(this.usuario,this.pass).subscribe(data =>{
-      console.log(data);
       if(Object.keys(data).length == 0){
         this.bdserviceService.getUsr2(this.usuario,this.pass).subscribe(data2 =>{
 
@@ -39,7 +38,7 @@ export class NavbarComponent implements OnInit {
           this.sesion = "correcto";
           this.completo=true;
           this.Dpto = "Centro"
-          this.bdserviceService.setSession(this.usuario, this.Dpto);
+          this.bdserviceService.setSession(this.usuario, this.Dpto,this.Tipo);
         }
 
         });
@@ -49,7 +48,7 @@ export class NavbarComponent implements OnInit {
         this.sesion = "correcto";
         this.completo=true;
         this.Dpto = data[0].Dpto
-        this.bdserviceService.setSession(this.usuario, this.Dpto);
+        this.bdserviceService.setSession(this.usuario, this.Dpto,this.Tipo);
         this.checkFecha();
       }
     });
