@@ -98,38 +98,31 @@ borrarGrupo(grupo:string){
           alert("error al conseguir carrera");
         }else{
           this.nomCarrera = data[0].Carrera;
-
-
           this.nomclase2 = this.nomCarrera
           let num = this.nomclase2.length;
           this.nom_list2 = grupo.substr(num,grupo.length);
-
           this.bdservice.dropView(grupo).subscribe(data2 =>{
             console.log(data2);
             if(data == "false"){
               alert("Error al borrar grupo "+grupo);
             }else{
-              this.bdservice.dropTableInfo(this.nom_list2,this.nomCarrera).subscribe(data3 =>{
-                console.log(data3);
-                if(data == "false"){
-                  alert("Error al borrar grupo "+grupo);
-                }else{
-                  this.cont = [];
-                  this.maestros = [];
-                  this.grupos2=[]
-                  this.visualizacion();
-                }
-              });
-
             }
-
           });
-
-
-
+          this.bdservice.dropTableInfo(this.nom_list2,this.nomCarrera).subscribe(data3 =>{
+            console.log(data3);
+            if(data == "false"){
+              alert("Error al borrar grupo "+grupo);
+            }else{
+              
+            }
+          });
+          this.cont = [];
+              this.maestros = [];
+              this.grupos2=[];
+              this.visualizacion();
         }
     });
-
+    
     }
 
 
@@ -137,6 +130,7 @@ borrarGrupo(grupo:string){
 }
 visualizacion(){
   //Aqui va ir un if para si es jefe dpto o si es decano
+  this.existengrupos=false;
   let tipo=this.bdservice.getTipo();
   if(tipo=="Dpto"){
     this.bdservice.getVistas2().subscribe(data=>{
