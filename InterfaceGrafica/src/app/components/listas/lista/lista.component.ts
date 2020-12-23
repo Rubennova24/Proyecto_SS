@@ -24,15 +24,23 @@ export class ListaComponent implements OnInit {
     this.materiacard=this.bdservice.getselecMateria();
     this.carreracard=this.bdservice.getselecCarrera();
     this.bdservice.getlista(this.materiacard).subscribe(data=>{
-      if(data=="false"){
-        this.texto="No se han inscrito alumnos";
-        this.tabla=false;
+
+      if(Object.keys(data).length != 0){
+        if(data == "false"){
+          this.texto="No se han inscrito alumnos";
+          this.tabla=false;
+        }else{
+          this.tabla=true;
+          this.creacionVista();
+        }
+
       }else{
-        this.tabla=true;
-        this.creacionVista();
-        //data ya tiene la lista de los alumnos inscritos pero son de todas las carreras, de aqui lo mandas a crear o ver las vistas
-        //acordarse de si ya exite volver a consultar la vista, sino es crearla
+          this.texto="No se han inscrito alumnos";
+          this.tabla=false;
+
+
       }
+
     });
   }
 

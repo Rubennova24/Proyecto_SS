@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
+import { JefesComponent } from './components/jefes/jefes.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AsignacionComponent } from './components/asignacion/asignacion/asignaci
     HomeComponent,
     DepartamentoComponent,
     ListaComponent,
-    AsignacionComponent
+    AsignacionComponent,
+    JefesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+.main{
+  margin: 20px;
+}
+.boton{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 15px;
+}

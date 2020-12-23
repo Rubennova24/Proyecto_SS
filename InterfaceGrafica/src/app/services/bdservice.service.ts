@@ -63,20 +63,27 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-  /*dropTableyView(Materia: string, Carrera: string){
-    let mat = Materia.replace(/ /g,"");
-    let anidado = Carrera+mat;
-    const body = new HttpParams()
-    .set('Nombre', anidado)
-    .set('Materia', mat)
-    .set('Carrera', Carrera);
+  dropTableInfo( lista: string, nomCarrera:string){
 
-    return this.httpClient.post('http://localhost:3000/' + 'CrearVista', body.toString(),
+    const body = new HttpParams()
+    .set('Lista', lista)
+    .set('nomCarrera', nomCarrera);
+    return this.httpClient.post('http://localhost:3000/' + 'dropTableInfo', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
-  }*/
+  }
+  dropView(grupo: string){
+
+    const body = new HttpParams()
+    .set('Vista', grupo);
+    return this.httpClient.post('http://localhost:3000/' + 'dropView', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
 
   getMateria(carr: string,dpto:string){
     const body = new HttpParams()
@@ -249,6 +256,59 @@ export class BdserviceService {
     .set('Usuario', usr)
     .set('Password', pass);
     return this.httpClient.post('http://localhost:3000/' + 'usr2', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getJefes(){
+    return this.httpClient.get('http://localhost:3000/' + 'jefes');
+  }
+  getDptosJefes(){
+    return this.httpClient.get('http://localhost:3000/' + 'dptos_jefes');
+  }
+  getJefes_centro(){
+    return this.httpClient.get('http://localhost:3000/' + 'jefes_centro');
+  }
+  getJefe(id: string){
+    const body = new HttpParams()
+    .set('Id', id);
+    return this.httpClient.post('http://localhost:3000/' + 'jefe', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  registrar(id: string,nom: string,pass: string,dpto: string,jefe:string){
+    const body = new HttpParams()
+    .set('Id', id)
+    .set('Nombre', nom)
+    .set('Contrasena', pass)
+    .set('JefeCentro', jefe)
+    .set('Dpto', dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'registrar', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  editar(id: string, n_nom: string, n_pass: string, n_dpto: string, n_jefe:string){
+    const body = new HttpParams()
+    .set('Id', id)
+    .set('Nombre', n_nom)
+    .set('Contrasena', n_pass)
+    .set('JefeCentro', n_jefe)
+    .set('Dpto', n_dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'editar', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  eliminar(id: string){
+    const body = new HttpParams()
+    .set('Id', id);
+    return this.httpClient.post('http://localhost:3000/' + 'eliminar', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

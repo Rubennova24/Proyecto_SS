@@ -32,9 +32,12 @@ module.exports = {
         connection.query('SELECT * FROM ?? ;', [body.Materia], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                
                 callback("false");
+                
                 return;
             }
+            
             callback(results);
         })
     },
@@ -58,16 +61,28 @@ module.exports = {
             callback(results);
         })
     },
-   /* dropTableyView: (connection, body, callback) => {
-        connection.query('DROP VIEW ??; DROP TABLE ??', [body.nom_tab, body.nom_view], (err, results) => {
-            if (err) {
-                //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                callback("false");
-                return;
-            }
-            callback(results);
-        })
-    },*/
+    dropView: (connection, body, callback) => {
+        connection.query('DROP VIEW ??;',
+            [body.Vista] ,(err, result) =>{
+                    if (err) {
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    callback("false");
+                    return;
+                    }
+                    callback(result);
+                    });
+    },
+    dropTableInfo: (connection, body, callback) => {
+        connection.query('DELETE FROM ?? WHERE carrera = ? ;',
+            [body.Lista, body.nomCarrera],(err, result) =>{
+                if (err) {
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    callback("false");
+                    return;
+                    }
+                    callback(result);
+                    }); 
+    },
     createlista: (connection, body, callback) => {
         connection.query('CREATE TABLE ?? ( Id varchar(8) NOT NULL,Nombre varchar(50) NOT NULL,Carrera varchar(8) NOT NULL, Imagen varchar(100) NOT NULL,Maestro varchar(50) NOT NULL,Salon varchar(5) NOT NULL,Horario time NOT NULL, Departamento varchar(8), CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo),CONSTRAINT FOREIGN KEY(Departamento) REFERENCES departamento(Codigo));', [body.Materia], (err, results) => {
             if (err) {
@@ -222,6 +237,76 @@ module.exports = {
             if(err){
                 callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+
+    getJefe: (connection, body, callback) => {
+        connection.query('SELECT * FROM jefe_dpto WHERE Id = ?',[body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    registrar: (connection, body, callback) => {
+        connection.query('INSERT INTO jefe_dpto (`id`, `nombre`, `contrasena`, `jefecentro`, `dpto`) VALUES (? , ? , ? , ?, ? );',
+        [body.Id, body.Nombre, body.Contrasena,body.JefeCentro, body.Dpto], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    editar: (connection, body, callback) => {
+        connection.query('UPDATE jefe_dpto SET `nombre` = ? , `contrasena` = ? , `jefecentro` = ?, `dpto` = ?  WHERE `id` = ? ;',
+        [body.Nombre, body.Contrasena, body.JefeCentro, body.Dpto, body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    eliminar: (connection, body, callback) => {
+        connection.query('DELETE FROM jefe_dpto WHERE id = ? ',[body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    getJefes: (connection, body, callback) => {
+        connection.query('SELECT dpto.Id,Dpto.Nombre,Dpto.Contrasena, Dpto.Dpto, Dpto.JefeCentro ,Centro.Nombre Jefe,dep.Nombre Departamento FROM jefe_dpto dpto,Jefe_centro Centro, departamento dep WHERE Dpto.JefeCentro=Centro.Id && Dpto.Dpto=dep.Codigo', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getJefes_Centro: (connection, body, callback) => {
+        connection.query('SELECT * FROM jefe_centro ORDER BY Nombre;', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getDptos: (connection, body, callback) => {
+        connection.query('SELECT * FROM departamento ORDER BY Nombre;', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 return;
             }
             callback(results);

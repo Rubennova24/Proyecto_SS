@@ -14,7 +14,7 @@
   border-radius: 5px;
 }
 .btn {
-  display: flex;
+  display: flex-end;
   flex-flow: row wrap;
   justify-content: center;
 }

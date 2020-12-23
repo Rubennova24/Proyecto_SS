@@ -4,6 +4,7 @@ import { DepartamentoComponent } from './components/departamento/departamento.co
 import { HomeComponent } from './components/home/home.component';
 import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
+import { JefesComponent } from './components/jefes/jefes.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'asignacion', component: AsignacionComponent},
   {path: 'departamento', component:DepartamentoComponent},
   {path: 'lista', component:ListaComponent},
+  {path: 'jefes', component:JefesComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

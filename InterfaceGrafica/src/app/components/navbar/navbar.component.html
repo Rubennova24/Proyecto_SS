@@ -18,8 +18,11 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/asignacion" *ngIf="Tipo=='Centro' || Tipo=='Dpto'">Asignación</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/jefes" *ngIf="Tipo=='Centro'">Jefes</a>
+      </li>
     </ul>
-    <ul class="navbar-nav justify-content-end" style="margin-left: 65%;">
+    <ul class="navbar-nav justify-content-end" style="margin-left: 55%;">
 
       <button class="btn btn-outline-danger" href=""  *ngIf="logeado" (click)="cerrarSesion()">Cerrar Sesion</button>
       <button class="btn btn-outline-info " href="" data-toggle="modal" data-target="#exampleModalCentered"  *ngIf="!logeado">Iniciar Sesión</button>

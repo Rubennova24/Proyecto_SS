@@ -57,9 +57,9 @@ router.post('/checkDpto', [
         res.json(data);
     }))
 });
-/*router.post('/dropTableyView', [
-    body('nom_tab').not().isEmpty().isString(),
-    body('nom_view').not().isEmpty().isString(),
+router.post('/dropTableInfo', [
+    body('Lista').not().isEmpty().isString(),
+    body('nomCarrera').not().isEmpty().isString(),
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -67,10 +67,24 @@ router.post('/checkDpto', [
         return
     }
     let body = req.body;
-    user.dropTableyView(connection, body, (data => {
+    user.dropTableInfo(connection, body, (data => {
         
     }))
-});*/
+});
+
+router.post('/dropView', [
+    body('Vista').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.dropView(connection, body, (data => {
+        
+    }))
+});
 
 router.post('/dpto', [
     body('IdCarrera').not().isEmpty().isString(),
@@ -281,6 +295,98 @@ router.post('/usr2',[
     }
     let body = req.body;
     user.getUsr2(connection,body, (data => {
+        res.json(data);
+    }))
+});
+
+router.get('/dptos_jefes', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getDptos(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/jefes_centro', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getJefes_Centro(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/jefes', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getJefes(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/jefe',[
+    body('Id').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getJefe(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/registrar', [
+    body('Id').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('Contrasena').not().isEmpty().isString(),
+    body('JefeCentro').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.registrar(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/editar', [
+    body('Nombre').not().isEmpty().isString(),
+    body('Contrasena').not().isEmpty().isString(),
+    body('JefeCentro').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+    body('Id').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.editar(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/eliminar',[
+    body('Id').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.eliminar(connection,body, (data => {
         res.json(data);
     }))
 });

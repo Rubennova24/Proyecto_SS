@@ -16,7 +16,9 @@ export class AsignacionComponent implements OnInit {
   clase:string;
   nomclase:any;
   nomclase2:string;
+  nomCarrera:string;
   nom_list:string;
+  nom_list2:string;
   vistas:any;
   loggeado:string;
   maestros = [];
@@ -87,9 +89,47 @@ ver(nom_tab:string){
 
 borrarGrupo(grupo:string){
 
+
     let confirmar=confirm("¿Seguro que se quiere eliminar el grupo "+grupo+" ?");
     if (confirmar){
       //Aquí pones lo que quieras si da a Aceptar
+      this.bdservice.getCarreraVista(grupo).subscribe(data =>{
+        if(data=="false"){
+          alert("error al conseguir carrera");
+        }else{
+          this.nomCarrera = data[0].Carrera;
+
+
+          this.nomclase2 = this.nomCarrera
+          let num = this.nomclase2.length;
+          this.nom_list2 = grupo.substr(num,grupo.length);
+
+          this.bdservice.dropView(grupo).subscribe(data2 =>{
+            console.log(data2);
+            if(data == "false"){
+              alert("Error al borrar grupo "+grupo);
+            }else{
+              this.bdservice.dropTableInfo(this.nom_list2,this.nomCarrera).subscribe(data3 =>{
+                console.log(data3);
+                if(data == "false"){
+                  alert("Error al borrar grupo "+grupo);
+                }else{
+                  this.cont = [];
+                  this.maestros = [];
+                  this.grupos2=[]
+                  this.visualizacion();
+                }
+              });
+
+            }
+
+          });
+
+
+
+        }
+    });
+
     }
 
 
@@ -114,7 +154,7 @@ visualizacion(){
               }
           });
             this.bdservice.conteoAsignacion(nom.Table_Name).subscribe(num =>{
-              
+
                 if(num == "false"){
                 }else{
                     this.cont.push(num);
