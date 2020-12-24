@@ -85,6 +85,19 @@ router.post('/dropView', [
         
     }))
 });
+router.post('/droptable', [
+    body('Tabla').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.dropTable(connection, body, (data => {
+        
+    }))
+});
 
 router.post('/dpto', [
     body('IdCarrera').not().isEmpty().isString(),
@@ -398,6 +411,39 @@ router.get('/fechainscripcion', (req, res) => {
     }
     let body = req.body;
     user.getFinscripciones(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/gettablas', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getTablas(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/deletemaestros', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.deletemaestros(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/deleteasignadospor', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.deleteasignadospor(connection, body, (data => {
         res.json(data);
     }))
 });

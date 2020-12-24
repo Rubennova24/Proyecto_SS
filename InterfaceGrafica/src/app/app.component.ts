@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
       let hoycompleto=hoy.getDate()+"/"+(hoy.getMonth()+1)+"/"+hoy.getFullYear();
       let cierrecompleto=cierre.getDate()+"/"+(cierre.getMonth()+1)+"/"+cierre.getFullYear();
       
-      if(hoycompleto==cierrecompleto){
+      if(hoy>=cierre){
         this.borrartodo();
       }
       if(inicio<=hoy && final>=hoy){
@@ -36,7 +36,9 @@ export class AppComponent implements OnInit{
     });
   }
   borrartodo(){
-
+    this.bdservice.totaltablas().subscribe(data=>{
+      this.bdservice.borrar(data);
+    });
   }
 
 }

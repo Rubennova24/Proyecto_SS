@@ -72,9 +72,42 @@ module.exports = {
                     callback(result);
                     });
     },
+    dropTable: (connection, body, callback) => {
+        connection.query('DROP TABLE ?? ;',
+            [body.Tabla] ,(err, result) =>{
+                    if (err) {
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    
+                    callback("false");
+                    return;
+                    }
+                   
+                    callback(result);
+                    });
+    },
     dropTableInfo: (connection, body, callback) => {
         connection.query('DELETE FROM ?? WHERE carrera = ? ;',
             [body.Lista, body.nomCarrera],(err, result) =>{
+                if (err) {
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    callback("false");
+                    return;
+                    }
+                    callback(result);
+                    }); 
+    },
+    deletemaestros: (connection, body, callback) => {
+        connection.query('DELETE FROM maestros_asignados;',(err, result) =>{
+                if (err) {
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    callback("false");
+                    return;
+                    }
+                    callback(result);
+                    }); 
+    },
+    deleteasignadospor: (connection, body, callback) => {
+        connection.query('DELETE FROM asignadospor;',(err, result) =>{
                 if (err) {
                     //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                     callback("false");
@@ -314,6 +347,15 @@ module.exports = {
     },
     getFinscripciones: (connection, body, callback) => {
         connection.query('SELECT * FROM fecha_inscripciones;', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getTablas: (connection, body, callback) => {
+        connection.query('SELECT Table_Name,Table_Type FROM INFORMATION_SCHEMA.Tables WHERE table_schema = "cursosespeciales"', (err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 return;

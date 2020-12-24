@@ -1,3 +1,4 @@
+import { data } from 'jquery';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
@@ -14,6 +15,7 @@ export class BdserviceService {
   fechainicio:string;
   fechafinal:string;
   esposibleinscribir:boolean;
+  tables=['asignadospor','carrera','centro','departamento','dpto_ca','fecha_inscripciones','jefe_centro','jefe_dpto','maestros_asignados','materia'];
   constructor(private httpClient: HttpClient) { }
   getSession(){
     return this.jefeDpto;
@@ -82,6 +84,15 @@ export class BdserviceService {
     const body = new HttpParams()
     .set('Vista', grupo);
     return this.httpClient.post('http://localhost:3000/' + 'dropView', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  dropTable(grupo: string){
+    const body = new HttpParams()
+    .set('Tabla', grupo);
+    return this.httpClient.post('http://localhost:3000/' + 'droptable', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -330,6 +341,33 @@ export class BdserviceService {
   }
   getFechaFinal(){
     return this.fechafinal;
+  }
+  totaltablas(){
+    return this.httpClient.get('http://localhost:3000/' + 'gettablas');
+  }
+  deletemaestros(){
+    return this.httpClient.get('http://localhost:3000/' + 'deletemaestros');
+  }
+  deleteasignadospor(){
+    return this.httpClient.get('http://localhost:3000/' + 'deleteasignadospor');
+  }
+  borrar(alltables:any){
+    for(let nom of alltables){
+      if(!this.tables.includes(nom.Table_Name)){
+        if(nom.Table_Type=="VIEW"){
+          this.dropView(nom.Table_Name).subscribe(data2=>{
+            
+          });
+        }else{
+          this.dropTable(nom.Table_Name).subscribe(data3=>{
+            
+          });
+        }
+      }
+    }
+    this.deletemaestros().subscribe(data=>{});
+    this.deleteasignadospor().subscribe(data=>{});
+
   }
 
 }
