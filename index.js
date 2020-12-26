@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multipart = require('connect-multiparty');
+const fs=require('fs');
 const connection = require("./conexion");
 const cors = require('cors');
 
@@ -23,6 +24,14 @@ const cors = require('cors');
             'path': req.files.uploads[0].path
         });
  });
+app.get('/borrarimagenes',(req,res)=>{
+    fs.readdirSync("./public/subidas").forEach((fileName)=>{
+        fs.unlink(`./public/subidas/${fileName}`,function(res){
+            
+        });
+    });
+
+});
 
  connection.connect((err, res) => {
     if(err){

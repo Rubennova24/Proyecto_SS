@@ -255,7 +255,7 @@ module.exports = {
         })
     },
     getUsr: (connection, body, callback) => {
-        connection.query('SELECT * FROM jefe_dpto WHERE Nombre = ? && Contrasena = ?',[body.Usuario, body.Password], (err, results) =>{
+        connection.query('SELECT * FROM jefe_dpto WHERE Nombre = ? && Contrasena = BINARY ?',[body.Usuario, body.Password], (err, results) =>{
             if(err){
                 callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 //callback("false");
@@ -266,7 +266,7 @@ module.exports = {
     },
 
     getUsr2: (connection, body, callback) => {
-        connection.query('SELECT * FROM jefe_centro WHERE Nombre = ? && Contrasena = ?',[body.Usuario, body.Password], (err, results) =>{
+        connection.query('SELECT * FROM jefe_centro WHERE Nombre = ? && Contrasena = BINARY ?',[body.Usuario, body.Password], (err, results) =>{
             if(err){
                 callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 //callback("false");

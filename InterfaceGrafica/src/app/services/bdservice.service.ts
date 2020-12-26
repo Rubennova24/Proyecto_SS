@@ -351,6 +351,9 @@ export class BdserviceService {
   deleteasignadospor(){
     return this.httpClient.get('http://localhost:3000/' + 'deleteasignadospor');
   }
+  deleteimagenes(){
+    return this.httpClient.get('http://localhost:3000/' + 'borrarimagenes');
+  }
   borrar(alltables:any){
     for(let nom of alltables){
       if(!this.tables.includes(nom.Table_Name)){
@@ -367,6 +370,7 @@ export class BdserviceService {
     }
     this.deletemaestros().subscribe(data=>{});
     this.deleteasignadospor().subscribe(data=>{});
+    this.deleteimagenes().subscribe(data=>{});
 
   }
 
