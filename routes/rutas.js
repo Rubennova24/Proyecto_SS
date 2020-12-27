@@ -403,6 +403,35 @@ router.post('/eliminar',[
         res.json(data);
     }))
 });
+router.post('/updateNuevoCiclo',[
+    body('Inicio').not().isEmpty().isString(),
+    body('Final').not().isEmpty().isString(),
+    body('CierreTotal').not().isEmpty().isString(),
+],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.updateNuevoCiclo(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/asignadospor',[
+    body('Asignador').not().isEmpty().isString(),
+    
+],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.asignadospor(connection,body, (data => {
+        res.json(data);
+    }))
+});
 router.get('/fechainscripcion', (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -436,15 +465,5 @@ router.get('/deletemaestros', (req, res) => {
         res.json(data);
     }))
 });
-router.get('/deleteasignadospor', (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        res.json({ success: false, err: JSON.stringify(errors) })
-        return
-    }
-    let body = req.body;
-    user.deleteasignadospor(connection, body, (data => {
-        res.json(data);
-    }))
-});
+
 module.exports = router;

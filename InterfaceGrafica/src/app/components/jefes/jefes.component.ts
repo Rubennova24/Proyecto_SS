@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { data } from 'jquery';
+import { Router } from '@angular/router';
 import { BdserviceService } from './../../services/bdservice.service';
 
 @Component({
@@ -11,7 +11,8 @@ export class JefesComponent implements OnInit {
   jefes:any
   dptos:any
   jefes_centro:any
-
+  loggeado:string;
+  tipo:string;
   nombre = ""
   clave = ""
   password = ""
@@ -26,9 +27,14 @@ export class JefesComponent implements OnInit {
   dpto_ed = 0
   jefe_ed = 0
 
-  constructor(private bdserviceService:BdserviceService) { }
+  constructor(private bdserviceService:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
+    this.loggeado = this.bdserviceService.getSession();
+    this.tipo = this.bdserviceService.getTipo();
+    if(this.loggeado == "" || this.tipo == "Dpto"){
+      this.router.navigate(['/inicio']);
+    }
     this.mostrar_jefes()
     this.bdserviceService.getDptosJefes().subscribe(data=>{
       this.dptos=data;

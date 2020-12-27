@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
 import { JefesComponent } from './components/jefes/jefes.component';
+import { FechasComponent } from './components/fechas/fechas.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { JefesComponent } from './components/jefes/jefes.component';
     DepartamentoComponent,
     ListaComponent,
     AsignacionComponent,
-    JefesComponent
+    JefesComponent,
+    FechasComponent
   ],
   imports: [
     BrowserModule,

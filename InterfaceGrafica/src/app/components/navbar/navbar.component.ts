@@ -15,12 +15,16 @@ export class NavbarComponent implements OnInit {
   sesion = "incorrecto";
   completo:boolean;
   Dpto:string;
+  cfecha:boolean = this.bdserviceService.componenteFecha;
+
   constructor(private router: Router,private bdserviceService:BdserviceService) {
 
    }
 
   ngOnInit(): void {
     this.completo=true;
+
+
   }
 
   ingresar(){
@@ -49,7 +53,7 @@ export class NavbarComponent implements OnInit {
         this.completo=true;
         this.Dpto = data[0].Dpto
         this.bdserviceService.setSession(this.usuario, this.Dpto,this.Tipo);
-        this.checkFecha();
+
       }
     });
 
@@ -58,6 +62,10 @@ export class NavbarComponent implements OnInit {
   limpiar(){
     this.pass = ""
     this.usuario = ""
+    if(this.bdserviceService.getnuevaFecha()){
+      this.router.navigate(['/fechas']);
+      this.bdserviceService.setComponenteFecha(true);
+    }
   }
   cerrarSesion(){
     this.limpiar()
@@ -68,11 +76,6 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  checkFecha(){
-    let f = new Date();
-    let fechaHoy = f.getDate()+"/"+(f.getMonth()+1);
 
-
-  }
 
 }

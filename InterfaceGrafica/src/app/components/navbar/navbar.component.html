@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-light justify-content-center" style="background: white;">
     <a class="navbar-brand" routerLink="/">
         <img src="../../../assets/img/logo.png" width="75%" alt="">
@@ -10,13 +11,13 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/inicio">Inicio</a>
+        <a class="nav-link" routerLink="/inicio" *ngIf=" !cfecha">Inicio</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/departamento">Registros</a>
+        <a class="nav-link" routerLink="/departamento" *ngIf=" !cfecha">Registros</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/asignacion" *ngIf="Tipo=='Centro' || Tipo=='Dpto'">Asignación</a>
+        <a class="nav-link" routerLink="/asignacion" *ngIf="(Tipo=='Centro' || Tipo=='Dpto') && !cfecha" >Asignación</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/jefes" *ngIf="Tipo=='Centro'">Jefes</a>
@@ -24,7 +25,7 @@
     </ul>
     <ul class="navbar-nav justify-content-end" style="margin-left: 55%;">
 
-      <button class="btn btn-outline-danger" href=""  *ngIf="logeado" (click)="cerrarSesion()">Cerrar Sesion</button>
+      <button class="btn btn-outline-danger" href=""  *ngIf="logeado" (click)="cerrarSesion()" [disabled]="cfecha">Cerrar Sesion</button>
       <button class="btn btn-outline-info " href="" data-toggle="modal" data-target="#exampleModalCentered"  *ngIf="!logeado">Iniciar Sesión</button>
 
     </ul>
@@ -72,3 +73,5 @@
   </div>
 </div>
 </div>
+
+

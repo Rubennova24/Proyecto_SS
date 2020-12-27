@@ -8,7 +8,25 @@ module.exports = {
             callback(results);
         })
     },
-    
+    updateNuevoCiclo:(connection, body, callback) => {
+        connection.query('UPDATE fecha_inscripciones SET Inicio = ? ,Final = ? ,CierreTotal = ?;', [body.Inicio,body.Final,body.CierreTotal], (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    asignadospor:(connection, body, callback) => {
+        connection.query('INSERT INTO asignadospor (`fechaCambio`, `Asignador`) VALUES ( current_timestamp() , ?);', [body.Asignador], (err, results) => {
+            if (err) {
+                callback("false");
+                
+                return;
+            }
+            callback(results);
+        })
+    },
 
     getdpto: (connection, body, callback) => {
         connection.query('SELECT * FROM departamento WHERE Codigo IN(SELECT Cdg_dpto FROM dpto_ca WHERE Cdg_ca = ?)ORDER BY Nombre;', [body.IdCarrera], (err, results) => {
@@ -106,16 +124,7 @@ module.exports = {
                     callback(result);
                     }); 
     },
-    deleteasignadospor: (connection, body, callback) => {
-        connection.query('DELETE FROM asignadospor;',(err, result) =>{
-                if (err) {
-                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
-                    callback("false");
-                    return;
-                    }
-                    callback(result);
-                    }); 
-    },
+    
     createlista: (connection, body, callback) => {
         connection.query('CREATE TABLE ?? ( Id varchar(8) NOT NULL,Nombre varchar(50) NOT NULL,Carrera varchar(8) NOT NULL, Imagen varchar(100) NOT NULL,Maestro varchar(50) NOT NULL,Salon varchar(5) NOT NULL,Horario time NOT NULL, Departamento varchar(8), CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo),CONSTRAINT FOREIGN KEY(Departamento) REFERENCES departamento(Codigo));', [body.Materia], (err, results) => {
             if (err) {

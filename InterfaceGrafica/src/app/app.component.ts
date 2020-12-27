@@ -12,10 +12,13 @@ export class AppComponent implements OnInit{
   title = 'app-redes';
   subscription:Subscription;
   refresh=false;
+
   constructor(private bdservice:BdserviceService){  }
   ngOnInit(){
+
+
     this.bdservice.getFinsciripciones().subscribe(data=>{
-     
+
       var hoy=new Date();
       var cierre=new Date(Date.parse(data[0].CierreTotal));
       var inicio=new Date(Date.parse(data[0].Inicio));
@@ -24,9 +27,10 @@ export class AppComponent implements OnInit{
       let finalcompleto=final.getDate()+"/"+(final.getMonth()+1)+"/"+final.getFullYear();
       let hoycompleto=hoy.getDate()+"/"+(hoy.getMonth()+1)+"/"+hoy.getFullYear();
       let cierrecompleto=cierre.getDate()+"/"+(cierre.getMonth()+1)+"/"+cierre.getFullYear();
-      
+
       if(hoy>=cierre){
         this.borrartodo();
+        this.asignarNuevaFecha();
       }
       if(inicio<=hoy && final>=hoy){
         this.bdservice.setPosibleInscribir(true,iniciocompleto,finalcompleto);
@@ -34,11 +38,16 @@ export class AppComponent implements OnInit{
         this.bdservice.setPosibleInscribir(false,iniciocompleto,finalcompleto);
       }
     });
+
   }
   borrartodo(){
     this.bdservice.totaltablas().subscribe(data=>{
       this.bdservice.borrar(data);
     });
+  }
+  asignarNuevaFecha(){
+    this.bdservice.setNuevaFecha(true);
+
   }
 
 }

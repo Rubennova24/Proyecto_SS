@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
 import { JefesComponent } from './components/jefes/jefes.component';
+import { FechasComponent } from './components/fechas/fechas.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'departamento', component:DepartamentoComponent},
   {path: 'lista', component:ListaComponent},
   {path: 'jefes', component:JefesComponent},
+  {path: 'fechas', component:FechasComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

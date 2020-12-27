@@ -15,6 +15,8 @@ export class BdserviceService {
   fechainicio:string;
   fechafinal:string;
   esposibleinscribir:boolean;
+  nuevafecha:boolean = false;
+  componenteFecha:boolean = false;
   tables=['asignadospor','carrera','centro','departamento','dpto_ca','fecha_inscripciones','jefe_centro','jefe_dpto','maestros_asignados','materia'];
   constructor(private httpClient: HttpClient) { }
   getSession(){
@@ -26,6 +28,21 @@ export class BdserviceService {
   getTipo(){
     return this.tipo;
   }
+  setNuevaFecha(nuevafecha){
+    this.nuevafecha = nuevafecha;
+
+  }
+  getnuevaFecha(){
+    return this.nuevafecha;
+  }
+  setComponenteFecha(cfecha){
+    this.componenteFecha = cfecha;
+
+  }
+  getComponenteFecha(){
+    return this.componenteFecha;
+  }
+
   uploadFile(formData, nombre_arch:string){
 
     let urlApi = 'http:///localhost:3000/subirimagen';
@@ -348,9 +365,7 @@ export class BdserviceService {
   deletemaestros(){
     return this.httpClient.get('http://localhost:3000/' + 'deletemaestros');
   }
-  deleteasignadospor(){
-    return this.httpClient.get('http://localhost:3000/' + 'deleteasignadospor');
-  }
+
   deleteimagenes(){
     return this.httpClient.get('http://localhost:3000/' + 'borrarimagenes');
   }
@@ -359,19 +374,40 @@ export class BdserviceService {
       if(!this.tables.includes(nom.Table_Name)){
         if(nom.Table_Type=="VIEW"){
           this.dropView(nom.Table_Name).subscribe(data2=>{
-            
+
           });
         }else{
           this.dropTable(nom.Table_Name).subscribe(data3=>{
-            
+
           });
         }
       }
     }
     this.deletemaestros().subscribe(data=>{});
-    this.deleteasignadospor().subscribe(data=>{});
+
     this.deleteimagenes().subscribe(data=>{});
 
+  }
+  updateNuevoCiclo(Inicio,Final,CierreTotal){
+    const body = new HttpParams()
+    .set('Inicio', Inicio)
+    .set('Final', Final)
+    .set('CierreTotal', CierreTotal);
+    return this.httpClient.post('http://localhost:3000/' + 'updateNuevoCiclo', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  asignadospor(Asignador:string){
+    const body = new HttpParams()
+    .set('Asignador', Asignador);
+    return this.httpClient.post('http://localhost:3000/' + 'asignadospor', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
   }
 
 }

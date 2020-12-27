@@ -1,0 +1,33 @@
+<div class="container jumbotron jumbotron-fluid mt-5 mb-5" >
+
+<br>
+<div class="contenedor" style="margin-left: 5em;">
+    <p>Se necesitan ingresar las nuevas fechas para las inscripciones de cursos especiales.</p>
+    <label for="nuevafecha">Ingresa la fecha del nuevo periodo de inscripción: </label>
+  <input type="date" name="" id="nuevafecha" #nuevafecha style="padding-left:5em; margin-left: 5em;"> <br><br>
+  <label for="fechacierre">Ingresa la fecha del cierre del periodo de inscripción: </label>
+  <input type="date" name="" id="fechacierre" #fechacierre style="padding-left:5em; margin-left: 3.5em;">
+<br>
+<br>
+<br>
+ <strong><p>Este fecha de cierre siguiente, delimitara el nuevo ciclo reiniciando archivos del sistema. </p></strong>
+  <label for="fechacierretotal">Ingresa la fecha del cierre total de este ciclo: </label>
+  <input type="date" name="" id="fechacierretotal" #fechacierretotal style="padding-left:5em; margin-left: 7.5em;">
+  <strong><p>Si las fechas son desconocidas favor de comunicarse con jefe de centro,
+     cierre sesion y cierre la pagina hasta que este parametro sea ingresado correctamente.</p></strong>
+     <br>
+     <div style="text-align: center;">
+      <button type="button" class="btn1 justify-content-center" (click)="checkFecha(nuevafecha.value, fechacierre.value, fechacierretotal.value)">Ingresar Fechas</button>
+    <button type="button" class="btn1 justify-content-center" style="margin-left: 5em;" *ngIf="confirmado" (click)="regresar()">Regresar</button>
+  </div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
