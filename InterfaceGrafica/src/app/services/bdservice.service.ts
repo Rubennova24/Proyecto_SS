@@ -1,11 +1,13 @@
 import { data } from 'jquery';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BdserviceService {
+  private componenteFecha: BehaviorSubject<boolean>;
   carrera:string;
   departamento:string;
   materia:string;
@@ -16,9 +18,10 @@ export class BdserviceService {
   fechafinal:string;
   esposibleinscribir:boolean;
   nuevafecha:boolean = false;
-  componenteFecha:boolean = false;
   tables=['asignadospor','carrera','centro','departamento','dpto_ca','fecha_inscripciones','jefe_centro','jefe_dpto','maestros_asignados','materia'];
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.componenteFecha = new BehaviorSubject<boolean>(false);
+   }
   getSession(){
     return this.jefeDpto;
   }
@@ -36,11 +39,11 @@ export class BdserviceService {
     return this.nuevafecha;
   }
   setComponenteFecha(cfecha){
-    this.componenteFecha = cfecha;
+    this.componenteFecha.next(cfecha);
 
   }
-  getComponenteFecha(){
-    return this.componenteFecha;
+  getComponenteFecha(): Observable<boolean>{
+    return this.componenteFecha.asObservable();
   }
 
   uploadFile(formData, nombre_arch:string){

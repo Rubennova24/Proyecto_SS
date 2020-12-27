@@ -1,6 +1,7 @@
 import { BdserviceService } from './../../../services/bdservice.service';
 import { Component, OnInit } from '@angular/core';
 import { identifierModuleUrl } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista',
@@ -9,8 +10,8 @@ import { identifierModuleUrl } from '@angular/compiler';
 })
 export class ListaComponent implements OnInit {
 
-  constructor(private bdservice:BdserviceService) { }
-  materiacard:string;
+  constructor(private bdservice:BdserviceService, private router:Router) { }
+  materiacard:string = "";
   carreracard:string;
   vistas=[];
   carreras:any;
@@ -25,6 +26,9 @@ export class ListaComponent implements OnInit {
   fechafinal:string;
   ngOnInit(): void {
     this.materiacard=this.bdservice.getselecMateria();
+    if(this.materiacard == ""){
+      this.router.navigate(['/departamento']);
+    }
     this.carreracard=this.bdservice.getselecCarrera();
     this.inscripcionposible=this.bdservice.esposibleinscribir;
     this.fechainicio=this.bdservice.getFechaInicio();
@@ -48,6 +52,8 @@ export class ListaComponent implements OnInit {
       }
 
     });
+
+
   }
 
   creacionVista(){

@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   sesion = "incorrecto";
   completo:boolean;
   Dpto:string;
-  cfecha:boolean = this.bdserviceService.componenteFecha;
+  cfecha:boolean;
 
   constructor(private router: Router,private bdserviceService:BdserviceService) {
 
@@ -23,7 +23,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.completo=true;
-
+    this.bdserviceService.getComponenteFecha().subscribe((val)=>{
+      this.cfecha = val
+    })
 
   }
 
