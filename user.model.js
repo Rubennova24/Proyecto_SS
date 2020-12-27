@@ -60,7 +60,7 @@ module.exports = {
         })
     },
     maestroAsignado: (connection, body, callback) => {
-        connection.query('SELECT DISTINCT (Maestro), Salon, Horario FROM ?? ;', [body.nom_tab], (err, results) => {
+        connection.query('SELECT DISTINCT (Maestro), Salon, Horario, FechaInicio FROM ?? ;', [body.nom_tab], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
@@ -126,7 +126,7 @@ module.exports = {
     },
     
     createlista: (connection, body, callback) => {
-        connection.query('CREATE TABLE ?? ( Id varchar(8) NOT NULL,Nombre varchar(50) NOT NULL,Carrera varchar(8) NOT NULL, Imagen varchar(100) NOT NULL,Maestro varchar(50) NOT NULL,Salon varchar(5) NOT NULL,Horario time NOT NULL, Departamento varchar(8), CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo),CONSTRAINT FOREIGN KEY(Departamento) REFERENCES departamento(Codigo));', [body.Materia], (err, results) => {
+        connection.query('CREATE TABLE ?? ( Id varchar(8) NOT NULL,Nombre varchar(50) NOT NULL,Carrera varchar(8) NOT NULL, Imagen varchar(100) NOT NULL,Maestro varchar(50) NOT NULL,Salon varchar(5) NOT NULL,Horario time NOT NULL, Departamento varchar(8),FechaInicio date NOT NULL, CONSTRAINT PRIMARY KEY (Id),CONSTRAINT FOREIGN KEY(Carrera) REFERENCES carrera(Codigo),CONSTRAINT FOREIGN KEY(Departamento) REFERENCES departamento(Codigo));', [body.Materia], (err, results) => {
             if (err) {
                 //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
@@ -162,16 +162,16 @@ module.exports = {
             if (err) {
                 throw err;
             } 
-            connection.query('INSERT INTO maestros_asignados (`clase`, `nombre_maestro`, `salon`, `horario`, `nombre_lista`, `carrera`) VALUES (? , ? , ? , ?, ?, ? );',
-            [body.Clase, body.Nombre, body.Salon, body.Horario,body.NombreLista ,body.Carrera, body.NombreLista] ,(err, result) =>{
+            connection.query('INSERT INTO maestros_asignados (`clase`, `nombre_maestro`, `salon`, `horario`, `nombre_lista`, `carrera`, `fechainicio`) VALUES (? , ? , ? , ?, ?, ?, ?);',
+            [body.Clase, body.Nombre, body.Salon, body.Horario,body.NombreLista ,body.Carrera, body.fechaInicio] ,(err, result) =>{
                     if (err) {
                     //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                     callback("false");
                     }
                     callback(result);
                     });
-            connection.query('UPDATE ?? SET `maestro` = ? , `salon` = ? , `horario` = ? WHERE `carrera`= ?;',
-            [body.NombreLista, body.Nombre, body.Salon, body.Horario, body.Carrera],(err, result) =>{
+            connection.query('UPDATE ?? SET `maestro` = ? , `salon` = ? , `horario` = ?, `fechainicio` = ? WHERE `carrera`= ?;',
+            [body.NombreLista, body.Nombre, body.Salon, body.Horario, body.fechaInicio, body.Carrera,],(err, result) =>{
                     if (err) {
                         connection.rollback(function() {
                             throw err;

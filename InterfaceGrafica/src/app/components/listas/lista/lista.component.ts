@@ -26,7 +26,6 @@ export class ListaComponent implements OnInit {
   fechafinal:string;
   ngOnInit(): void {
     this.materiacard=this.bdservice.getselecMateria();
-    console.log(this.materiacard);
     if(this.materiacard == undefined){
       this.router.navigate(['/departamento']);
     }
@@ -76,6 +75,8 @@ export class ListaComponent implements OnInit {
                       alert("algo paso mal viendo la vista");
 
                     }else{
+                      let prueba = new Date(vista[0].FechaInicio);
+                      vista[0].FechaInicio = prueba.getDate()+'/'+(prueba.getMonth()+1)+'/'+prueba.getFullYear();
                       this.vistas.push(vista);
 
                     }

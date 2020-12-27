@@ -190,6 +190,7 @@ router.post('/asignarMaestro', [
     body('Horario').not().isEmpty().isString(),
     body('NombreLista').not().isEmpty().isString(),
     body('Carrera').not().isEmpty().isString(),
+    body('fechaInicio').not().isEmpty().isString(),
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

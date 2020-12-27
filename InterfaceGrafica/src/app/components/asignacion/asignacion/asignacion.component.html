@@ -10,11 +10,12 @@
                 </button>
               </div>
                 <div class="card-body">
-                    <h5 class="card-title">Materia: {{grupo}}</h5>
+                    <h4 class="card-title"><small>Materia:</small><strong> {{grupo}}</strong></h4>
                     <div *ngFor="let dato of maestros[j]">
                       <h6>Maestro: {{dato.Maestro}}</h6>
                       <h6>Salon: {{dato.Salon}}</h6>
                       <h6>Horario: {{dato.Horario}}</h6>
+                      <h6>Fecha de Inicio: {{dato.FechaInicio}}</h6>
                     </div>
 
                     <h6>#Alumnos: {{cont[j]}} </h6>
@@ -62,11 +63,14 @@
                 <label for="nombre">Horario: </label>
                 <input type="time" name="horario" id="horario" style="margin-left: 18%;" #horario>
                 <br>
+                <label for="fechaInicio">Fecha de Inicio: </label>
+                <input type="date" name="fechaInicio" id="fechaInicio" style="margin-left: 18%;" #fechaInicio>
+                <br>
                 <br>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" (click)="asignacion(nombre.value,salon.value, horario.value)" data-dismiss="modal">Asignar </button>
+                <button type="button" class="btn btn-success" (click)="asignacion(nombre.value,salon.value, horario.value,fechaInicio.value )" data-dismiss="modal">Asignar </button>
             </div>
         </div>
     </div>

@@ -251,7 +251,7 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-  asignacion(Clase:string, Nombre:string, Salon:string, Horario:string,NombreLista:string,Carrera:string){
+  asignacion(Clase:string, Nombre:string, Salon:string, Horario:string,NombreLista:string,Carrera:string, fechaInicio:string){
 
     const body = new HttpParams()
     .set('Clase', Clase)
@@ -259,7 +259,8 @@ export class BdserviceService {
     .set('Salon', Salon)
     .set('Horario', Horario)
     .set('NombreLista', NombreLista)
-    .set('Carrera', Carrera);
+    .set('Carrera', Carrera)
+    .set('fechaInicio', fechaInicio);
     return this.httpClient.post('http://localhost:3000/' + 'asignarMaestro', body.toString(),
     {
     headers: new HttpHeaders()

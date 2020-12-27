@@ -37,8 +37,11 @@ export class AsignacionComponent implements OnInit {
 
   }
 
-  asignacion(nombre:string, salon:string, horario:string){
-    this.bdservice.getCarreraVista(this.clase).subscribe(data =>{
+  asignacion(nombre:string, salon:string, horario:string, fechaInicio:string){
+    if(nombre == "" || salon == "" || horario == "" || fechaInicio == ""){
+      alert("completa los datos.");
+    }else{
+      this.bdservice.getCarreraVista(this.clase).subscribe(data =>{
         if(data=="false"){
           alert("error al conseguir carrera");
         }else{
@@ -48,9 +51,13 @@ export class AsignacionComponent implements OnInit {
 
           this.nom_list = this.clase.substr(num,this.clase.length);
 
-        this.bdservice.asignacion(this.clase,nombre,salon,horario,this.nom_list, this.nomclase.Carrera).subscribe(data =>{
+        this.bdservice.asignacion(this.clase,nombre,salon,horario,this.nom_list, this.nomclase.Carrera, fechaInicio).subscribe(data =>{
         if(data=="false"){
-          alert("error al asignar");
+          this.asignar(nombre);
+          this.cont = [];
+          this.maestros = [];
+          this.grupos2=[]
+          this.visualizacion()
         }else{
           alert("Maestro asignado");
           this.asignar(nombre);
@@ -63,6 +70,8 @@ export class AsignacionComponent implements OnInit {
     });
         }
     });
+    }
+
 
   }
 
@@ -113,7 +122,7 @@ borrarGrupo(grupo:string){
             if(data == "false"){
               alert("Error al borrar grupo "+grupo);
             }else{
-              
+
             }
           });
           this.cont = [];
@@ -122,7 +131,7 @@ borrarGrupo(grupo:string){
               this.visualizacion();
         }
     });
-    
+
     }
 
 
@@ -144,6 +153,8 @@ visualizacion(){
             this.bdservice.maestroAsignado(nom.Table_Name).subscribe(data3 =>{
               if(data3 == "false"){
               }else{
+                let prueba = new Date(data3[0].FechaInicio);
+                data3[0].FechaInicio = prueba.getDate()+'/'+(prueba.getMonth()+1)+'/'+prueba.getFullYear();
                 this.maestros.push(data3);
               }
           });
