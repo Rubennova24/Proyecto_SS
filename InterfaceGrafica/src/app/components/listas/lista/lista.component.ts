@@ -26,7 +26,8 @@ export class ListaComponent implements OnInit {
   fechafinal:string;
   ngOnInit(): void {
     this.materiacard=this.bdservice.getselecMateria();
-    if(this.materiacard == ""){
+    console.log(this.materiacard);
+    if(this.materiacard == undefined){
       this.router.navigate(['/departamento']);
     }
     this.carreracard=this.bdservice.getselecCarrera();
