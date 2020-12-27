@@ -372,4 +372,13 @@ module.exports = {
             callback(results);
         })
     },
+    getModificacion: (connection, body, callback) => {
+        connection.query('SELECT * FROM asignadospor ORDER BY fechaCambio DESC LIMIT 1', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
 }

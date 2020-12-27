@@ -27,6 +27,8 @@ export class JefesComponent implements OnInit {
   dpto_ed = 0
   jefe_ed = 0
 
+  ultimo_registro:any
+
   constructor(private bdserviceService:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
@@ -42,6 +44,12 @@ export class JefesComponent implements OnInit {
     this.bdserviceService.getJefes_centro().subscribe(data=>{
       this.jefes_centro=data
       //console.log(this.jefes_centro);
+    })
+    this.bdserviceService.modificacion().subscribe(data=>{
+      let prueba = new Date(data[0].fechaCambio);
+                data[0].fechaCambio = prueba.getDate()+'/'+(prueba.getMonth()+1)+'/'+prueba.getFullYear();
+      this.ultimo_registro=data
+      console.log(data);
     })
   }
   mostrar_jefes(){
@@ -100,6 +108,10 @@ export class JefesComponent implements OnInit {
         this.jefe = 0
       }
     });
+  }
+  modificar_fecha(){
+    this.bdserviceService.setNuevaFecha(true);
+    this.router.navigate(['/fechas']);
   }
 
 }

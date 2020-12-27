@@ -403,7 +403,6 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-
   asignadospor(Asignador:string){
     const body = new HttpParams()
     .set('Asignador', Asignador);
@@ -413,5 +412,9 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  modificacion(){
+    return this.httpClient.get('http://localhost:3000/' + 'ultima_modificacion');
+  }
 
+  
 }
