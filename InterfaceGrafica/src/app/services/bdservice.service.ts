@@ -18,7 +18,7 @@ export class BdserviceService {
   fechafinal:string;
   esposibleinscribir:boolean;
   nuevafecha:boolean = false;
-  tables=['asignadospor','carrera','centro','departamento','dpto_ca','fecha_inscripciones','jefe_centro','jefe_dpto','maestros_asignados','materia','maestros'];
+  tables=['asignadospor','carrera','centro','departamento','dpto_ca','fecha_inscripciones','jefe_centro','jefe_dpto','maestros_asignados','materia','maestros','compatibilidad'];
   constructor(private httpClient: HttpClient) {
     this.componenteFecha = new BehaviorSubject<boolean>(false);
    }
