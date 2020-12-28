@@ -66,13 +66,13 @@ export class ListaComponent implements OnInit {
             datos => {
 
               if(datos=="false"){
-                alert("algo salio mal en la creacion de vista");
+                //alert("algo salio mal en la creacion de vista");
               }else{
                // for(const Carr2 of this.carreras){
                 this.bdservice.VerVista(this.materiacard, Carr.Carrera).subscribe(
                   vista => {
                     if(vista == "false"){
-                      alert("algo paso mal viendo la vista");
+                     // alert("algo paso mal viendo la vista");
 
                     }else{
                       let prueba = new Date(vista[0].FechaInicio);
@@ -107,9 +107,9 @@ export class ListaComponent implements OnInit {
         //se crea la lista y se inscribe
         this.bdservice.createlista(this.materiacard).subscribe(data=>{
           if(data=="false"){
-            alert('Algo paso mal tabla');
+            //alert('Algo paso mal tabla');
           }else{
-            alert("tabla creada correctamente");
+            //alert("tabla creada correctamente");
 
 
           }

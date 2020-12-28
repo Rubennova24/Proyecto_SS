@@ -45,7 +45,7 @@ export class FechasComponent implements OnInit {
   regresar(){
     this.bdService.asignadospor(this.Asignador).subscribe(data =>{
         if(data == "false"){
-          alert("fallo en asignarpor");
+          //alert("fallo en asignarpor");
         }else{
           this.bdService.setComponenteFecha(false);
           window.location.reload();

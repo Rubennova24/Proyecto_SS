@@ -43,7 +43,7 @@ export class AsignacionComponent implements OnInit {
     }else{
       this.bdservice.getCarreraVista(this.clase).subscribe(data =>{
         if(data=="false"){
-          alert("error al conseguir carrera");
+          //alert("error al conseguir carrera");
         }else{
           this.nomclase = data[0];
           this.nomclase2 = this.nomclase.Carrera.toLowerCase();
@@ -88,7 +88,7 @@ ver(nom_tab:string){
   this.bdservice.VerVista2(nom_tab).subscribe(
     vista => {
       if(vista == "false"){
-        alert("algo paso mal viendo la vista");
+        //alert("algo paso mal viendo la vista");
 
       }else{
         this.vistas = vista
@@ -104,7 +104,7 @@ borrarGrupo(grupo:string){
       //Aquí pones lo que quieras si da a Aceptar
       this.bdservice.getCarreraVista(grupo).subscribe(data =>{
         if(data=="false"){
-          alert("error al conseguir carrera");
+          //alert("error al conseguir carrera");
         }else{
           this.nomCarrera = data[0].Carrera;
           this.nomclase2 = this.nomCarrera
@@ -113,14 +113,14 @@ borrarGrupo(grupo:string){
           this.bdservice.dropView(grupo).subscribe(data2 =>{
             console.log(data2);
             if(data == "false"){
-              alert("Error al borrar grupo "+grupo);
+              //alert("Error al borrar grupo "+grupo);
             }else{
             }
           });
           this.bdservice.dropTableInfo(this.nom_list2,this.nomCarrera).subscribe(data3 =>{
             console.log(data3);
             if(data == "false"){
-              alert("Error al borrar grupo "+grupo);
+              //alert("Error al borrar grupo "+grupo);
             }else{
 
             }
