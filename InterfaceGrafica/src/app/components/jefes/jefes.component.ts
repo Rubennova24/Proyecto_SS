@@ -19,7 +19,7 @@ export class JefesComponent implements OnInit {
   departamento = 0
   jefe = 0
 
-  jefe_editar = ""
+  jefe_editar = "" //para mostrar en el modal arriba
   id_jefe = " "
 
   nuevo_nom = ""

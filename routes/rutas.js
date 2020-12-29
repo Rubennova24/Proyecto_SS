@@ -364,7 +364,7 @@ router.post('/registrar', [
     body('Contrasena').not().isEmpty().isString(),
     body('JefeCentro').not().isEmpty().isString(),
     body('Dpto').not().isEmpty().isString(),
-], (req, res) => {
+    ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.json({ success: false, err: JSON.stringify(errors) })
@@ -474,6 +474,72 @@ router.get('/ultima_modificacion', (req, res) => {
     }
     let body = req.body;
     user.getModificacion(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/maestros', [
+    body('Dpto').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getMaestros(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/eliminar_mstro',[
+    body('Nombre').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.eliminar_mstro(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/editar_mstro', [
+    body('Nombre').not().isEmpty().isString(),
+    body('Id').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.editar_mstro(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/registrar_mstro', [
+    body('Id').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+    body('Centro').not().isEmpty().isString(),
+    ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.registrar_mstro(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/maestro',[
+    body('Id').not().isEmpty().isString(),],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getMaestro(connection,body, (data => {
         res.json(data);
     }))
 });

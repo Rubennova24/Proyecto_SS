@@ -6,6 +6,7 @@ import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
 import { JefesComponent } from './components/jefes/jefes.component';
 import { FechasComponent } from './components/fechas/fechas.component';
+import { MaestrosComponent } from './components/maestros/maestros.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'lista', component:ListaComponent},
   {path: 'jefes', component:JefesComponent},
   {path: 'fechas', component:FechasComponent},
+  {path: 'maestros', component:MaestrosComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

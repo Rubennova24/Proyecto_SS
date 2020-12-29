@@ -12,6 +12,7 @@ import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
 import { JefesComponent } from './components/jefes/jefes.component';
 import { FechasComponent } from './components/fechas/fechas.component';
+import { MaestrosComponent } from './components/maestros/maestros.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { FechasComponent } from './components/fechas/fechas.component';
     ListaComponent,
     AsignacionComponent,
     JefesComponent,
-    FechasComponent
+    FechasComponent,
+    MaestrosComponent
   ],
   imports: [
     BrowserModule,

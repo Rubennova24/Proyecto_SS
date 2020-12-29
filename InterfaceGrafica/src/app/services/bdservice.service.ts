@@ -415,6 +415,54 @@ export class BdserviceService {
   modificacion(){
     return this.httpClient.get('http://localhost:3000/' + 'ultima_modificacion');
   }
-
+  getMaestros(dpto: string){
+    const body = new HttpParams()
+    .set('Dpto', dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'maestros', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  eliminar_mstro(nom: string){
+    const body = new HttpParams()
+    .set('Nombre', nom);
+    return this.httpClient.post('http://localhost:3000/' + 'eliminar_mstro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  editar_mstro(n_nom: string, id: string){
+    const body = new HttpParams()
+    .set('Nombre', n_nom)
+    .set('Id', id);
+    return this.httpClient.post('http://localhost:3000/' + 'editar_mstro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getMaestro(id: string){
+    const body = new HttpParams()
+    .set('Id', id);
+    return this.httpClient.post('http://localhost:3000/' + 'maestro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  registrar_mstro(id: string, nom: string, dpto: string, centro: string){
+    const body = new HttpParams()
+    .set('Id', id)
+    .set('Nombre', nom)
+    .set('Dpto', dpto)
+    .set('Centro', centro);
+    return this.httpClient.post('http://localhost:3000/' + 'registrar_mstro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   
 }

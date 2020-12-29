@@ -284,7 +284,6 @@ module.exports = {
             callback(results);
         })
     },
-
     getJefe: (connection, body, callback) => {
         connection.query('SELECT * FROM jefe_dpto WHERE Id = ?',[body.Id], (err, results) =>{
             if(err){
@@ -376,6 +375,57 @@ module.exports = {
         connection.query('SELECT * FROM asignadospor ORDER BY fechaCambio DESC LIMIT 1', (err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    getMaestros: (connection, body, callback) => {
+        connection.query('SELECT * FROM maestros WHERE departamento = ? ORDER BY Nombre;',[body.Dpto] ,(err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    eliminar_mstro: (connection, body, callback) => {
+        connection.query('DELETE FROM maestros WHERE Nombre = ? ',[body.Nombre], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    editar_mstro: (connection, body, callback) => {
+        connection.query('UPDATE maestros SET `Nombre` = ?  WHERE `Id` = ? ;',
+        [body.Nombre, body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    getMaestro: (connection, body, callback) => {
+        connection.query('SELECT * FROM maestros WHERE Id = ?',[body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    registrar_mstro: (connection, body, callback) => {
+        connection.query('INSERT INTO maestros (`id`, `nombre`, `departamento`, `centro`) VALUES (? , ? , ? , ? );',
+        [body.Id, body.Nombre, body.Dpto, body.Centro], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
                 return;
             }
             callback(results);
