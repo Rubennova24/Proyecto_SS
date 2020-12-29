@@ -415,73 +415,43 @@ export class BdserviceService {
   modificacion(){
     return this.httpClient.get('http://localhost:3000/' + 'ultima_modificacion');
   }
-<<<<<<< HEAD
   getMateriasrepetidas(Dpto:string){
     const body = new HttpParams()
     .set('Dpto', Dpto);
     return this.httpClient.post('http://localhost:3000/' + 'getmateriasrepetidas', body.toString(),
-=======
-  getMaestros(dpto: string){
-    const body = new HttpParams()
-    .set('Dpto', dpto);
-    return this.httpClient.post('http://localhost:3000/' + 'maestros', body.toString(),
->>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-<<<<<<< HEAD
   getCarrerasrepetidas(mat:string){
     const body = new HttpParams()
     .set('Materia', mat);
     return this.httpClient.post('http://localhost:3000/' + 'getcarrerasrepetidas', body.toString(),
-=======
-  eliminar_mstro(nom: string){
-    const body = new HttpParams()
-    .set('Nombre', nom);
-    return this.httpClient.post('http://localhost:3000/' + 'eliminar_mstro', body.toString(),
->>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-<<<<<<< HEAD
   getCompatibilidades(Dpto:string){
     const body = new HttpParams()
     .set('Dpto', Dpto);
     return this.httpClient.post('http://localhost:3000/' + 'getcompatibilidades', body.toString(),
-=======
-  editar_mstro(n_nom: string, id: string){
-    const body = new HttpParams()
-    .set('Nombre', n_nom)
-    .set('Id', id);
-    return this.httpClient.post('http://localhost:3000/' + 'editar_mstro', body.toString(),
->>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-<<<<<<< HEAD
   getCompatibilidad(indice:any,Dpto:string){
     const body = new HttpParams()
     .set('Indice', indice)
     .set('Dpto', Dpto);
     return this.httpClient.post('http://localhost:3000/' + 'getcompatibilidad', body.toString(),
-=======
-  getMaestro(id: string){
-    const body = new HttpParams()
-    .set('Id', id);
-    return this.httpClient.post('http://localhost:3000/' + 'maestro', body.toString(),
->>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-<<<<<<< HEAD
   getCarrera(codigo:any){
     const body = new HttpParams()
     .set('Codigo', codigo);
@@ -504,7 +474,48 @@ export class BdserviceService {
     .set('col7', carreras[6])
     .set('col8', carreras[7]);
     return this.httpClient.post('http://localhost:3000/' + 'nuevacompatibilidad', body.toString(),
-=======
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getMaestros(dpto: string){
+    const body = new HttpParams()
+    .set('Dpto', dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'maestros', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  eliminar_mstro(nom: string){
+    const body = new HttpParams()
+    .set('Nombre', nom);
+    return this.httpClient.post('http://localhost:3000/' + 'eliminar_mstro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  editar_mstro(n_nom: string, id: string){
+    const body = new HttpParams()
+    .set('Nombre', n_nom)
+    .set('Id', id);
+    return this.httpClient.post('http://localhost:3000/' + 'editar_mstro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getMaestro(id: string){
+    const body = new HttpParams()
+    .set('Id', id);
+    return this.httpClient.post('http://localhost:3000/' + 'maestro', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   registrar_mstro(id: string, nom: string, dpto: string, centro: string){
     const body = new HttpParams()
     .set('Id', id)
@@ -512,14 +523,10 @@ export class BdserviceService {
     .set('Dpto', dpto)
     .set('Centro', centro);
     return this.httpClient.post('http://localhost:3000/' + 'registrar_mstro', body.toString(),
->>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-<<<<<<< HEAD
-=======
-  
->>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
+
 }

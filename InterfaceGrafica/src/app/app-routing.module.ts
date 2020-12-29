@@ -6,11 +6,8 @@ import { ListaComponent } from './components/listas/lista/lista.component';
 import { AsignacionComponent } from './components/asignacion/asignacion/asignacion.component';
 import { JefesComponent } from './components/jefes/jefes.component';
 import { FechasComponent } from './components/fechas/fechas.component';
-<<<<<<< HEAD
 import { MaestrosComponent } from './components/maestros/maestros.component';
-=======
 import { CompatibilidadComponent } from './components/compatibilidad/compatibilidad.component';
->>>>>>> 324c16bf8c2f5d8c65d401a849db9b32582cd2e9
 
 
 const routes: Routes = [
