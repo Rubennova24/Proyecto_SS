@@ -415,6 +415,68 @@ export class BdserviceService {
   modificacion(){
     return this.httpClient.get('http://localhost:3000/' + 'ultima_modificacion');
   }
-
-  
+  getMateriasrepetidas(Dpto:string){
+    const body = new HttpParams()
+    .set('Dpto', Dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'getmateriasrepetidas', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getCarrerasrepetidas(mat:string){
+    const body = new HttpParams()
+    .set('Materia', mat);
+    return this.httpClient.post('http://localhost:3000/' + 'getcarrerasrepetidas', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getCompatibilidades(Dpto:string){
+    const body = new HttpParams()
+    .set('Dpto', Dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'getcompatibilidades', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getCompatibilidad(indice:any,Dpto:string){
+    const body = new HttpParams()
+    .set('Indice', indice)
+    .set('Dpto', Dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'getcompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getCarrera(codigo:any){
+    const body = new HttpParams()
+    .set('Codigo', codigo);
+    return this.httpClient.post('http://localhost:3000/' + 'getcarrera', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  nuevacompatibilidad(Materia:string,Dpto:string,carreras:any){
+    const body = new HttpParams()
+    .set('Materia', Materia)
+    .set('Dpto', Dpto)
+    .set('col1', carreras[0])
+    .set('col2', carreras[1])
+    .set('col3', carreras[2])
+    .set('col4', carreras[3])
+    .set('col5', carreras[4])
+    .set('col6', carreras[5])
+    .set('col7', carreras[6])
+    .set('col8', carreras[7]);
+    return this.httpClient.post('http://localhost:3000/' + 'nuevacompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
 }

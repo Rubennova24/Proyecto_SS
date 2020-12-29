@@ -1,3 +1,45 @@
 <div class="main">
     <h1>Menu de compatibilidad</h1>
+    <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <h3>Crear Compatibilidad</h3>
+            <select name="materiaselect" id="" (change)="Seleccionomat(materiaselect.value)" #materiaselect>
+                <option selected>Selecciona una Materia</option>
+                <option *ngFor="let mat of materias" [value]="mat.Nombre">{{mat.Nombre}}</option>                 
+             </select>
+             <div *ngFor="let carr of carreras">
+                <input  type="checkbox" [value]="carr.Codigo" [id]="carr.Codigo" (change)="checkboxes($event.target.checked,$event.target.value)">
+                <label [for]="carr.Codigo"> {{carr.Nombre}}</label>
+             </div><br>
+             <button class="btn btn-success" (click)="nuevacompat()">Agregar</button>
+          </div>
+          <div class="col-sm">
+            <h3>Buscar Compatibilidad</h3>
+            <select name="compatselect" id="" (change)="Seleccionocompat(compatselect.value)" #compatselect>
+                <option selected>Selecciona una Materia</option>
+                <option *ngFor="let compat of compatibilidades" [value]="compat.Indice">{{compat.Indice}}-{{compat.Materia}}</option>                 
+            </select>
+            <select name="carr" id="" #carrselect>
+                <option>Selecciona una Carrera</option>
+                <option *ngFor="let carr of carreras2" [value]="carr.Codigo">{{carr.Nombre}}</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <h3>Compatibilidad</h3>
+            <h5 *ngFor="let nom of nomcompatmat">Nombre: {{nom.Materia}}-{{nom.Indice}}</h5>
+            <h6>Carreras:</h6>
+            <div *ngFor="let carr of carrerascompat">
+                <p>{{carr}}</p>
+
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    
+    
+    
+     <br>
+    
 </div>
