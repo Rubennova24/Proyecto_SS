@@ -24,6 +24,10 @@ export class AsignacionComponent implements OnInit {
   maestros = [];
   UsrDpto:string;
   existengrupos=false;
+
+  departamento:any;
+  maestros_dpto = [];
+
   constructor(private bdservice:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
@@ -33,10 +37,23 @@ export class AsignacionComponent implements OnInit {
     }
     this.UsrDpto = this.bdservice.getUsrDpto();
     this.visualizacion();
-
-
+    this.departamento= this.bdservice.getUsrDpto(); //Centro
+    this.obtener_maestros();
+  }
+  obtener_maestros(){
+    this.bdservice.getMaestros(this.departamento).subscribe(data => {
+      for (var i in data){
+        this.maestros_dpto.push(data[i].Nombre);
+      }
+      //this.maestros_dpto.push(data);
+      console.log(this.maestros_dpto);
+    })
   }
 
+  buscar(e){
+    console.log(e);  
+  }
+  
   asignacion(nombre:string, salon:string, horario:string, fechaInicio:string){
     if(nombre == "" || salon == "" || horario == "" || fechaInicio == ""){
       alert("completa los datos.");
@@ -71,17 +88,14 @@ export class AsignacionComponent implements OnInit {
         }
     });
     }
-
-
   }
-
 setClase(clase:string){
   this.clase=clase;
 }
 asignar(nombre:string){
   this.bdservice.setMaestro(nombre).subscribe(data=>{
 
-});
+  });
 }
 
 ver(nom_tab:string){

@@ -20,6 +20,9 @@
         <a class="nav-link" routerLink="/asignacion" *ngIf="(Tipo=='Centro' || Tipo=='Dpto') && !cfecha" >Asignación</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" routerLink="/maestros" *ngIf="(Tipo=='Dpto') && !cfecha">Maestros</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" routerLink="/jefes" *ngIf="(Tipo=='Centro') && !cfecha">Jefes</a>
       </li>
       <li class="nav-item">

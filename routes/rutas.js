@@ -364,7 +364,7 @@ router.post('/registrar', [
     body('Contrasena').not().isEmpty().isString(),
     body('JefeCentro').not().isEmpty().isString(),
     body('Dpto').not().isEmpty().isString(),
-], (req, res) => {
+    ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.json({ success: false, err: JSON.stringify(errors) })
@@ -477,16 +477,22 @@ router.get('/ultima_modificacion', (req, res) => {
         res.json(data);
     }))
 });
+<<<<<<< HEAD
 //compatibilidad
 router.post('/getmateriasrepetidas', [
     body('Dpto').not().isEmpty().isString(),
 ], (req, res) => {
+=======
+router.post('/maestros', [
+    body('Dpto').not().isEmpty().isString(),],(req,res) => {
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.json({ success: false, err: JSON.stringify(errors) })
         return
     }
     let body = req.body;
+<<<<<<< HEAD
     user.getMateriasrepetidas(connection, body, (data => {
         res.json(data);
     }))
@@ -494,18 +500,36 @@ router.post('/getmateriasrepetidas', [
 router.post('/getcarrerasrepetidas', [
     body('Materia').not().isEmpty().isString(),
 ], (req, res) => {
+=======
+    user.getMaestros(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/eliminar_mstro',[
+    body('Nombre').not().isEmpty().isString(),],(req,res) => {
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.json({ success: false, err: JSON.stringify(errors) })
         return
     }
     let body = req.body;
+<<<<<<< HEAD
     user.getCarrerasrepetidas(connection, body, (data => {
         res.json(data);
     }))
 });
 router.post('/getcompatibilidades', [
     body('Dpto').not().isEmpty().isString(),
+=======
+    user.eliminar_mstro(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/editar_mstro', [
+    body('Nombre').not().isEmpty().isString(),
+    body('Id').not().isEmpty().isString(),
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -513,6 +537,7 @@ router.post('/getcompatibilidades', [
         return
     }
     let body = req.body;
+<<<<<<< HEAD
     user.getCompatibilidades(connection, body, (data => {
         res.json(data);
     }))
@@ -521,12 +546,25 @@ router.post('/getcompatibilidad', [
     body('Dpto').not().isEmpty().isString(),
     body('Indice').not().isEmpty().isString(),
 ], (req, res) => {
+=======
+    user.editar_mstro(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/registrar_mstro', [
+    body('Id').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+    body('Centro').not().isEmpty().isString(),
+    ], (req, res) => {
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.json({ success: false, err: JSON.stringify(errors) })
         return
     }
     let body = req.body;
+<<<<<<< HEAD
     user.getCompatibilidad(connection, body, (data => {
         res.json(data);
     }))
@@ -556,13 +594,25 @@ router.post('/nuevacompatibilidad', [
     body('col7'),
     body('col8'),
 ], (req, res) => {
+=======
+    user.registrar_mstro(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/maestro',[
+    body('Id').not().isEmpty().isString(),],(req,res) => {
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.json({ success: false, err: JSON.stringify(errors) })
         return
     }
     let body = req.body;
+<<<<<<< HEAD
     user.nuevacompatibilidad(connection, body, (data => {
+=======
+    user.getMaestro(connection,body, (data => {
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
         res.json(data);
     }))
 });

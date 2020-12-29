@@ -284,7 +284,6 @@ module.exports = {
             callback(results);
         })
     },
-
     getJefe: (connection, body, callback) => {
         connection.query('SELECT * FROM jefe_dpto WHERE Id = ?',[body.Id], (err, results) =>{
             if(err){
@@ -381,57 +380,99 @@ module.exports = {
             callback(results);
         })
     },
+<<<<<<< HEAD
     //querys para compatibilidad
     getMateriasrepetidas: (connection, body, callback) => {
         connection.query('Select mat.Nombre From materia mat WHERE mat.Dpto = ? Group By mat.Nombre Having Count(*) > 1',[body.Dpto], (err, results) =>{
             if(err){
                 //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
+=======
+    getMaestros: (connection, body, callback) => {
+        connection.query('SELECT * FROM maestros WHERE departamento = ? ORDER BY Nombre;',[body.Dpto] ,(err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
                 return;
             }
             callback(results);
         })
     },
+<<<<<<< HEAD
     getCarrerasrepetidas: (connection, body, callback) => {
         connection.query('SELECT ca.Codigo,ca.Nombre FROM carrera ca,materia mat where mat.Nombre= ? && ca.Codigo=mat.Carrera',[body.Materia], (err, results) =>{
             if(err){
                 //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
+=======
+    eliminar_mstro: (connection, body, callback) => {
+        connection.query('DELETE FROM maestros WHERE Nombre = ? ',[body.Nombre], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
                 return;
             }
             callback(results);
         })
     },
+<<<<<<< HEAD
     getCompatibilidades: (connection, body, callback) => {
         connection.query('SELECT * FROM compatibilidad WHERE Dpto= ? ORDER BY Materia',[body.Dpto], (err, results) =>{
             if(err){
                 //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
+=======
+    editar_mstro: (connection, body, callback) => {
+        connection.query('UPDATE maestros SET `Nombre` = ?  WHERE `Id` = ? ;',
+        [body.Nombre, body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
                 return;
             }
             callback(results);
         })
     },
+<<<<<<< HEAD
     nuevacompatibilidad: (connection, body, callback) => {
         connection.query('INSERT INTO `compatibilidad`(`Materia`, `Dpto`, `col1`, `col2`, `col3`, `col4`, `col5`, `col6`, `col7`, `col8`) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);',[body.Materia,body.Dpto,body.col1,body.col2,body.col3,body.col4,body.col5,body.col6,body.col7,body.col8], (err, results) =>{
             if(err){
                 //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
+=======
+    getMaestro: (connection, body, callback) => {
+        connection.query('SELECT * FROM maestros WHERE Id = ?',[body.Id], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
                 return;
             }
             callback(results);
         })
     },
+<<<<<<< HEAD
     getCompatibilidad: (connection, body, callback) => {
         connection.query('SELECT * FROM compatibilidad WHERE Dpto= ? && Indice= ? ORDER BY Materia',[body.Dpto,body.Indice], (err, results) =>{
             if(err){
                 //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 callback("false");
+=======
+    registrar_mstro: (connection, body, callback) => {
+        connection.query('INSERT INTO maestros (`id`, `nombre`, `departamento`, `centro`) VALUES (? , ? , ? , ? );',
+        [body.Id, body.Nombre, body.Dpto, body.Centro], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
                 return;
             }
             callback(results);
         })
     },
+<<<<<<< HEAD
     getCarrera: (connection, body, callback) => {
         connection.query('SELECT Nombre FROM carrera WHERE Codigo= ?',[body.Codigo], (err, results) =>{
             if(err){
@@ -443,4 +484,6 @@ module.exports = {
         })
     },
     //SELECT ca.Nombre FROM carrera ca,materia mat where mat.Nombre='Álgebra' && ca.Codigo=mat.Carrera
+=======
+>>>>>>> 72b946c89a88fa46e1fae7552e90250b2fd629f5
 }
