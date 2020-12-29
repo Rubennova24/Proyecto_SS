@@ -1,12 +1,13 @@
 <div class="main">
     <h1>Menu de compatibilidad</h1>
-    <div class="container">
+    <div class="container jumbotron jumbotron-fluid mt-5 mb-5">
+      <div class="container">
         <div class="row">
           <div class="col-sm">
             <h3>Crear Compatibilidad</h3>
             <select name="materiaselect" id="" (change)="Seleccionomat(materiaselect.value)" #materiaselect>
                 <option selected>Selecciona una Materia</option>
-                <option *ngFor="let mat of materias" [value]="mat.Nombre">{{mat.Nombre}}</option>                 
+                <option *ngFor="let mat of materias" [value]="mat.Nombre">{{mat.Nombre}}</option>
              </select>
              <div *ngFor="let carr of carreras">
                 <input  type="checkbox" [value]="carr.Codigo" [id]="carr.Codigo" (change)="checkboxes($event.target.checked,$event.target.value)">
@@ -18,28 +19,37 @@
             <h3>Buscar Compatibilidad</h3>
             <select name="compatselect" id="" (change)="Seleccionocompat(compatselect.value)" #compatselect>
                 <option selected>Selecciona una Materia</option>
-                <option *ngFor="let compat of compatibilidades" [value]="compat.Indice" >{{compat.Indice}}-{{compat.Materia}}</option>                 
+                <option *ngFor="let compat of compatibilidades" [value]="compat.Indice" >{{compat.Indice}}-{{compat.Materia}}</option>
             </select>
+            <br>
             <select name="carr" id="" #carrselect>
                 <option>Selecciona una Carrera</option>
                 <option *ngFor="let carr of carreras2" [value]="carr.Codigo">{{carr.Nombre}}</option>
             </select>
+            <br>
+            <button class="btn btn-success" (click)="agregarcompat(carrselect.value)">Agregar</button>
           </div>
           <div class="col-sm">
             <h3>Compatibilidad</h3>
-            <h5 *ngFor="let nom of nomcompatmat">Nombre: {{nom.Materia}}-{{nom.Indice}}</h5>
+            <div *ngFor="let nom of nomcompatmat">
+              <h5 >Nombre: {{nom.Materia}}-{{nom.Indice}}</h5>
+              <button class="btn btn-danger"  (click)="eliminarcompat(nom.Indice)">Eliminar</button>
+            </div>
+
             <h6>Carreras:</h6>
             <div *ngFor="let carr of carrerascompat">
                 <p>{{carr}}</p>
 
             </div>
-            
+
           </div>
         </div>
       </div>
-    
-    
-    
+    </div>
+
+
+
+
      <br>
-    
+
 </div>

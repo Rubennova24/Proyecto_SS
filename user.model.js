@@ -421,6 +421,26 @@ module.exports = {
             callback(results);
         })
     },
+    updatecompatibilidad: (connection, body, callback) => {
+        connection.query('UPDATE compatibilidad SET Dpto = ?, Materia = ?, col1 = ?, col2 = ?, col3 = ?, col4 = ?, col5 = ?, col6 = ?, col7 = ?, col8 = ? WHERE Indice = ?',[body.Dpto,body.Materia,body.col1,body.col2,body.col3,body.col4,body.col5,body.col6,body.col7,body.col8,body.Indice], (err, results) =>{
+            if(err){
+                //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    eliminarcompatibilidad: (connection, body, callback) => {
+        connection.query('DELETE FROM compatibilidad WHERE Indice = ?',[body.Indice], (err, results) =>{
+            if(err){
+                //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
     getCompatibilidad: (connection, body, callback) => {
         connection.query('SELECT * FROM compatibilidad WHERE Dpto= ? && Indice= ? ORDER BY Materia',[body.Dpto,body.Indice], (err, results) =>{
             if(err){

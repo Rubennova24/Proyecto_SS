@@ -566,6 +566,44 @@ router.post('/nuevacompatibilidad', [
         res.json(data);
     }))
 });
+router.post('/updatecompatibilidad', [
+    body('Materia').not().isEmpty().isString(),
+    body('Indice').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+    body('col1').not().isEmpty().isString(),
+    body('col2').not().isEmpty().isString(),
+    body('col3'),
+    body('col4'),
+    body('col5'),
+    body('col6'),
+    body('col7'),
+    body('col8'),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.updatecompatibilidad(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/eliminarcompatibilidad', [
+    
+    body('Indice').not().isEmpty().isString(),
+   
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.eliminarcompatibilidad(connection, body, (data => {
+        res.json(data);
+    }))
+});
 router.post('/maestros', [
     body('Dpto').not().isEmpty().isString(),],(req,res) => {
     const errors = validationResult(req);

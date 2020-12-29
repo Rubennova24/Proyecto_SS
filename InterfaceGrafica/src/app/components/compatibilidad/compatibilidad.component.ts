@@ -20,9 +20,14 @@ export class CompatibilidadComponent implements OnInit {
   compatmat:any;
   nomcompatmat:any;
   agregarcompats=[];
+  loggeado:string ="";
   constructor(private bdservice:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
+    this.loggeado = this.bdservice.getSession();
+    if(this.loggeado == ""){
+      this.router.navigate(['/inicio']);
+    }
     this.usrdpto=this.bdservice.getUsrDpto();
     this.visualizacion();
 
@@ -33,18 +38,22 @@ export class CompatibilidadComponent implements OnInit {
     });
     this.bdservice.getCompatibilidades(this.usrdpto).subscribe(data=>{
       this.compatibilidades=data;
+
     });
   }
   Seleccionomat(indice:string){
+    this.agregarcompats = [];
     this.materiaselectv=indice;
     this.bdservice.getCarrerasrepetidas(indice).subscribe(data=>{
       this.carreras=data;
+
+
     });
   }
   Seleccionocompat(matselect:any){
     this.carrerascompat=[];
     this.compatmat=matselect;
-    
+
     this.bdservice.getCompatibilidad(this.compatmat,this.usrdpto).subscribe(data=>{
       this.bdservice.getCarrerasrepetidas(data[0].Materia).subscribe(data=>{
         this.carreras2=data;
@@ -64,7 +73,7 @@ export class CompatibilidadComponent implements OnInit {
             }
         });
       }
-      
+
       if(data[0].col3!=''){
         this.bdservice.getCarrera(data[0].col3).subscribe(data2=>{
           if(data2!="false"){
@@ -72,7 +81,7 @@ export class CompatibilidadComponent implements OnInit {
             }
         });
       }
-      
+
       if(data[0].col4!=''){
         this.bdservice.getCarrera(data[0].col4).subscribe(data2=>{
           if(data2!="false"){
@@ -108,17 +117,18 @@ export class CompatibilidadComponent implements OnInit {
             }
         });
       }
-     
+
     });
   }
   checkboxes(event:boolean,value:string){
+
     if(event){
       this.agregarcompats.push(value);
     }else{
       let i=this.agregarcompats.indexOf(value);
       this.agregarcompats.splice(i,1);
     }
-    
+
   }
   nuevacompat(){
     if(this.agregarcompats.length<=1){
@@ -145,6 +155,66 @@ export class CompatibilidadComponent implements OnInit {
         }
       });
     }
+  }
+  agregarcompat(carrera:string){
+    let codCarr = Array();
+    let band:boolean = false;
+    console.log(this.nomcompatmat);
+
+    for(let col of this.nomcompatmat){
+      for(let item in col){
+      if(item != "Dpto" && item != "Indice" && item != "Materia"){
+        codCarr.push(col[item]);
+
+      }
+       if(carrera == col[item]){
+         alert("Esta carrera ya esta en la lista de compatibilidad.");
+         band = true;
+         break;
+       }
+      }
+     }
+     if(band == false){
+      let index = codCarr.indexOf("");
+     if(index != -1){
+       codCarr[index]=carrera
+       if(codCarr.length != 8){
+        while(codCarr.length!=8){
+          codCarr.push('');
+        }
+       }
+       this.bdservice.updatecompatibilidad(this.nomcompatmat[0].Dpto,this.nomcompatmat[0].Indice,this.nomcompatmat[0].Materia, codCarr).subscribe(data =>{
+        if(data=="false"){
+          alert('No pudimos');
+        }else{
+          alert('Compatibilidad Modificada');
+          this.router.navigateByUrl('/inicio', {skipLocationChange: true}).then(()=>
+          this.router.navigate(["/compatibilidad"]));
+        }
+       });
+     }
+
+     }
+
+
+  }
+  eliminarcompat(indice:string){
+    let confirmar=confirm("¿Seguro que se quiere eliminar el grupo de compatibilidad "+indice+"?");
+    if (confirmar){
+      //Aquí pones lo que quieras si da a Aceptar
+      this.bdservice.eliminarcompatibilidad(indice).subscribe(data=>{
+        if(data=="false"){
+          alert('No pudimos');
+        }else{
+          alert('Compatibilidad Eliminada');
+          this.router.navigateByUrl('/inicio', {skipLocationChange: true}).then(()=>
+          this.router.navigate(["/compatibilidad"]));
+        }
+      });
+
+    }
+
+
   }
 
 }

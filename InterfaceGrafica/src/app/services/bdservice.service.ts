@@ -479,6 +479,34 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  updatecompatibilidad(Dpto:string,Indice:string,Materia:string,carreras:any){
+    const body = new HttpParams()
+    .set('Dpto', Dpto)
+    .set('Indice', Indice)
+    .set('Materia', Materia)
+    .set('col1', carreras[0])
+    .set('col2', carreras[1])
+    .set('col3', carreras[2])
+    .set('col4', carreras[3])
+    .set('col5', carreras[4])
+    .set('col6', carreras[5])
+    .set('col7', carreras[6])
+    .set('col8', carreras[7]);
+    return this.httpClient.post('http://localhost:3000/' + 'updatecompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  eliminarcompatibilidad(Indice:string){
+    const body = new HttpParams()
+    .set('Indice', Indice);
+    return this.httpClient.post('http://localhost:3000/' + 'eliminarcompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   getMaestros(dpto: string){
     const body = new HttpParams()
     .set('Dpto', dpto);
