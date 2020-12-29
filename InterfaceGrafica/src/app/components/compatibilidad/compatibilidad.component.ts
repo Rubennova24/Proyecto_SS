@@ -44,10 +44,11 @@ export class CompatibilidadComponent implements OnInit {
   Seleccionocompat(matselect:any){
     this.carrerascompat=[];
     this.compatmat=matselect;
-    this.bdservice.getCarrerasrepetidas(matselect).subscribe(data=>{
-      this.carreras2=data;
-    });
+    
     this.bdservice.getCompatibilidad(this.compatmat,this.usrdpto).subscribe(data=>{
+      this.bdservice.getCarrerasrepetidas(data[0].Materia).subscribe(data=>{
+        this.carreras2=data;
+      });
       this.nomcompatmat=data;
       if(data[0].col1!=''){
         this.bdservice.getCarrera(data[0].col1).subscribe(data2=>{
