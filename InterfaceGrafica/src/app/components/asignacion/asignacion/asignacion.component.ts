@@ -49,11 +49,6 @@ export class AsignacionComponent implements OnInit {
       console.log(this.maestros_dpto);
     })
   }
-
-  buscar(e){
-    console.log(e);  
-  }
-  
   asignacion(nombre:string, salon:string, horario:string, fechaInicio:string){
     if(nombre == "" || salon == "" || horario == "" || fechaInicio == ""){
       alert("completa los datos.");

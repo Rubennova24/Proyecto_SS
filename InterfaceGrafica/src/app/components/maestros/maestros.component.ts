@@ -22,6 +22,7 @@ export class MaestrosComponent implements OnInit {
   ctro_ed = 0
   nombre = ""
   clave = ""
+  ultimo_id: any;
   constructor(private bdserviceService:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
@@ -39,14 +40,15 @@ export class MaestrosComponent implements OnInit {
   mostrar_maestros(){
     this.bdserviceService.getMaestros(this.departamento).subscribe(data => {
       this.maestros = data;
-      console.log(this.maestros);
+    });
+    this.bdserviceService.ultimo_id().subscribe(data => {
+      this.ultimo_id = data[0].id;
     })
   }
   delete(mstro){
     console.log(mstro);
     if(confirm("Desea eliminar al Maestro: "+ mstro.Nombre)) {
       this.bdserviceService.eliminar_mstro(mstro.Nombre).subscribe(data=>{
-        console.log(data);
       })
     }
     this.mostrar_maestros();

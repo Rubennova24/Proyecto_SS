@@ -556,5 +556,8 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  ultimo_id() {
+    return this.httpClient.get('http://localhost:3000/' + 'ultimo_id');
+  }
 
 }

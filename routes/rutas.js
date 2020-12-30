@@ -15,9 +15,6 @@ router.get('/carreras', (req, res) => {
         res.json(data);
     }))
 });
-
-
-
 router.get('/asignacion', (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -667,6 +664,17 @@ router.post('/maestro',[
     }
     let body = req.body;
     user.getMaestro(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.get('/ultimo_id', (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.ultimo_id(connection, body, (data => {
         res.json(data);
     }))
 });

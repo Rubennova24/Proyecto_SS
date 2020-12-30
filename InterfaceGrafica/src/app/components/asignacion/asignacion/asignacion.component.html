@@ -1,5 +1,8 @@
-<br><br>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<br><br>
     <div class="container" *ngIf="existengrupos; else vacio">
         <div class="row">
             <div *ngFor="let grupo of grupos2;let j = index"  class="card col-md-4" style="width: 18rem; margin-left: 2%;">
@@ -54,19 +57,35 @@
                 </button>
             </div>
             <div class="modal-body">
+              <form>
+                
+              <div class="form-group">
                 <label for="nombre">Nombre Maestro: </label>
-                <input type="text" name="nombre" id="nombre" style="margin-left: 3.5%;" #nombre (keyup)="buscar(nombre.value)">  <!-- aqui es -->
-                <br>
+                <input class="form-control" list="browsers" type="text" name="browser" id="browser" #nombre>
+                <datalist id="browsers">
+                  <option *ngFor="let i of maestros_dpto" [value]="i">{{i}}</option>
+                </datalist>
+                <!--
+                <select class="form-control" #nombre>
+                  <option value="0">Selecciona un Maestro</option>
+                  <option *ngFor="let i of maestros_dpto" [value]="i">{{i}}</option>
+                </select>
+              -->
+              </div>
+              <div class="form-group">
                 <label for="salon">Salon: </label>
-                <input type="text" name="salon" id="salon" style="margin-left: 21%;" #salon>
-                <br>
+                <input class="form-control" type="text" name="salon" id="salon" #salon>
+              </div>
+              <div class="form-group">
                 <label for="horario">Horario: </label>
-                <input type="time" name="horario" id="horario" style="margin-left: 18%;" #horario>
-                <br>
+                <input type="time" class="form-control" name="horario" id="horario" #horario>
+              </div>
+              <div class="form-group">
                 <label for="fechaInicio">Fecha de Inicio: </label>
-                <input type="date" name="fechaInicio" id="fechaInicio" style="margin-left: 18%;" #fechaInicio>
+                <input type="date" class="form-control" name="fechaInicio" id="fechaInicio" #fechaInicio>
+              </div>
                 <br>
-                <br>
+              </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

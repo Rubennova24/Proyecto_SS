@@ -461,9 +461,8 @@ module.exports = {
             callback(results[0].Nombre);
         })
     },
-    //SELECT ca.Nombre FROM carrera ca,materia mat where mat.Nombre='Álgebra' && ca.Codigo=mat.Carrera
     getMaestros: (connection, body, callback) => {
-        connection.query('SELECT * FROM maestros WHERE departamento = ? ORDER BY Nombre;',[body.Dpto] ,(err, results) => {
+        connection.query('SELECT CAST(Id AS INT) id, Nombre FROM maestros WHERE departamento = ? ORDER BY Id;',[body.Dpto] ,(err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 return;
@@ -512,5 +511,14 @@ module.exports = {
             }
             callback(results);
         })
-    }
+    },
+    ultimo_id: (connection, body, callback) => {
+        connection.query('SELECT CAST(Id AS INT) id FROM maestros ORDER BY Id DESC LIMIT 1;', (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
 }
