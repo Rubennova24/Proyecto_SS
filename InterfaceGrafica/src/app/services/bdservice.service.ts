@@ -452,6 +452,26 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  obtenerCompatibilidad(materia:any){
+    const body = new HttpParams()
+    .set('Materia', materia);
+    return this.httpClient.post('http://localhost:3000/' + 'obtenercompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  getcarrsincompats(Array:any,materia:string){
+    let mat =  materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Array', Array)
+    .set('Materia', mat);
+    return this.httpClient.post('http://localhost:3000/' + 'getcarrsincompats', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   getCarrera(codigo:any){
     const body = new HttpParams()
     .set('Codigo', codigo);
@@ -502,6 +522,25 @@ export class BdserviceService {
     const body = new HttpParams()
     .set('Indice', Indice);
     return this.httpClient.post('http://localhost:3000/' + 'eliminarcompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  vistacompatibilidad(Materia:string,Nombre:string,carreras:any){
+    let mat =  Materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Materia', mat)
+    .set('Nombre', Nombre)
+    .set('col1', carreras[0])
+    .set('col2', carreras[1])
+    .set('col3', carreras[2])
+    .set('col4', carreras[3])
+    .set('col5', carreras[4])
+    .set('col6', carreras[5])
+    .set('col7', carreras[6])
+    .set('col8', carreras[7]);
+    return this.httpClient.post('http://localhost:3000/' + 'vistacompatibilidad', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

@@ -451,6 +451,49 @@ module.exports = {
             callback(results);
         })
     },
+    obtenerCompatibilidad: (connection, body, callback) => {
+        connection.query('SELECT * FROM compatibilidad WHERE Materia = ? ORDER BY Materia',[body.Materia], (err, results) =>{
+            if(err){
+                //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    getcarrsincompats: (connection, body, callback) => {
+        const carreras = body.Array.split(',');
+       
+        var consulta='SELECT DISTINCT(Carrera) FROM '+body.Materia+' WHERE'
+        for(let carr of carreras){
+            if(carr!= ''){
+                consulta+=' Carrera != "'+carr+'" && ';
+            }
+        }
+        consulta+=' Carrera != "" ;';
+        
+        connection.query(consulta, (err, results) =>{
+            if(err){
+                //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                console.log(err);
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+        
+    },
+    Vistacompatibilidad: (connection, body, callback) => { 
+        connection.query("CREATE OR REPLACE VIEW ?? AS SELECT * FROM ?? WHERE carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? ;", [body.Nombre, body.Materia,body.col1,body.col2,body.col3,body.col4,body.col5,body.col6,body.col7,body.col8], (err, results) => {
+            if (err) {
+                //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                console.log(err);
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
     getCarrera: (connection, body, callback) => {
         connection.query('SELECT Nombre FROM carrera WHERE Codigo= ?',[body.Codigo], (err, results) =>{
             if(err){

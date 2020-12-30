@@ -528,6 +528,33 @@ router.post('/getcompatibilidad', [
         res.json(data);
     }))
 });
+router.post('/obtenercompatibilidad', [
+    body('Materia').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.obtenerCompatibilidad(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/getcarrsincompats', [
+    body('Array'),
+    body('Materia'),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getcarrsincompats(connection, body, (data => {
+        res.json(data);
+    }))
+});
 router.post('/getcarrera', [
     body('Codigo').not().isEmpty().isString(),
 ], (req, res) => {
@@ -598,6 +625,28 @@ router.post('/eliminarcompatibilidad', [
     }
     let body = req.body;
     user.eliminarcompatibilidad(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/vistacompatibilidad', [
+    body('Materia').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('col1').not().isEmpty().isString(),
+    body('col2').not().isEmpty().isString(),
+    body('col3'),
+    body('col4'),
+    body('col5'),
+    body('col6'),
+    body('col7'),
+    body('col8'),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.Vistacompatibilidad(connection, body, (data => {
         res.json(data);
     }))
 });
