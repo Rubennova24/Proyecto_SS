@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { isNumeric } from 'jquery';
 import { BdserviceService } from 'src/app/services/bdservice.service';
 
 @Component({
@@ -24,10 +25,11 @@ export class AsignacionComponent implements OnInit {
   maestros = [];
   UsrDpto:string;
   existengrupos=false;
-
+  asigncarrcompats = [];
   departamento:any;
   maestros_dpto = [];
-
+  concatGrupoycompats = [];
+  carr = [];
   constructor(private bdservice:BdserviceService, private router:Router) { }
 
   ngOnInit(): void {
@@ -45,44 +47,100 @@ export class AsignacionComponent implements OnInit {
       for (var i in data){
         this.maestros_dpto.push(data[i].Nombre);
       }
-      //this.maestros_dpto.push(data);
-      console.log(this.maestros_dpto);
+
     })
   }
   asignacion(nombre:string, salon:string, horario:string, fechaInicio:string){
     if(nombre == "" || salon == "" || horario == "" || fechaInicio == ""){
       alert("completa los datos.");
     }else{
-      this.bdservice.getCarreraVista(this.clase).subscribe(data =>{
-        if(data=="false"){
-          //alert("error al conseguir carrera");
+      this.bdservice.getCompatibilidades(this.UsrDpto).subscribe(data =>{
+        let compats:any = data;
+        if(data == "false"){
+          alert("error al conseguir UsrDpto");
+
         }else{
-          this.nomclase = data[0];
-          this.nomclase2 = this.nomclase.Carrera.toLowerCase();
-          let num = this.nomclase2.length;
+          for(let concat of compats){
+            let string:string = concat.Indice+concat.Materia;
+            this.concatGrupoycompats.push(string.toLowerCase());
+          }
+          let i=this.concatGrupoycompats.indexOf(this.clase);
+          if(i != -1){
+            let array1 = compats[i]
+            for(let carr in array1){
+              if(carr != "Dpto" && carr != "Indice" && carr != "Materia"){
+                this.asigncarrcompats.push(array1[carr]);
 
-          this.nom_list = this.clase.substr(num,this.clase.length);
+              }
+            }
+            this.bdservice.updateAsignacioncompats(array1.Materia, nombre, salon, horario, fechaInicio, this.asigncarrcompats).subscribe(data=>{
+              if(data == "false"){
+                alert("error al update en compats");
 
-        this.bdservice.asignacion(this.clase,nombre,salon,horario,this.nom_list, this.nomclase.Carrera, fechaInicio).subscribe(data =>{
-        if(data=="false"){
-          this.asignar(nombre);
-          this.cont = [];
-          this.maestros = [];
-          this.grupos2=[]
-          this.visualizacion()
-        }else{
-          alert("Maestro asignado");
-          this.asignar(nombre);
-          this.cont = [];
-          this.maestros = [];
-          this.grupos2=[]
-          this.visualizacion();
+              }else{
 
+              }
+            });
+            this.bdservice.asignarMaestroCompat(this.clase,nombre,salon,horario,array1.Materia, "", fechaInicio).subscribe(data =>{
+              console.log(data);
+
+              if(data=="false"){
+                this.asignar(nombre);
+                this.cont = [];
+                this.maestros = [];
+                this.grupos2=[]
+                this.router.navigateByUrl('/inicio', {skipLocationChange: true}).then(()=>
+            this.router.navigate(["/asignacion"]));
+              }else{
+                alert("Maestro asignado");
+                this.asignar(nombre);
+                this.cont = [];
+                this.maestros = [];
+                this.grupos2=[]
+                this.router.navigateByUrl('/inicio', {skipLocationChange: true}).then(()=>
+            this.router.navigate(["/asignacion"]));
+
+              }
+          });
+          }else{
+
+              this.bdservice.getCarreraVista(this.clase).subscribe(data =>{
+                if(data=="false"){
+                  //alert("error al conseguir carrera");
+                }else{
+
+                  this.nomclase = data[0];
+                  this.nomclase2 = this.nomclase.Carrera.toLowerCase();
+                  let num = this.nomclase2.length;
+
+                  this.nom_list = this.clase.substr(num,this.clase.length);
+
+                this.bdservice.asignacion(this.clase,nombre,salon,horario,this.nom_list, this.nomclase.Carrera, fechaInicio).subscribe(data =>{
+                if(data=="false"){
+                  this.asignar(nombre);
+                  this.cont = [];
+                  this.maestros = [];
+                  this.grupos2=[]
+                  this.visualizacion()
+                }else{
+                  alert("Maestro asignado");
+                  this.asignar(nombre);
+                  this.cont = [];
+                  this.maestros = [];
+                  this.grupos2=[]
+                  this.visualizacion();
+
+                }
+            });
+                }
+            });
+
+          }
         }
-    });
-        }
-    });
+      });
     }
+
+
   }
 setClase(clase:string){
   this.clase=clase;
@@ -112,40 +170,56 @@ borrarGrupo(grupo:string){
     if (confirmar){
       //Aquí pones lo que quieras si da a Aceptar
       this.bdservice.getCarreraVista(grupo).subscribe(data =>{
+        let carrerasBorrar:any = data;
         if(data=="false"){
           //alert("error al conseguir carrera");
         }else{
-          this.nomCarrera = data[0].Carrera;
-          this.nomclase2 = this.nomCarrera
-          let num = this.nomclase2.length;
-          this.nom_list2 = grupo.substr(num,grupo.length);
-          this.bdservice.dropView(grupo).subscribe(data2 =>{
-            console.log(data2);
-            if(data == "false"){
-              //alert("Error al borrar grupo "+grupo);
-            }else{
-            }
-          });
-          this.bdservice.dropTableInfo(this.nom_list2,this.nomCarrera).subscribe(data3 =>{
-            console.log(data3);
-            if(data == "false"){
+          for(let carreras of carrerasBorrar){
+            this.bdservice.getTablafromView(grupo).subscribe(data=>{
+              console.log(data);
+              if(data=="false"){
+
+              }else{
+                let str = data[0].View_definition;
+                str = str.split(',');
+                str = str[1].replace("`cursosespeciales`.`", '');
+                str = str.replace("`.`Nombre` AS `Nombre`",'');
+                this.bdservice.dropTableInfo(str,carreras.Carrera).subscribe(data3 =>{
+                  console.log(data3);
+                  if(data == "false"){
+                    //alert("Error al borrar grupo "+grupo);
+                  }else{
+
+                  }
+                });
+              }
+                });
+          }
+
+         this.bdservice.dropView(grupo).subscribe(data2 =>{
+          console.log(data2);
+            if(data2 == "false"){
               //alert("Error al borrar grupo "+grupo);
             }else{
 
+
             }
-          });
-          this.cont = [];
-              this.maestros = [];
-              this.grupos2=[];
-              this.visualizacion();
-        }
+
+
+
+
     });
-
+    this.cont = [];
+    this.maestros = [];
+    this.grupos2=[];
+    this.router.navigateByUrl('/inicio', {skipLocationChange: true}).then(()=>
+  this.router.navigate(["/asignacion"]));
     }
-
-
+  });
+  }
 
 }
+
 visualizacion(){
   //Aqui va ir un if para si es jefe dpto o si es decano
   this.existengrupos=false;

@@ -104,8 +104,21 @@ module.exports = {
                     });
     },
     dropTableInfo: (connection, body, callback) => {
+        
         connection.query('DELETE FROM ?? WHERE carrera = ? ;',
             [body.Lista, body.nomCarrera],(err, result) =>{
+                if (err) {
+                    //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                    callback("false");
+                    return;
+                    }
+                    callback(result);
+                    }); 
+    },
+    getTablafromView: (connection, body, callback) => {
+        
+        connection.query('SELECT View_definition FROM INFORMATION_SCHEMA.Views WHERE table_schema = "cursosespeciales" && TABLE_NAME= ?;',
+            [body.View],(err, result) =>{
                 if (err) {
                     //callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                     callback("false");
@@ -171,7 +184,7 @@ module.exports = {
                     callback(result);
                     });
             connection.query('UPDATE ?? SET `maestro` = ? , `salon` = ? , `horario` = ?, `fechainicio` = ? WHERE `carrera`= ?;',
-            [body.NombreLista, body.Nombre, body.Salon, body.Horario, body.fechaInicio, body.Carrera,],(err, result) =>{
+            [body.NombreLista, body.Nombre, body.Salon, body.Horario, body.fechaInicio, body.Carrera],(err, result) =>{
                     if (err) {
                         connection.rollback(function() {
                             throw err;
@@ -482,6 +495,39 @@ module.exports = {
             callback(results);
         })
         
+    },
+    updateAsignacioncompats: (connection, body, callback) => {
+        const carreras = body.Array.split(',');
+        
+        var consulta='UPDATE '+body.Materia+' SET `maestro` = "'+body.Maestro+'" , `salon` = "'+body.Salon+'" , `horario` = "'+body.Horario+'", `fechainicio` = "'+body.fechaInicio+'" WHERE '
+        for(let carr of carreras){
+            if(carr!= ''){
+                consulta+=' Carrera = "'+carr+'" || ';
+            }
+        }
+        consulta+=' Carrera = "" ;';
+       // console.log(consulta);
+        connection.query(consulta, (err, results) =>{
+            if(err){
+                //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                console.log(err);
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
+        
+    },
+    asignarMaestroCompat: (connection, body, callback) => {
+        connection.query('INSERT INTO maestros_asignados (`clase`, `nombre_maestro`, `salon`, `horario`, `nombre_lista`, `carrera`, `fechainicio`) VALUES (? , ? , ? , ?, ?, ?, ?);',[body.Materia, body.Nombre, body.Salon, body.Horario, body.NomList, body.Carrera, body.fechaInicio], (err, results) =>{
+            if(err){
+                //callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                console.log(err);
+                callback("false");
+                return;
+            }
+            callback(results);
+        })
     },
     Vistacompatibilidad: (connection, body, callback) => { 
         connection.query("CREATE OR REPLACE VIEW ?? AS SELECT * FROM ?? WHERE carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? || carrera = ? ;", [body.Nombre, body.Materia,body.col1,body.col2,body.col3,body.col4,body.col5,body.col6,body.col7,body.col8], (err, results) => {

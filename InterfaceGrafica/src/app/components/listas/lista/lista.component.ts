@@ -116,24 +116,23 @@ export class ListaComponent implements OnInit {
                     this.vistas2.push(data2);
                   });
                 }
-                console.log(this.vistas2);
               }
             });
           }else{//si hay compatibilidades pero no esta en la compatibilidad
             this.bdservice.getcarrsincompats(this.nomcarrcompats,this.materiacard).subscribe(datos=>{
               let carrsincompat:any=datos;
-              
+
               if(datos=="false"){
                 alert('Paso algo mal trayendo carreras sin compats');
               }else{
                 for(let carrs of carrsincompat){
                   this.nomcarrsincompats.push(carrs.Carrera);
                 }
-                
+
                 for( const Carr of this.nomcarrsincompats){
                   this.bdservice.CrearVista(this.materiacard, Carr).subscribe(
                     datos => {
-        
+
                       if(datos=="false"){
                         //alert("algo salio mal en la creacion de vista");
                       }else{
@@ -142,14 +141,14 @@ export class ListaComponent implements OnInit {
                           vista => {
                             if(vista == "false"){
                              // alert("algo paso mal viendo la vista");
-        
+
                             }else{
                               let prueba = new Date(vista[0].FechaInicio);
                               vista[0].FechaInicio = prueba.getDate()+'/'+(prueba.getMonth()+1)+'/'+prueba.getFullYear();
                               this.vistas.push(vista);
-        
+
                             }
-        
+
                           });
                        // }
                       }
@@ -164,12 +163,12 @@ export class ListaComponent implements OnInit {
       }else{//Vista sin compatibilidad
         this.bdservice.VerCarreraLista(this.materiacard).subscribe(
           data => {
-    
+
             this.carreras = data;
             for( const Carr of this.carreras){
               this.bdservice.CrearVista(this.materiacard, Carr.Carrera).subscribe(
                 datos => {
-    
+
                   if(datos=="false"){
                     //alert("algo salio mal en la creacion de vista");
                   }else{
@@ -178,14 +177,14 @@ export class ListaComponent implements OnInit {
                       vista => {
                         if(vista == "false"){
                          // alert("algo paso mal viendo la vista");
-    
+
                         }else{
                           let prueba = new Date(vista[0].FechaInicio);
                           vista[0].FechaInicio = prueba.getDate()+'/'+(prueba.getMonth()+1)+'/'+prueba.getFullYear();
                           this.vistas.push(vista);
-    
+
                         }
-    
+
                       });
                    // }
                   }
@@ -195,11 +194,11 @@ export class ListaComponent implements OnInit {
           }
           );
       }
-        
+
 
     });
 
-    
+
   }
   inscripcion(id:string,nombre:string){
     let Dpto = this.bdservice.getSelectDpto();

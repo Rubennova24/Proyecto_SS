@@ -129,6 +129,15 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  getTablafromView(view:string){
+    const body = new HttpParams()
+    .set('View', view);
+    return this.httpClient.post('http://localhost:3000/' + 'TablafromView', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   getlista(materia: string){
     let mat =  materia.replace(/ /g,"");
 
@@ -456,6 +465,39 @@ export class BdserviceService {
     const body = new HttpParams()
     .set('Materia', materia);
     return this.httpClient.post('http://localhost:3000/' + 'obtenercompatibilidad', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
+  updateAsignacioncompats(Materia:string, Maestro:string, Salon:string, Horario:string, fechaInicio:string, array:any){
+    let mat =  Materia.replace(/ /g,"");
+    const body = new HttpParams()
+    .set('Materia', mat)
+    .set('Maestro', Maestro)
+    .set('Salon', Salon)
+    .set('Horario', Horario)
+    .set('fechaInicio', fechaInicio)
+    .set('Array', array);
+    return this.httpClient.post('http://localhost:3000/' + 'updateAsignacioncompats', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  asignarMaestroCompat(Materia:string, Maestro:string, Salon:string, Horario:string,NomList:string,Carrera:string , fechaInicio:string){
+    let mat =  Materia.replace(/ /g,"");
+    Carrera = "Compat";
+    const body = new HttpParams()
+    .set('Materia', mat)
+    .set('Nombre', Maestro)
+    .set('Salon', Salon)
+    .set('Horario', Horario)
+    .set('NomList', NomList)
+    .set('Carrera', Carrera)
+    .set('fechaInicio', fechaInicio);
+    return this.httpClient.post('http://localhost:3000/' + 'asignarMaestroCompat', body.toString(),
     {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

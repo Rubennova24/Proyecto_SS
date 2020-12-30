@@ -185,7 +185,7 @@ router.post('/asignarMaestro', [
     body('Nombre').not().isEmpty().isString(),
     body('Salon').not().isEmpty().isString(),
     body('Horario').not().isEmpty().isString(),
-    body('NombreLista').not().isEmpty().isString(),
+    body('NombreLista'),
     body('Carrera').not().isEmpty().isString(),
     body('fechaInicio').not().isEmpty().isString(),
 ], (req, res) => {
@@ -474,6 +474,19 @@ router.get('/ultima_modificacion', (req, res) => {
         res.json(data);
     }))
 });
+router.post('/TablafromView', [
+    body('View').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getTablafromView(connection, body, (data => {
+        res.json(data);
+    }))
+});
 //compatibilidad
 router.post('/getmateriasrepetidas', [
     body('Dpto').not().isEmpty().isString(),
@@ -552,6 +565,43 @@ router.post('/getcarrsincompats', [
     }
     let body = req.body;
     user.getcarrsincompats(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/updateAsignacioncompats', [
+    body('Materia').not().isEmpty().isString(),
+    body('Maestro').not().isEmpty().isString(),
+    body('Salon').not().isEmpty().isString(),
+    body('Horario').not().isEmpty().isString(),
+    body('fechaInicio').not().isEmpty().isString(),
+    body('Array'),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.updateAsignacioncompats(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/asignarMaestroCompat', [
+    body('Materia').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('Salon').not().isEmpty().isString(),
+    body('Horario').not().isEmpty().isString(),
+    body('NomList').not().isEmpty().isString(),
+    body('Carrera'),
+    body('fechaInicio').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.asignarMaestroCompat(connection, body, (data => {
         res.json(data);
     }))
 });
