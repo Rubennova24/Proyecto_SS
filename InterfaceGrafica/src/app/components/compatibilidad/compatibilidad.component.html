@@ -1,55 +1,51 @@
 <div class="main">
-    <h1>Menu de compatibilidad</h1>
+  <h1 style="text-align: center; margin-bottom: 15px;">Menu de compatibilidad</h1>
     <div class="container jumbotron jumbotron-fluid mt-5 mb-5">
       <div class="container">
         <div class="row">
           <div class="col-sm">
             <h3>Crear Compatibilidad</h3>
-            <select name="materiaselect" id="" (change)="Seleccionomat(materiaselect.value)" #materiaselect>
+            <div class="form-group">
+              <select name="materiaselect" class="form-control" (change)="Seleccionomat(materiaselect.value)" #materiaselect>
                 <option selected>Selecciona una Materia</option>
                 <option *ngFor="let mat of materias" [value]="mat.Nombre">{{mat.Nombre}}</option>
-             </select>
-             <div *ngFor="let carr of carreras">
-                <input  type="checkbox" [value]="carr.Codigo" [id]="carr.Codigo" (change)="checkboxes($event.target.checked,$event.target.value)">
+              </select>
+              <div *ngFor="let carr of carreras">
+                <input class="form-control" type="checkbox" [value]="carr.Codigo" [id]="carr.Codigo" (change)="checkboxes($event.target.checked,$event.target.value)">
                 <label [for]="carr.Codigo"> {{carr.Nombre}}</label>
-             </div><br>
-             <button class="btn btn-success" (click)="nuevacompat()">Agregar</button>
+              </div><br>
+              <button class="btn btn-success" (click)="nuevacompat()">Agregar</button>
+            </div>             
           </div>
           <div class="col-sm">
             <h3>Buscar Compatibilidad</h3>
-            <select name="compatselect" id="" (change)="Seleccionocompat(compatselect.value)" #compatselect>
-                <option selected>Selecciona una Materia</option>
-                <option *ngFor="let compat of compatibilidades" [value]="compat.Indice" >{{compat.Indice}}-{{compat.Materia}}</option>
-            </select>
-            <br>
-            <select name="carr" id="" #carrselect>
+            <div class="form-group">
+              <select name="compatselect" class="form-control" (change)="Seleccionocompat(compatselect.value)" #compatselect>
+                  <option selected>Selecciona una Materia</option>
+                  <option *ngFor="let compat of compatibilidades" [value]="compat.Indice" >{{compat.Indice}}-{{compat.Materia}}</option>
+              </select><br>
+              <select name="carr" class="form-control" #carrselect>
                 <option>Selecciona una Carrera</option>
                 <option *ngFor="let carr of carreras2" [value]="carr.Codigo">{{carr.Nombre}}</option>
-            </select>
-            <br>
-            <button class="btn btn-success" (click)="agregarcompat(carrselect.value)">Agregar</button>
+              </select> <br>
+              <button class="btn btn-success" (click)="agregarcompat(carrselect.value)">Agregar</button>
+            </div>
           </div>
           <div class="col-sm">
             <h3>Compatibilidad</h3>
-            <div *ngFor="let nom of nomcompatmat">
-              <h5 >Nombre: {{nom.Materia}}-{{nom.Indice}}</h5>
-              <button class="btn btn-danger"  (click)="eliminarcompat(nom.Indice)">Eliminar</button>
-            </div>
-
-            <h6>Carreras:</h6>
-            <div *ngFor="let carr of carrerascompat">
+            <div class="form-group">
+              <div *ngFor="let nom of nomcompatmat">
+                <h5 >Nombre: {{nom.Materia}}-{{nom.Indice}}</h5>
+                <button class="btn btn-danger"  (click)="eliminarcompat(nom.Indice)">Eliminar</button>
+              </div>
+              <h6>Carreras:</h6>
+              <div *ngFor="let carr of carrerascompat">
                 <p>{{carr}}</p>
-
+              </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-
-
-
-
-     <br>
-
+    <br>
 </div>
