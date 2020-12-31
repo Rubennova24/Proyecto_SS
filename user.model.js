@@ -551,7 +551,7 @@ module.exports = {
         })
     },
     getMaestros: (connection, body, callback) => {
-        connection.query('SELECT CAST(Id AS INT) id, Nombre FROM maestros WHERE departamento = ? ORDER BY Id;',[body.Dpto] ,(err, results) => {
+        connection.query('SELECT CAST(Id AS INT) id, Nombre FROM maestros WHERE departamento = ? ORDER BY Nombre;',[body.Dpto] ,(err, results) => {
             if (err) {
                 callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
                 return;

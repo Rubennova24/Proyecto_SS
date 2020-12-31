@@ -70,6 +70,7 @@ export class MaestrosComponent implements OnInit {
     alert("Datos modificados satisfactoriamente");
     this.mostrar_maestros();
     this.nuevo_nom = ""
+
   }
   guardar(nom:string, id:string){
     var dpto = this.departamento;
@@ -85,9 +86,10 @@ export class MaestrosComponent implements OnInit {
         this.mostrar_maestros();
         this.nombre=""
         this.clave=""
+
       }
     });
   }
-  
+
 
 }

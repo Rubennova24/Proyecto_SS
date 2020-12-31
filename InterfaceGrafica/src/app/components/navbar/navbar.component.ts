@@ -33,10 +33,7 @@ export class NavbarComponent implements OnInit {
     this.bdserviceService.getUsr(this.usuario,this.pass).subscribe(data =>{
       if(Object.keys(data).length == 0){
         this.bdserviceService.getUsr2(this.usuario,this.pass).subscribe(data2 =>{
-
-
         if(Object.keys(data2).length == 0){
-
           this.completo=false;
         }else{
           this.logeado = true;
