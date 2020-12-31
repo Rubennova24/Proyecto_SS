@@ -35,9 +35,9 @@
                                 <label>Nuevo Nombre</label>
                                 <input type="text" class="form-control" #nom_e [(ngModel)]="nuevo_nom" name="nom_e">
                             </div>
-                            <button type="submit" class="btn btn-info"  *ngIf="nuevo_nom!='' ;else desactivado" (click)="actualizar()">Confirmar</button>
+                            <button type="submit" class="btn btn-info" data-dismiss="modal" *ngIf="nuevo_nom!='' ;else desactivado" (click)="actualizar()">Confirmar</button>
                             <ng-template #desactivado>
-                                <button type="submit" class="btn btn-info" disabled>Confirmar</button>
+                                <button type="submit" class="btn btn-info" data-dismiss="modal" disabled>Confirmar</button>
                             </ng-template>
                         </form>
                     </div>
@@ -71,7 +71,7 @@
                             <label>Id</label>
                             <input type="text" class="form-control" #id [(ngModel)]="clave" name="clave">
                         </div>
-                        <button type="submit" class="btn btn-info"  *ngIf="nom.value!='' && id.value!='' ;else desactivado" (click)="guardar(nom.value, id.value)">Confirmar</button>
+                        <button type="submit" class="btn btn-info"  data-dismiss="modal" *ngIf="nom.value!='' && id.value!='' ;else desactivado" (click)="guardar(nom.value, id.value)">Confirmar</button>
                         <ng-template #desactivado>
                             <button type="submit" class="btn btn-info" disabled>Confirmar</button>
                         </ng-template>

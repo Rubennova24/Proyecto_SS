@@ -46,7 +46,7 @@ export class MaestrosComponent implements OnInit {
     })
   }
   delete(mstro){
-    console.log(mstro);
+    
     if(confirm("Desea eliminar al Maestro: "+ mstro.Nombre)) {
       this.bdserviceService.eliminar_mstro(mstro.Nombre).subscribe(data=>{
       })
@@ -55,17 +55,17 @@ export class MaestrosComponent implements OnInit {
   }
   opcion(){}
   editar(mstro){    //funcion para
-    console.log(mstro);
     this.nuevo_nom = mstro.Nombre;
     this.dpto_ed = mstro.Departamento;
     this.ctro_ed = mstro.Centro;
 
     this.mstro_editar = mstro.Nombre;
-    this.id_mstro = mstro.Id;
+    this.id_mstro = mstro.id;
+    
   }
   actualizar(){ //confirmar la edicion
     this.bdserviceService.editar_mstro(this.nuevo_nom, this.id_mstro).subscribe(data=>{
-      console.log(data);
+      
     });
     alert("Datos modificados satisfactoriamente");
     this.mostrar_maestros();
@@ -74,13 +74,13 @@ export class MaestrosComponent implements OnInit {
   }
   guardar(nom:string, id:string){
     var dpto = this.departamento;
-    console.log(nom,id,dpto);
+    
     this.bdserviceService.getMaestro(id).subscribe(data=>{
       if(Object.keys(data).length != 0){ //ya esta ese id
         alert("Id existente, intente con otro");
       }else{
         this.bdserviceService.registrar_mstro(id,nom,dpto,this.centro).subscribe(data=>{
-          console.log(data);
+          
         });
         alert("Maestro registrado satisfactoriamente");
         this.mostrar_maestros();

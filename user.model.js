@@ -570,11 +570,12 @@ module.exports = {
         })
     },
     editar_mstro: (connection, body, callback) => {
-        connection.query('UPDATE maestros SET `Nombre` = ?  WHERE `Id` = ? ;',
+        connection.query('UPDATE maestros SET nombre = ?  WHERE id = ? ;',
         [body.Nombre, body.Id], (err, results) =>{
             if(err){
                 callback({array: null, id: null, success: false, err: JSON.stringify(err) });
                 //callback("false");
+                console.log(err);
                 return;
             }
             callback(results);
