@@ -276,6 +276,26 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  guardarexcel(Tabla:string){
+    const body = new HttpParams()
+    .set('Tabla', Tabla);
+    return this.httpClient.post('http://localhost:3000/' + 'guardarexcel', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  descargarexcel(Nombre:string): Observable<any>{
+    const body = new HttpParams()
+    .set('Nombre', Nombre);
+    return this.httpClient.post('http://localhost:3000/' + 'descargarexcel', body.toString(),
+    {
+    responseType: "blob",
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+
   getCarreraVista(Nombre:string){
     const body = new HttpParams()
     .set('Nombre', Nombre);

@@ -1,3 +1,4 @@
+const excel = require('exceljs');
 module.exports = {
     getCarreras: (connection, body, callback) => {
         connection.query('SELECT * FROM carrera ORDER BY Nombre;', (err, results) => {
@@ -611,4 +612,35 @@ module.exports = {
             callback(results);
         })
     },
+    guardarexcel: (connection, body, callback)=>{
+        connection.query('SELECT * FROM ?? ;', [body.Tabla], (err, rows, fields)=>{
+            if (err){
+                callback("false");
+                return;
+            }
+            const json = JSON.parse(JSON.stringify(rows));
+            
+
+            let workbook = new excel.Workbook();
+            let worksheet = workbook.addWorksheet(body.Tabla);
+
+            worksheet.columns = [
+                {header: 'Id', key: 'Id', width: 8},
+                {header: 'Nombre', key: 'Nombre', width: 50},
+                {header: 'Carrera', key: 'Carrera', width: 8},
+                {header: 'Imagen', key: 'Imagen', width: 50},
+                {header: 'Maestro', key: 'Maestro', width: 50},
+                {header: 'Salon', key: 'Salon', width: 5},
+                {header: 'Horario', key: 'Horario', width: 15},
+                {header: 'Departamento', key: 'Departamento', width: 8},
+                {header: 'Fecha Inicio', key: 'FechaInicio', width: 15},
+            ];
+
+            worksheet.addRows(json);
+
+            workbook.xlsx.writeFile('public/excel/'+body.Tabla+'.xlsx').then(function(){
+                callback("true");
+            });
+        });
+    }
 }

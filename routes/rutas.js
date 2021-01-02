@@ -778,4 +778,18 @@ router.get('/ultimo_id', (req, res) => {
     }))
 });
 
+router.post('/guardarexcel',[
+    body('Tabla').not().isEmpty().isString(),
+],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.guardarexcel(connection,body, (data => {
+        res.json(data);
+    }))
+});
+
 module.exports = router;

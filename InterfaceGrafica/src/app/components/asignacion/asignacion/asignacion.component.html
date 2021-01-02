@@ -29,6 +29,12 @@
                         </button>
                       </div>
                       <div class="col">
+                        <button type="button" class="btn btn-success" (click)="guardarexcel(grupo)" style="margin-top: 2%;">
+                          Exportar
+                        </button>
+                      </div>
+
+                      <div class="col">
                         <button type="button" class="btn btn-success" data-toggle="modal" (click)="setClase(grupo)" data-target="#staticBackdrop" style="margin-top: 2%;">
                           Asignar
                         </button>
@@ -58,7 +64,7 @@
             </div>
             <div class="modal-body">
               <form>
-                
+
               <div class="form-group">
                 <label for="nombre">Nombre Maestro: </label>
                 <input class="form-control" list="browsers" type="text" name="browser" id="browser" #nombre>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { isNumeric } from 'jquery';
 import { BdserviceService } from 'src/app/services/bdservice.service';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-asignacion',
@@ -279,5 +279,24 @@ visualizacion(){
   });
   }//end else if
 }
+guardarexcel(Tabla:string){
+  let confirmar=confirm("¿Seguro que se quiere exportar el grupo "+Tabla+" a excel ?");
+  if (confirmar){
+    this.bdservice.guardarexcel(Tabla).subscribe(data =>{
+      if(data=="false"){
+        alert("No se pudo exportar el archivo.");
+      }else if(data=="true"){
 
+        this.descargar(Tabla);
+      }
+    });
+  }
+
+}
+
+descargar(Tabla:string){
+  this.bdservice.descargarexcel(Tabla).subscribe(data2 =>{
+    saveAs(data2, Tabla);
+  });
+}
 }

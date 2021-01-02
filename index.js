@@ -5,6 +5,7 @@ const fs=require('fs');
 const connection = require("./conexion");
 const cors = require('cors');
 
+
  const app = express();
  const rutas=require('./routes/rutas');
  app.use(cors());
@@ -32,6 +33,16 @@ app.get('/borrarimagenes',(req,res)=>{
     });
 
 });
+app.post('/descargarexcel',(req,res)=>{
+    let body = req.body
+    res.download('./public/excel/'+body.Nombre+'.xlsx',function(err){
+        if(err){
+            console.log(err);
+        }else{
+            console.log("descargado");
+        }
+    });
+});
 
  connection.connect((err, res) => {
     if(err){
@@ -41,6 +52,7 @@ app.get('/borrarimagenes',(req,res)=>{
     }
     console.log('conexion exitosa a la base de datos');
  });
+
 
  app.listen(3000,(err,res)=> {
      if(err){
