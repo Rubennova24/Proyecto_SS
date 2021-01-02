@@ -31,6 +31,12 @@ app.get('/borrarimagenes',(req,res)=>{
             
         });
     });
+    fs.readdirSync("./public/excel").forEach((fileName)=>{
+        fs.unlink(`./public/excel/${fileName}`,function(res){
+            
+        });
+    });
+
 
 });
 app.post('/descargarexcel',(req,res)=>{
