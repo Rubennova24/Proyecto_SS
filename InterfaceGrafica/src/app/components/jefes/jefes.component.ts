@@ -1,6 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { BdserviceService } from './../../services/bdservice.service';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-jefes',
@@ -49,7 +50,7 @@ export class JefesComponent implements OnInit {
       let prueba = new Date(data[0].fechaCambio);
                 data[0].fechaCambio = prueba.getDate()+'/'+(prueba.getMonth()+1)+'/'+prueba.getFullYear();
       this.ultimo_registro=data
-      console.log(data);
+      //console.log(data);
     })
   }
   mostrar_jefes(){
@@ -60,7 +61,7 @@ export class JefesComponent implements OnInit {
   opcion(){}
   opcion2(){}
   editar(jefe){    //funcion para
-    console.log(jefe);
+    //console.log(jefe);
     this.nuevo_nom = jefe.Nombre;
     this.nueva_pass = jefe.Contrasena;
     this.dpto_ed = jefe.Dpto;
@@ -70,9 +71,9 @@ export class JefesComponent implements OnInit {
     this.id_jefe = jefe.Id;
   }
   actualizar(dpto: string, jefe: string){ //confirmar la edicion
-    console.log( this.id_jefe, this.nuevo_nom,this.nueva_pass,this.dpto_ed,this.jefe_ed);
+    //console.log( this.id_jefe, this.nuevo_nom,this.nueva_pass,this.dpto_ed,this.jefe_ed);
     this.bdserviceService.editar(this.id_jefe,this.nuevo_nom,this.nueva_pass, dpto, jefe).subscribe(data=>{
-      console.log(data);
+      //console.log(data);
     });
     alert("Datos modificados satisfactoriamente");
     this.mostrar_jefes();
@@ -82,7 +83,7 @@ export class JefesComponent implements OnInit {
     this.jefe_ed = 0
   }
   delete(jf){
-    console.log(jf);
+    //console.log(jf);
     if(confirm("Desea eliminar el Jefe: "+ jf.Nombre)) {
       this.bdserviceService.eliminar(jf.Id).subscribe(data=>{
         console.log(data);
@@ -91,13 +92,13 @@ export class JefesComponent implements OnInit {
     this.mostrar_jefes()
   }
   guardar(nom:string, id:string, pass:string, dpto:string, jefe:string){
-    console.log(nom,id,pass,dpto,jefe);
+    //console.log(nom,id,pass,dpto,jefe);
     this.bdserviceService.getJefe(id).subscribe(data=>{
       if(Object.keys(data).length != 0){ //ya esta ese id
         alert("Id existente, intente con otro");
       }else{
         this.bdserviceService.registrar(id,nom,pass,dpto,jefe).subscribe(data=>{
-          console.log(data);
+          //console.log(data);
         });
         alert("Jefe registrado satisfactoriamente");
         this.mostrar_jefes();
@@ -112,6 +113,11 @@ export class JefesComponent implements OnInit {
   modificar_fecha(){
     this.bdserviceService.setNuevaFecha(true);
     this.router.navigate(['/fechas']);
+  }
+  Reporte(){
+    this.bdserviceService.descargarReporteExcel().subscribe(data =>{
+        saveAs(data,"reportesemestre");
+    });
   }
 
 }

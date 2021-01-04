@@ -285,6 +285,15 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
+  guardarReporteExcel(Tablas:any){
+    const body = new HttpParams()
+    .set('Tablas', Tablas);
+    return this.httpClient.post('http://localhost:3000/' + 'guardarReporteExcel', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   descargarexcel(Nombre:string): Observable<any>{
     const body = new HttpParams()
     .set('Nombre', Nombre);
@@ -295,7 +304,15 @@ export class BdserviceService {
     .set('Content-Type', 'application/x-www-form-urlencoded')
     });
   }
-
+  descargarReporteExcel(): Observable<any>{
+    const body = new HttpParams()
+    return this.httpClient.post('http://localhost:3000/' + 'descargarReporteExcel', body.toString(),
+    {
+    responseType: "blob",
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
   getCarreraVista(Nombre:string){
     const body = new HttpParams()
     .set('Nombre', Nombre);

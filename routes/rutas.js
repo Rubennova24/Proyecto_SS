@@ -791,5 +791,18 @@ router.post('/guardarexcel',[
         res.json(data);
     }))
 });
+router.post('/guardarReporteExcel',[
+    body('Tablas'),
+],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.guardarReporteExcel(connection,body, (data => {
+        res.json(data);
+    }))
+});
 
 module.exports = router;

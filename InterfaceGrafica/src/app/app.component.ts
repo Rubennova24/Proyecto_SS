@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
   title = 'app-redes';
   subscription:Subscription;
   refresh=false;
-
+  views = [];
   constructor(private bdservice:BdserviceService){  }
   ngOnInit(){
 
@@ -41,9 +41,28 @@ export class AppComponent implements OnInit{
 
   }
   borrartodo(){
-    this.bdservice.totaltablas().subscribe(data=>{
-      this.bdservice.borrar(data);
+    this.bdservice.getVistas2().subscribe(data1 =>{
+      let allviews:any = data1;
+
+      for(let vista of allviews){
+          this.views.push(vista.Table_Name);
+
+      }
+      if(this.views.length !=0){
+        this.bdservice.guardarReporteExcel(this.views).subscribe(datos =>{
+          if(datos=="true"){
+            this.bdservice.totaltablas().subscribe(data=>{
+              this.bdservice.borrar(data);
+            });
+          }
+      });
+      }
+
+
+
+
     });
+
   }
   asignarNuevaFecha(){
     this.bdservice.setNuevaFecha(true);

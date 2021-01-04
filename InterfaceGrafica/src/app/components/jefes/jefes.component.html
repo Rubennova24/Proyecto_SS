@@ -124,9 +124,14 @@
 </div>
 <div class="fechas my-5">
     <h1 style="text-align: center;">Registro de Modificación de Fechas</h1>
-    <div class="alert alert-warning" role="alert">    
+    <div class="alert alert-warning" role="alert">
         <p>Fecha: {{ultimo_registro[0].fechaCambio}} </p>
         <p>Nombre: {{ultimo_registro[0].Asignador}} </p>
         <button type="button" class="btn btn-outline-secondary" (click)="modificar_fecha()">Modificar Fechas</button>
+        <br><br>
+        <div>
+          <button type="button" class="btn btn-outline-success" (click)="Reporte()">Descargar Reporte</button>
+        </div>
     </div>
+
 </div>

@@ -1,4 +1,5 @@
 const excel = require('exceljs');
+var workbook2 = new excel.Workbook();
 module.exports = {
     getCarreras: (connection, body, callback) => {
         connection.query('SELECT * FROM carrera ORDER BY Nombre;', (err, results) => {
@@ -642,5 +643,40 @@ module.exports = {
                 callback("true");
             });
         });
+    },
+    
+    guardarReporteExcel: (connection, body, callback)=>{
+        const Tablas = body.Tablas.split(',');
+        for(let Tabla of Tablas){
+            connection.query('SELECT * FROM ?? ;', [Tabla], (err, rows, fields)=>{
+                if (err){
+                    
+                    callback("false");
+                    return;
+                }
+                const json = JSON.parse(JSON.stringify(rows));
+                let worksheet2 = workbook2.addWorksheet(Tabla);
+    
+                worksheet2.columns = [
+                    {header: 'Id', key: 'Id', width: 8},
+                    {header: 'Nombre', key: 'Nombre', width: 50},
+                    {header: 'Carrera', key: 'Carrera', width: 8},
+                    {header: 'Imagen', key: 'Imagen', width: 50},
+                    {header: 'Maestro', key: 'Maestro', width: 50},
+                    {header: 'Salon', key: 'Salon', width: 5},
+                    {header: 'Horario', key: 'Horario', width: 15},
+                    {header: 'Departamento', key: 'Departamento', width: 8},
+                    {header: 'Fecha Inicio', key: 'FechaInicio', width: 15},
+                ];
+    
+                worksheet2.addRows(json);
+                workbook2.xlsx.writeFile('public/historico/reportesemestre.xlsx').then(function(){
+                    
+                });
+            });
+        }
+        callback("true");
+        
+        
     }
 }

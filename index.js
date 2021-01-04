@@ -44,8 +44,14 @@ app.post('/descargarexcel',(req,res)=>{
     res.download('./public/excel/'+body.Nombre+'.xlsx',function(err){
         if(err){
             console.log(err);
-        }else{
-            console.log("descargado");
+        }
+    });
+});
+app.post('/descargarReporteExcel',(req,res)=>{
+    let body = req.body
+    res.download('./public/historico/reportesemestre.xlsx',function(err){
+        if(err){
+            console.log(err);
         }
     });
 });
