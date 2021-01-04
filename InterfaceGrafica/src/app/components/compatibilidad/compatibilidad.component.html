@@ -11,7 +11,7 @@
                 <option *ngFor="let mat of materias" [value]="mat.Nombre">{{mat.Nombre}}</option>
               </select>
               <div *ngFor="let carr of carreras">
-                <input class="form-control" type="checkbox" [value]="carr.Codigo" [id]="carr.Codigo" (change)="checkboxes($event.target.checked,$event.target.value)">
+                <input  type="checkbox" [value]="carr.Codigo" [id]="carr.Codigo" (change)="checkboxes($event.target.checked,$event.target.value)">
                 <label [for]="carr.Codigo"> {{carr.Nombre}}</label>
               </div><br>
               <button class="btn btn-success" (click)="nuevacompat()">Agregar</button>
