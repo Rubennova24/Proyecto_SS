@@ -804,5 +804,64 @@ router.post('/guardarReporteExcel',[
         res.json(data);
     }))
 });
+router.post('/materias', [body('IdDpto').not().isEmpty().isString(),], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.getMaterias(connection, body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/eliminar_mat',[
+    body('Codigo').not().isEmpty().isString(),
+    body('Carrera').not().isEmpty().isString(),
+    ],(req,res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.eliminar_mat(connection,body, (data => {
+        res.json(data);
+    }))
+});
+router.post('/registrar_mat', [
+    body('Codigo').not().isEmpty().isString(),
+    body('Nombre').not().isEmpty().isString(),
+    body('Semestre').not().isEmpty().isString(),
+    body('Centro').not().isEmpty().isString(),
+    body('Carrera').not().isEmpty().isString(),
+    body('Dpto').not().isEmpty().isString(),
+    ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.registrar_mat(connection, body, (data => {
+        res.json(data);
+    }))
+})
+router.post('/editar_mat', [
+    body('Nombre').not().isEmpty().isString(),
+    body('Semestre').not().isEmpty().isString(),
+    body('Codigo').not().isEmpty().isString(),
+    body('Carrera').not().isEmpty().isString(),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({ success: false, err: JSON.stringify(errors) })
+        return
+    }
+    let body = req.body;
+    user.editar_mat(connection, body, (data => {
+        res.json(data);
+    }))
+});
 
 module.exports = router;

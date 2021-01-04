@@ -1,0 +1,8 @@
+.main{
+  margin: 20px;
+}
+.boton{
+display: flex;
+flex-flow: column wrap;
+justify-content: center;
+}

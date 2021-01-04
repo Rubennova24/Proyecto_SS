@@ -677,5 +677,50 @@ export class BdserviceService {
   ultimo_id() {
     return this.httpClient.get('http://localhost:3000/' + 'ultimo_id');
   }
+  getMaterias(dpto:string){
+    const body = new HttpParams()
+    .set('IdDpto', dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'materias', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  eliminar_mat(cod: string,carr: string){
+    const body = new HttpParams()
+    .set('Codigo', cod)
+    .set('Carrera',carr);
+    return this.httpClient.post('http://localhost:3000/' + 'eliminar_mat', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  registrar_mat(cod: string, nom: string, sem: string, centro: string, carr: string, dpto: string){
+    const body = new HttpParams()
+    .set('Codigo', cod)
+    .set('Nombre', nom)
+    .set('Semestre', sem)
+    .set('Centro', centro)
+    .set('Carrera', carr)
+    .set('Dpto', dpto);
+    return this.httpClient.post('http://localhost:3000/' + 'registrar_mat', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
+  editar_mat(n_nom: string, n_sem: string, cod: string, car: string){
+    const body = new HttpParams()
+    .set('Nombre', n_nom)
+    .set('Semestre', n_sem)
+    .set('Codigo', cod)
+    .set('Carrera', car);
+    return this.httpClient.post('http://localhost:3000/' + 'editar_mat', body.toString(),
+    {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+  }
 
 }

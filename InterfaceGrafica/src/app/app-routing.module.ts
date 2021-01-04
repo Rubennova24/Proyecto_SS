@@ -8,6 +8,7 @@ import { JefesComponent } from './components/jefes/jefes.component';
 import { FechasComponent } from './components/fechas/fechas.component';
 import { MaestrosComponent } from './components/maestros/maestros.component';
 import { CompatibilidadComponent } from './components/compatibilidad/compatibilidad.component';
+import { MateriasComponent } from './components/materias/materias.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'compatibilidad', component:CompatibilidadComponent},
   {path: 'fechas', component:FechasComponent},
   {path: 'maestros', component:MaestrosComponent},
+  {path: 'materias', component: MateriasComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

@@ -14,6 +14,7 @@ import { JefesComponent } from './components/jefes/jefes.component';
 import { FechasComponent } from './components/fechas/fechas.component';
 import { MaestrosComponent } from './components/maestros/maestros.component';
 import { CompatibilidadComponent } from './components/compatibilidad/compatibilidad.component';
+import { MateriasComponent } from './components/materias/materias.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CompatibilidadComponent } from './components/compatibilidad/compatibili
     JefesComponent,
     FechasComponent,
     MaestrosComponent,
-    CompatibilidadComponent
+    CompatibilidadComponent,
+    MateriasComponent
   ],
   imports: [
     BrowserModule,

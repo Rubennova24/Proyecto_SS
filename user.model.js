@@ -678,5 +678,47 @@ module.exports = {
         callback("true");
         
         
+    },
+    getMaterias: (connection, body, callback) => {
+        connection.query('SELECT * FROM materia WHERE Dpto = ? ORDER BY Semestre;', [body.IdDpto], (err, results) => {
+            if (err) {
+                callback({ array: null, id: null, success: false, err: JSON.stringify(err) });
+                return;
+            }
+            callback(results);
+        })
+    },
+    eliminar_mat: (connection, body, callback) => {
+        connection.query('DELETE FROM materia WHERE Codigo = ? && Carrera = ?',[body.Codigo,body.Carrera], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    registrar_mat: (connection, body, callback) => {
+        connection.query('INSERT INTO materia (`codigo`, `nombre`, `semestre`, `centro`, `carrera`, `dpto`) VALUES (? , ? , ? , ?, ? , ? );',
+        [body.Codigo, body.Nombre, body.Semestre, body.Centro, body.Carrera, body.Dpto], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                return;
+            }
+            callback(results);
+        })
+    },
+    editar_mat: (connection, body, callback) => {
+        connection.query('UPDATE materia SET nombre = ?, semestre = ? WHERE codigo = ? && carrera = ? ;',
+        [body.Nombre, body.Semestre, body.Codigo, body.Carrera], (err, results) =>{
+            if(err){
+                callback({array: null, id: null, success: false, err: JSON.stringify(err) });
+                //callback("false");
+                console.log(err);
+                return;
+            }
+            callback(results);
+        })
     }
 }

@@ -1,0 +1,106 @@
+<div class="main">
+
+  <!-- Button trigger modal -->
+  <div class="container-fluid boton">
+    <h1 style="text-align: center; margin-bottom: 15px;">Materias</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Registrar Materia
+  </button>
+  <br><br>
+  </div>
+
+  <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Carrera</th>
+          <th scope="col">Semestre</th>
+          <th scope="col" colspan="2">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mat of materias">
+          <td>{{mat.Codigo}}</td>
+          <td>{{mat.Nombre}}</td>
+          <td>{{mat.Carrera}}</td>
+          <td>{{mat.Semestre}}</td>
+          <td><button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="editar(mat)"
+              data-toggle="modal" data-target="#editar">Editar</button></td>
+          <td><button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="delete(mat)">Eliminar</button></td>
+        </tr>
+      </tbody>
+  </table>
+  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Editar Materia: {{mat_editar}}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+                  <div class="modal-body">
+                      <form>
+                          <div class="form-group">
+                              <label>Nuevo Nombre</label>
+                              <input type="text" class="form-control" #nom_e [(ngModel)]="nuevo_nom" name="nom_e">
+                          </div>
+                          <div class="form-group">
+                              <label>Nuevo Semestre</label>
+                              <input type="text" class="form-control" #sem_e [(ngModel)]="nuevo_sem" name="sem_e">
+                          </div>
+                          <button type="submit" class="btn btn-info" data-dismiss="modal" *ngIf="nuevo_nom!='' && nuevo_sem!='' ;else desactivado" (click)="actualizar()">Confirmar</button>
+                          <ng-template #desactivado>
+                              <button type="submit" class="btn btn-info" data-dismiss="modal" disabled>Confirmar</button>
+                          </ng-template>
+                      </form>
+                  </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="container-fluid boton">
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Nueva Materia</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                      <div class="form-group">
+                          <label>Codigo</label>
+                          <input type="text" class="form-control" #cod [(ngModel)]="codigo" name="codigo">
+                      </div>
+                      <div class="form-group">
+                          <label>Nombre</label>
+                          <input type="text" class="form-control" #nom [(ngModel)]="nombre" name="nombre">
+                      </div>
+                      <div class="form-group">
+                          <label>Carrera</label>
+                          <input class="form-control" list="datalistOptions" id="exampleDataList" [(ngModel)]="carrera" name="carrera" #carr>
+                          <datalist id="datalistOptions">
+                              <option *ngFor="let j of carreras" [value]="j.Codigo">{{j.Nombre}}</option>
+                          </datalist>
+                      </div>
+                      <div class="form-group">
+                          <label>Semestre</label>
+                          <input type="text" class="form-control" #sem [(ngModel)]="semestre" name="semestre">
+                      </div>
+                      <button type="submit" class="btn btn-info"  data-dismiss="modal" *ngIf="codigo!='' && nombre!='' && semestre!='' ;else desactivado" (click)="guardar(cod.value,nom.value,sem.value,carr.value)">Confirmar</button>
+                      <ng-template #desactivado>
+                          <button type="submit" class="btn btn-info" disabled>Confirmar</button>
+                      </ng-template>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
