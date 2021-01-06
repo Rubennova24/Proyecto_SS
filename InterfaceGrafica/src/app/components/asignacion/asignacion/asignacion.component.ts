@@ -201,7 +201,8 @@ borrarGrupo(grupo:string){
             if(data2 == "false"){
               //alert("Error al borrar grupo "+grupo);
             }else{
-
+              this.router.navigateByUrl('/inicio', {skipLocationChange: true}).then(()=>
+              this.router.navigate(["/asignacion"]));
 
             }
 

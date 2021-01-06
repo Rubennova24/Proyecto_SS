@@ -75,12 +75,13 @@ export class JefesComponent implements OnInit {
     this.bdserviceService.editar(this.id_jefe,this.nuevo_nom,this.nueva_pass, dpto, jefe).subscribe(data=>{
       //console.log(data);
     });
-    alert("Datos modificados satisfactoriamente");
+    //alert("Datos modificados satisfactoriamente");
     this.mostrar_jefes();
     this.nuevo_nom = ""
     this.nueva_pass = ""
     this.dpto_ed = 0
     this.jefe_ed = 0
+
   }
   delete(jf){
     //console.log(jf);
